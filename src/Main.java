@@ -11,11 +11,11 @@ public class Main
         Clock timer = new Clock();
         while( game.window.isOpen() )
         {
+            Game.window.setFramerateLimit( 60 ); // Avoid excessive updates
             game.inputHandler.handleWindowEvents();
             object.update();
             game.window.clear(); // Clear the buffer
             game.window.draw( object.sprite );
-            //Game.window.setFramerateLimit( 60 ); // Avoid excessive updates
             game.window.display(); // Swap buffers
             //System.out.printf( "framerate is %d\n", 1000/timer.restart().asMilliseconds() );
         }
