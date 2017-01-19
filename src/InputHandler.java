@@ -4,6 +4,7 @@ import org.jsfml.window.event.Event;
 import java.util.HashMap;
 import java.util.Map;
 
+//Handles window events.
 public class InputHandler
 {
     public Map keyState = new HashMap();
