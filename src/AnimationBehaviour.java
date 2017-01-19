@@ -3,6 +3,8 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 
+
+// Animates an object when it's added to it.
 public class AnimationBehaviour
 {
     private Clock timer;
@@ -18,6 +20,13 @@ public class AnimationBehaviour
     private int numSequencesRow;
     private int numSequencesColumn;
 
+    /**
+     * Automatically animates the sprite based on the spritesheet provided.
+     * @param spr the sprite that is going to be animated.
+     * @param numSequencesRow the number of sprites per row in the sprite texture.
+     *                        for example there are 15 sprites per row in this texture here: http://www.gamefromscratch.com/image.axd?picture=a.png
+     * @param totalSequences the total number of sprites in the spritesheet/texture. in the link above, there are total of 32 sprites.
+     */
     public AnimationBehaviour( Sprite spr, int numSequencesRow, int totalSequences )
     {
         timer = new Clock();
@@ -32,11 +41,13 @@ public class AnimationBehaviour
 
     }
 
+    // Sets the animation speed.
     public void setAnimationSpeed( float factor )
     {
         millisPerSequence = ( int ) ( ( float ) SEQUENCE_SPEED_NORMAL/factor );
     }
 
+    // Updates the animation. Should be called every frame.
     public void update()
     {
         if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
