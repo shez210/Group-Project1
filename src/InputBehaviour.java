@@ -4,13 +4,11 @@ import static org.jsfml.window.Keyboard.*;
 public class InputBehaviour
 {
     InputHandler input;
-    Vector2f velocity;
     GameObject entity;
 
     public InputBehaviour( InputHandler input, GameObject obj )
     {
         this.input = input;
-        this.velocity = new Vector2f( 0, 0 );
         entity = obj;
     }
 

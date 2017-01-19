@@ -1,6 +1,4 @@
-import org.jsfml.graphics.RectangleShape;
 import org.jsfml.system.Clock;
-import org.jsfml.system.Vector2f;
 
 public class Main
 {
@@ -11,13 +9,14 @@ public class Main
         Clock timer = new Clock();
         while( game.window.isOpen() )
         {
-            Game.window.setFramerateLimit( 60 ); // Avoid excessive updates
+            Game.window.setFramerateLimit( 120 ); // Avoid excessive updates
             game.inputHandler.handleWindowEvents();
             object.update();
             game.window.clear(); // Clear the buffer
             game.window.draw( object.sprite );
             game.window.display(); // Swap buffers
-            //System.out.printf( "framerate is %d\n", 1000/timer.restart().asMilliseconds() );
+            System.out.printf( "framerate is %d\n", 1000/timer.restart().asMilliseconds() );
+
         }
     }
 }

@@ -15,8 +15,8 @@ public class Resources
     // Precaches resources (only sprites for now).
     public Resources()
     {
+        //loadSpriteSheet( "dude_running.png" );
         loadSpriteSheet( "dude_running.png" );
-        //loadSpriteSheet( "cat_running.png" );
     }
 
     /** Loads sprite sheet

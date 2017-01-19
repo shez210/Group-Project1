@@ -21,17 +21,27 @@ public class InputHandler
     void handleWindowEvents()
     {
         // Poll all pending events
-        for( Event event : Game.window.pollEvents() )
-        {
+        for( Event event : Game.window.pollEvents() ) {
             // If a key is pressed, store the key in the map with a value of 'true'.
-            if( event.type == Event.Type.KEY_PRESSED ) { keyState.put( event.asKeyEvent().key, true ); }
+            if (event.type == Event.Type.KEY_PRESSED) {
+                keyState.put(event.asKeyEvent().key, true);
+            }
             // If a key is released, store the key in the map with a value of 'false'.
-            if( event.type == Event.Type.KEY_RELEASED ) { keyState.put( event.asKeyEvent().key, false ); }
+            if (event.type == Event.Type.KEY_RELEASED) {
+                keyState.put(event.asKeyEvent().key, false);
+            }
+
+            if (event.type == Event.Type.CLOSED)
+            {
+                Game.window.close();
+            }
         }
 
         if( ( boolean ) keyState.get( Keyboard.Key.ESCAPE ) == true )
         {
             Game.window.close();
         }
+
+
     }
 }

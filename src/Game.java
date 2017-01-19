@@ -1,7 +1,6 @@
-import org.jsfml.window.*;
-import org.jsfml.graphics.*;
-
-import javax.annotation.Resource;
+import org.jsfml.graphics.RenderWindow;
+import org.jsfml.window.VideoMode;
+import org.jsfml.window.WindowStyle;
 
 public class Game
 {
