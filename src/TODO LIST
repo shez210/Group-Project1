@@ -4,6 +4,7 @@ TODO:
 
 1. Someone needs to code the AnimationStateBehaviour class that should deal with switching between
 different types of animations, e.g. idle, attack1, attack2, death and so on.
+All that functionality should be encapsulated in an update() method.
 
 2. Someone needs to write a class that handles AI behaviour. This will be used for all enemies.
 The simplest thing that they need to be able to do is to run towards the player and once they are close enough,
@@ -29,5 +30,5 @@ to start hitting him repeatedly. All that functionality should be encapsulated i
 
 12. Dodging range/magic attacks. (also in the report)
 
-13. Need everything done by week 14-15, because week 16 is for testing and fixing bugs.
+13. We've got plenty of tasks and not much time. Try to start as soon as you can.
 
