@@ -1,0 +1,33 @@
+TODO:
+
+0. We need to come up with some code structure. I wrote some code while doing my best to not commit to any structure.
+
+1. Someone needs to code the AnimationStateBehaviour class that should deal with switching between
+different types of animations, e.g. idle, attack1, attack2, death and so on.
+
+2. Someone needs to write a class that handles AI behaviour. This will be used for all enemies.
+The simplest thing that they need to be able to do is to run towards the player and once they are close enough,
+to start hitting him repeatedly. All that functionality should be encapsulated in an update() method.
+
+3. Someone needs to write the collision code (player-map, player-enemy).
+
+4. Need a GameState class that switches between menus and also starts game.
+
+5. Need some nice design and pictures for start menu.
+
+6. We still don't have any sprites at all.
+
+7. We don't have any sounds and music.
+
+8. Need the code for random room- and enemy- generation.
+
+9. Need tiles for map.
+
+10. Need to figure out how to make the final boss challenging enough.
+
+11. Also tutorials, some score system, maybe leveling, gold, treasure chests and weapons.(it's all in the report)
+
+12. Dodging range/magic attacks. (also in the report)
+
+13. Need everything done by week 14-15, because week 16 is for testing and fixing bugs.
+
