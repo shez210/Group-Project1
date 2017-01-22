@@ -23,5 +23,6 @@ public class Game
 	{
 		window = new RenderWindow();
 		window.create( new VideoMode( SCREEN_WIDTH, SCREEN_HEIGHT ), TITLE, WindowStyle.DEFAULT );
+		Game.window.setFramerateLimit( 120 ); // Avoid excessive updates
 	}
 }

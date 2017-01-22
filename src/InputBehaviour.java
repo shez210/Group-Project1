@@ -1,39 +1,23 @@
-import org.jsfml.system.Vector2f;
-import static org.jsfml.window.Keyboard.*;
+import java.util.ArrayList;
+
+import static org.jsfml.window.Keyboard.Key;
 
 public class InputBehaviour
 {
     InputHandler input;
-    GameObject entity;
+    ArrayList<Boolean> abilities;
 
-    public InputBehaviour( InputHandler input, GameObject obj )
+    public InputBehaviour( InputHandler input, ArrayList<Boolean> abilities )
     {
         this.input = input;
-        entity = obj;
+        this.abilities = abilities;
     }
 
     public void update()
     {
-        entity.setVelocity( new Vector2f( 0, 0 ) );
-
-        if( ( boolean ) input.keyState.get( Key.A ) == true )
-        {
-            entity.setVelocity( Vector2f.add( entity.getVelocity(), new Vector2f( -5, 0 ) ) );
-        }
-
-        if( ( boolean ) input.keyState.get( Key.D ) == true )
-        {
-            entity.setVelocity( Vector2f.add( entity.getVelocity(), new Vector2f( 5, 0 ) ) );
-        }
-
-        if( ( boolean ) input.keyState.get( Key.W ) == true )
-        {
-            entity.setVelocity( Vector2f.add( entity.getVelocity(), new Vector2f( 0, -5 ) ) );
-        }
-
-        if( ( boolean ) input.keyState.get( Key.S ) == true )
-        {
-            entity.setVelocity( Vector2f.add( entity.getVelocity(), new Vector2f( 0, 5 ) ) );
-        }
+        abilities.set( GameObject.Ability.MOVE_LEFT.ordinal(), ( Boolean ) input.keyState.get( Key.A ) );
+        abilities.set( GameObject.Ability.MOVE_RIGHT.ordinal(), ( Boolean ) input.keyState.get( Key.D ) );
+        abilities.set( GameObject.Ability.MOVE_UP.ordinal(), ( Boolean ) input.keyState.get( Key.W ) );
+        abilities.set( GameObject.Ability.MOVE_DOWN.ordinal(), ( Boolean ) input.keyState.get( Key.S ) );
     }
 }

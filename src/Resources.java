@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class Resources
 {
-    public int counter = 0;
     public ArrayList<Texture> textures = new ArrayList<>();
 
     // Precaches resources (only sprites for now).
@@ -20,7 +19,6 @@ public class Resources
     }
 
     /** Loads sprite sheet
-     *
      * @param path the relative path to the file.
      */
     public void loadSpriteSheet( String path )
