@@ -4,8 +4,8 @@ import static org.jsfml.window.Keyboard.Key;
 
 public class InputBehaviour
 {
-    InputHandler input;
-    ArrayList<Boolean> abilities;
+    private InputHandler input;
+    private ArrayList<Boolean> abilities;
 
     public InputBehaviour( InputHandler input, ArrayList<Boolean> abilities )
     {

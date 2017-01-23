@@ -1,7 +1,6 @@
-import jdk.internal.util.xml.impl.Input;
+
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,10 +9,11 @@ import java.util.Collections;
 public class GameObject
 {
     public Sprite sprite;
-    public AnimationBehaviour anim;
     public InputBehaviour input;
     public MotionBehaviour motion;
     public ArrayList<Boolean> abilities;
+    public ArrayList<AnimationBehaviour> anims;
+    public AnimationStateBehaviour animState;
 
     public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN }
 
@@ -21,30 +21,24 @@ public class GameObject
     public GameObject( Texture tex )
     {
         abilities = new ArrayList<>( Collections.nCopies( Ability.values().length, false ) );
+        anims = new ArrayList<>( Collections.nCopies( Ability.values().length, null ) );
         sprite = new Sprite( tex ); // Assigning a texture to sprite.
-        sprite.setScale( 0.5f, 0.5f );
-
-
-        /*
-        anim = new AnimationBehaviour( sprite, 7, 27 ); // Add animation behaviour to game object.
-        input = new InputBehaviour( Game.inputHandler, abilities ); // Add input behaviour to game object.
-        motion = new MotionBehaviour( sprite, abilities );
-        this.anim = anim; // Add animation behaviour to game object.
-        this.input = input; // Add input behaviour to game object.
-        this.motion = motion;
-         */
     }
 
     void update()
     {
-        if( anim != null ) { anim.update(); } // If the GameObject supports animation, update it.
         if( input != null ) { input.update(); } // If the GameObject is controlled by input, handle the input.
         if( motion != null ) { motion.update(); } // If the GameObject can move, then move it.
+        if( animState != null ) { animState.update(); } // If the GameObject supports animation, update it.
     }
 
-    void addBehaviour( AnimationBehaviour anim )
+    void addBehaviour( AnimationBehaviour anim, int abilityIndex )
     {
-        this.anim = anim;
+        this.anims.set( abilityIndex, anim );
+    }
+    void addBehaviour( AnimationStateBehaviour animState )
+    {
+        this.animState = animState;
     }
     void addBehaviour( InputBehaviour input )
     {
