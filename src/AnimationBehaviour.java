@@ -14,11 +14,15 @@ public class AnimationBehaviour
     private final int SEQUENCE_SPEED_NORMAL = 80;
     private int texWidth;
     private int texHeight;
-    private int animSequences;
-    private int currentSequence = 0;
+    private int totalSequences;
+    private int currentSequence;
+    private int sequenceStart;
+    private int sequenceEnd;
     private int millisPerSequence = SEQUENCE_SPEED_NORMAL;
     private int numSequencesRow;
     private int numSequencesColumn;
+
+    private boolean showOnlyOneFrame;
 
     /**
      * Automatically animates the sprite based on the spritesheet provided.
@@ -27,7 +31,7 @@ public class AnimationBehaviour
      *                        for example there are 15 sprites per row in this texture here: http://www.gamefromscratch.com/image.axd?picture=a.png
      * @param totalSequences the total number of sprites in the spritesheet/texture. in the link above, there are total of 32 sprites.
      */
-    public AnimationBehaviour( Sprite spr, int numSequencesRow, int totalSequences )
+    public AnimationBehaviour( Sprite spr, int sequenceStart, int sequenceEnd, int numSequencesRow, int totalSequences )
     {
         timer = new Clock();
         sprite = spr;
@@ -37,8 +41,10 @@ public class AnimationBehaviour
         this.numSequencesRow = numSequencesRow;
         this.numSequencesColumn = ( totalSequences%numSequencesRow == 0 ) ?
                                     totalSequences/numSequencesRow : totalSequences/numSequencesRow + 1;
-        animSequences = totalSequences;
-
+        this.sequenceStart = sequenceStart;
+        currentSequence = sequenceStart;
+        this.sequenceEnd = sequenceEnd;
+        this.totalSequences = totalSequences;
     }
 
     // Sets the animation speed.
@@ -47,21 +53,29 @@ public class AnimationBehaviour
         millisPerSequence = ( int ) ( ( float ) SEQUENCE_SPEED_NORMAL/factor );
     }
 
+    public void showOnlyFirstFrame()
+    {
+        showOnlyOneFrame = true;
+    }
+    public void showAllFrames()
+    {
+        showOnlyOneFrame = false;
+    }
+
     // Updates the animation. Should be called every frame.
     public void update()
     {
         if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
         {
             currentSequence ++;
-            if( currentSequence == animSequences ) { currentSequence = 0; }
+            if( currentSequence == sequenceEnd ) { currentSequence = sequenceStart; }
+            if( showOnlyOneFrame == true ) { currentSequence = sequenceStart; }
             timer.restart();
             int rectX = ( currentSequence%numSequencesRow )*texWidth/numSequencesRow;
             int rectY = ( currentSequence/numSequencesRow )*texHeight/numSequencesColumn;
             int rectW = texWidth/numSequencesRow;
             int rectH = texHeight/numSequencesColumn;
             sprite.setTextureRect( new IntRect( rectX, rectY, rectW, rectH ) );
-            //System.out.printf( "x = %d, y = %d\n", rectX, rectY );
-            //sprite.setPosition( 100, 100 );
         }
     }
 }
