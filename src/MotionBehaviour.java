@@ -1,5 +1,3 @@
-import org.jsfml.graphics.BlendMode;
-import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 
@@ -34,6 +32,9 @@ public class MotionBehaviour
         if( abilities.get( GameObject.Ability.MOVE_DOWN.ordinal() ) == true )
         { velocity = Vector2f.add( velocity, new Vector2f( 0, SPEED_NORMAL ) ); }
 
-        sprite.setPosition( Vector2f.add( sprite.getPosition(), velocity ) ); // moves the sprite.
+        sprite.setPosition( Vector2f.add( sprite.getPosition(), velocity ) ); // moves the sprite.f
+        if (sprite.getPosition() == Game.SCREEN_HEIGHT || Game.SCREEN_WIDTH){
+            System.out.println("Edge hit");
+        }
     }
 }
