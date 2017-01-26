@@ -4,6 +4,10 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 
+// Guys, try not to touch this code because it's barely working. Just use it if you want animations.
+// If you find a bug, PM me. @bogdann96
+
+// Description is above the constructor.
 
 // Animates an object when it's added to it.
 public class AnimationBehaviour

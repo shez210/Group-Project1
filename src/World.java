@@ -1,6 +1,8 @@
 
 import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
+
 import java.util.ArrayList;
 
 // The World class holds all game objects and establishes communication between them.
@@ -11,10 +13,12 @@ public class World
     public World()
     {
         gameObjects = new ArrayList<>();
-        gameObjects.add( new GameObject( Game.resources.textures.get( 0 ) ) );
-        createPlayer( gameObjects.get( 0 ) );
-        gameObjects.add( new GameObject( Game.resources.textures.get( 0 ) ) );
+        gameObjects.add( new GameObject() );
+        createPlayerBeta( gameObjects.get( 0 ) );
+        gameObjects.add( new GameObject() );
         createDummy( gameObjects.get( 1 ) );
+        gameObjects.add( new GameObject() );
+        createDecoration( gameObjects.get( 2 ), Game.resources.textures.get( 2 ) );
     }
 
     public void update()
@@ -60,8 +64,9 @@ public class World
 
     public static void createPlayer( GameObject object )
     {
-        object.addBehaviour( new InputBehaviour( Game.inputHandler, object.abilities ) );
-        object.addBehaviour( new MotionBehaviour( object.sprite, object.abilities ) );
+        object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
+        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.abilities ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 14, 21, 7, 28 ), GameObject.Ability.MOVE_LEFT.ordinal()  );
@@ -69,13 +74,28 @@ public class World
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
     }
 
+    public static void createPlayerBeta( GameObject object )
+    {
+        object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
+        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.addBehaviour( new InputBehaviourBeta( Game.inputHandler, object.motion, object.sprite ) );
+    }
+
     public static void createDummy( GameObject object )
     {
+        object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 14, 21, 7, 28 ), GameObject.Ability.MOVE_LEFT.ordinal()  );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 21, 28, 7, 28 ), GameObject.Ability.MOVE_RIGHT.ordinal()  );
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
         object.sprite.setPosition( new Vector2f( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2 ) );
+    }
+
+    // Use this to create tiles, walls, chests, whatever.
+    // If you don't know how to use it, see the example in the constructor.
+    public static void createDecoration( GameObject object, Texture tex )
+    {
+        object.addTexture( tex );
     }
 }

@@ -18,11 +18,11 @@ public class GameObject
     public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN }
 
     // GameObject is created by instantiating all the needed components/behaviours.
-    public GameObject( Texture tex )
+    public GameObject()
     {
+        sprite = new Sprite();
         abilities = new ArrayList<>( Collections.nCopies( Ability.values().length, false ) );
         anims = new ArrayList<>( Collections.nCopies( Ability.values().length, null ) );
-        sprite = new Sprite( tex ); // Assigning a texture to sprite.
     }
 
     void update()
@@ -35,6 +35,11 @@ public class GameObject
     void addBehaviour( AnimationBehaviour anim, int abilityIndex )
     {
         this.anims.set( abilityIndex, anim );
+    }
+
+    void addBehaviour( AnimationBehaviour anim )
+    {
+        this.anims.add( anim );
     }
 
     void addBehaviour( AnimationStateBehaviour animState )
@@ -51,4 +56,6 @@ public class GameObject
     {
         this.motion = motion;
     }
+
+    void addTexture( Texture texture ) { this.sprite.setTexture( texture ); }
 }

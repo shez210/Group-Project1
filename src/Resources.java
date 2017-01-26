@@ -8,17 +8,17 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-//author
 
 public class Resources
 {
     public ArrayList<Texture> textures = new ArrayList<>();
 
-    // Precaches resources (only sprites for now).
+    // Precache resources (only sprites for now).
     public Resources()
     {
         loadSpriteSheet( "player_running.png", new Color( 255, 254 ,254 ) );
-        //loadSpriteSheet( "dude_running.png" );
+        loadSpriteSheet( "placeholder_sprite.png", Color.WHITE );
+        loadSpriteSheet( "chest_sprite.png", Color.WHITE );
     }
 
     /** Loads sprite sheet

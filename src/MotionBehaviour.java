@@ -5,38 +5,21 @@ import java.util.ArrayList;
 
 public class MotionBehaviour
 {
-    private ArrayList<Boolean> abilities;
-    private Vector2f velocity;
+    public Vector2f velocity;
     private Sprite sprite;
     private final float SPEED_NORMAL = 0.05f;
-    private float speed = SPEED_NORMAL;
+    public float speed = SPEED_NORMAL;
 
-    public MotionBehaviour( Sprite sprite, ArrayList<Boolean> abilities )
+    public MotionBehaviour( Sprite sprite )
     {
         this.sprite = sprite;
-        this.abilities = abilities;
+        velocity = new Vector2f( 0, 0 );
     }
 
     public void update()
     {
-        velocity = new Vector2f( 0, 0 );
-        //speed = Game.deltaTime*SPEED_NORMAL;
-
-        if( abilities.get( GameObject.Ability.MOVE_LEFT.ordinal() ) == true )
-        { velocity = Vector2f.add( velocity, new Vector2f( -speed, 0 ) ); }
-
-        if( abilities.get( GameObject.Ability.MOVE_RIGHT.ordinal() ) == true )
-        { velocity = Vector2f.add( velocity, new Vector2f( speed, 0 ) ); }
-
-        if( abilities.get( GameObject.Ability.MOVE_UP.ordinal() ) == true )
-        { velocity = Vector2f.add( velocity, new Vector2f( 0, -speed ) ); }
-
-        if( abilities.get( GameObject.Ability.MOVE_DOWN.ordinal() ) == true )
-        { velocity = Vector2f.add( velocity, new Vector2f( 0, speed ) ); }
-
         stayInScreenBoundaries();
-
-        sprite.setPosition( Vector2f.add( new Vector2f( sprite.getPosition().x, sprite.getPosition().y ), velocity ) ); // Move the sprite.
+        sprite.setPosition( Vector2f.add( sprite.getPosition(), velocity ) ); // Move the sprite.
     }
 
     void onCollision()
