@@ -34,6 +34,9 @@ public class AnimationStateBehaviour
             if( abilities.get( GameObject.Ability.MOVE_RIGHT.ordinal() ) == true )
             { currentAnim = anims.get( GameObject.Ability.MOVE_RIGHT.ordinal() ); }
 
+            if( abilities.get( GameObject.Ability.MOVE_ATTACK.ordinal() ) == true )
+            { currentAnim = anims.get( GameObject.Ability.MOVE_ATTACK.ordinal() ); }
+
             currentAnim.showAllFrames();
         }
         else currentAnim.showOnlyFirstFrame();

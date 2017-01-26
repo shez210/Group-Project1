@@ -36,5 +36,10 @@ public class Tutorial
             abilities.set( GameObject.Ability.MOVE_RIGHT.ordinal(), ( Boolean ) input.keyState.get( Key.S ) );
             buttonPressed = true;
         }
+        while(buttonPressed = false){
+            System.out.println("Press S to move Down");
+            abilities.set( GameObject.Ability.MOVE_RIGHT.ordinal(), ( Boolean ) input.keyState.get( Key.S ) );
+            buttonPressed = true;
+        }
     }
 }

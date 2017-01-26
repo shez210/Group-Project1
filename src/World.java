@@ -1,4 +1,3 @@
-
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import java.util.ArrayList;
@@ -15,6 +14,8 @@ public class World
         createPlayer( gameObjects.get( 0 ) );
         gameObjects.add( new GameObject( Game.resources.textures.get( 0 ) ) );
         createDummy( gameObjects.get( 1 ) );
+        gameObjects.add( new GameObject( Game.resources.textures.get( 0 ) ) );
+        createDummyTwo( gameObjects.get( 2 ) );
     }
 
     public void update()
@@ -77,5 +78,15 @@ public class World
         object.addBehaviour( new AnimationBehaviour( object.sprite, 21, 28, 7, 28 ), GameObject.Ability.MOVE_RIGHT.ordinal()  );
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
         object.sprite.setPosition( new Vector2f( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2 ) );
+    }
+
+    public static void createDummyTwo( GameObject object )
+    {
+        object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, 14, 21, 7, 28 ), GameObject.Ability.MOVE_LEFT.ordinal()  );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, 21, 28, 7, 28 ), GameObject.Ability.MOVE_RIGHT.ordinal()  );
+        object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
+        object.sprite.setPosition( new Vector2f( Game.SCREEN_WIDTH-10, Game.SCREEN_HEIGHT-10 ) );
     }
 }

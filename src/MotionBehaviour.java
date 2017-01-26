@@ -8,7 +8,7 @@ public class MotionBehaviour
     private ArrayList<Boolean> abilities;
     private Vector2f velocity;
     private Sprite sprite;
-    private final float SPEED_NORMAL = 0.05f;
+    private final float SPEED_NORMAL = 0.025f;
     private float speed = SPEED_NORMAL;
 
     public MotionBehaviour( Sprite sprite, ArrayList<Boolean> abilities )
@@ -33,6 +33,11 @@ public class MotionBehaviour
 
         if( abilities.get( GameObject.Ability.MOVE_DOWN.ordinal() ) == true )
         { velocity = Vector2f.add( velocity, new Vector2f( 0, speed ) ); }
+
+        if( abilities.get( GameObject.Ability.MOVE_ATTACK.ordinal() ) == true )
+        {
+            System.out.println("Attack");
+        }
 
         stayInScreenBoundaries();
 

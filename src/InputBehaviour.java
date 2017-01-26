@@ -20,5 +20,8 @@ public class InputBehaviour
         abilities.set( GameObject.Ability.MOVE_RIGHT.ordinal(), ( Boolean ) input.keyState.get( Key.D ) );
         abilities.set( GameObject.Ability.MOVE_UP.ordinal(), ( Boolean ) input.keyState.get( Key.W ) );
         abilities.set( GameObject.Ability.MOVE_DOWN.ordinal(), ( Boolean ) input.keyState.get( Key.S ) );
+        abilities.set( GameObject.Ability.MOVE_ATTACK.ordinal(), ( Boolean ) input.keyState.get( Key.SPACE ) );
+        System.out.println("Attack");
+
     }
 }
