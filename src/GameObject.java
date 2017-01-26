@@ -15,7 +15,7 @@ public class GameObject
     public ArrayList<AnimationBehaviour> anims;
     public AnimationStateBehaviour animState;
 
-    public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN }
+    public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, MOVE_ATTACK }
 
     // GameObject is created by instantiating all the needed components/behaviours.
     public GameObject()
