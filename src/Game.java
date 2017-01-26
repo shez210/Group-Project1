@@ -1,5 +1,5 @@
+
 import org.jsfml.graphics.RenderWindow;
-import org.jsfml.system.Vector2f;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 
@@ -13,6 +13,7 @@ public class Game
 	public static RenderWindow window;
 	public static InputHandler inputHandler = new InputHandler();
 	public static Resources resources = new Resources();
+	public static float deltaTime;
 
 
 	public Game()
@@ -24,7 +25,7 @@ public class Game
 	{
 		window = new RenderWindow();
 		window.create( new VideoMode( SCREEN_WIDTH, SCREEN_HEIGHT ), TITLE, WindowStyle.DEFAULT );
-		Game.window.setFramerateLimit( 120 ); // Avoid excessive updates
+		//Game.window.setFramerateLimit( 120 ); // Avoid excessive updates
 	}
 	public int getScreenWidth(){
 		return SCREEN_WIDTH;

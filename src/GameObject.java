@@ -27,23 +27,26 @@ public class GameObject
 
     void update()
     {
-        if( input != null ) { input.update(); } // If the GameObject is controlled by input, handle the input.
-        if( motion != null ) { motion.update(); } // If the GameObject can move, then move it.
-        if( animState != null ) { animState.update(); } // If the GameObject supports animation, update it.
+        if ( input != null ) { input.update(); } // If the GameObject is controlled by input, handle the input.
+        if ( motion != null ) { motion.update(); } // If the GameObject can move, then move it.
+        if ( animState != null ) { animState.update(); } // If the GameObject supports animation, update it.
     }
 
     void addBehaviour( AnimationBehaviour anim, int abilityIndex )
     {
         this.anims.set( abilityIndex, anim );
     }
+
     void addBehaviour( AnimationStateBehaviour animState )
     {
         this.animState = animState;
     }
+
     void addBehaviour( InputBehaviour input )
     {
         this.input = input;
     }
+
     void addBehaviour( MotionBehaviour motion )
     {
         this.motion = motion;
