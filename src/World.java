@@ -79,6 +79,7 @@ public class World
         object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
         object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.sprite, object.abilities ) );
+        object.sprite.setPosition( 300, 300 );
     }
 
     public static void createDummy( GameObject object )

@@ -1,7 +1,6 @@
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
-import java.util.ArrayList;
 
 public class MotionBehaviour
 {

@@ -18,7 +18,7 @@ public class InputBehaviourBeta implements InputBehaviour
 
     public void update()
     {
-        //headTowards( input.mouseCoords );
+        headTowards( input.mouseCoords );
         lookAt( input.mouseCoords );
         System.out.println( motion.velocity.toString() );
     }
