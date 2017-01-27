@@ -66,7 +66,7 @@ public class World
     {
         object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.abilities ) );
+        //object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.abilities ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 14, 21, 7, 28 ), GameObject.Ability.MOVE_LEFT.ordinal()  );
@@ -78,7 +78,7 @@ public class World
     {
         object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new InputBehaviourBeta( Game.inputHandler, object.motion, object.sprite ) );
+        object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.sprite, object.abilities ) );
     }
 
     public static void createDummy( GameObject object )
@@ -97,5 +97,10 @@ public class World
     public static void createDecoration( GameObject object, Texture tex )
     {
         object.addTexture( tex );
+    }
+
+    public static void createBullet()
+    {
+
     }
 }

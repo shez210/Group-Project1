@@ -1,5 +1,7 @@
 
+import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import java.util.ArrayList;
 
@@ -7,12 +9,14 @@ public class InputBehaviourOld implements InputBehaviour
 {
     private InputHandler input;
     private MotionBehaviour motion;
+    private Sprite sprite;
     private ArrayList<Boolean> abilities;
 
-    public InputBehaviourOld( InputHandler input, MotionBehaviour motion, ArrayList<Boolean> abilities )
+    public InputBehaviourOld( InputHandler input, MotionBehaviour motion, Sprite sprite, ArrayList<Boolean> abilities )
     {
         this.input = input;
         this.motion = motion;
+        this.sprite = sprite;
         this.abilities = abilities;
     }
 
@@ -37,5 +41,14 @@ public class InputBehaviourOld implements InputBehaviour
         if( abilities.get( GameObject.Ability.MOVE_DOWN.ordinal() ) == true )
         { motion.velocity = Vector2f.add( motion.velocity, new Vector2f( 0, motion.speed ) ); }
 
+        lookAt( input.mouseCoords );
+
     }
+
+    public void lookAt( Vector2i dest )
+    {
+        Vector2f diff = Vector2f.sub( new Vector2f( dest ), sprite.getPosition() );
+        sprite.setRotation( ( float ) ( Math.atan2( -diff.x, diff.y ) / Math.PI * 180.0 + 90.0 ) );
+    }
+
 }

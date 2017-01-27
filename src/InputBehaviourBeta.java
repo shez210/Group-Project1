@@ -14,12 +14,11 @@ public class InputBehaviourBeta implements InputBehaviour
         this.motion = motion;
         this.sprite = sprite;
         sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f + 1, sprite.getGlobalBounds().height/2.0f + 1 ) );
-
     }
 
     public void update()
     {
-        headTowards( input.mouseCoords );
+        //headTowards( input.mouseCoords );
         lookAt( input.mouseCoords );
         System.out.println( motion.velocity.toString() );
     }

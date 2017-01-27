@@ -6,7 +6,7 @@ import org.jsfml.window.event.Event;
 import java.util.HashMap;
 import java.util.Map;
 
-//Handles window events.
+//Handles window, keyboard, mouse events.
 public class InputHandler
 {
     public Map keyState = new HashMap(); //The map used to store every keyboard key and its current state (true/false).

@@ -1,6 +1,7 @@
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,7 @@ public class GameObject
     public MotionBehaviour motion;
     public ArrayList<Boolean> abilities;
     public ArrayList<AnimationBehaviour> anims;
+    public ArrayList<GameObject> bullets;
     public AnimationStateBehaviour animState;
 
     public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, MOVE_ATTACK }
@@ -57,5 +59,19 @@ public class GameObject
         this.motion = motion;
     }
 
-    void addTexture( Texture texture ) { this.sprite.setTexture( texture ); }
+    void addTexture( Texture texture )
+    {
+        sprite.setTexture( texture );
+        sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
+    }
+
+    void addBullets( int amount )
+    {
+        bullets = new ArrayList<>( amount );
+        for( int i = 0; i < amount; i ++ )
+        {
+            bullets.add( new GameObject() );
+            bullets.get( bullets.size() - 1 );
+        }
+    }
 }
