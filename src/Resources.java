@@ -1,17 +1,15 @@
 
-import org.jsfml.graphics.Color;
-import org.jsfml.graphics.Image;
-import org.jsfml.graphics.Texture;
-import org.jsfml.graphics.TextureCreationException;
+import org.jsfml.graphics.*;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-
+// Holds all game content (textures, sounds, music, etc).
 public class Resources
 {
     public ArrayList<Texture> textures = new ArrayList<>();
+    public Font font = new Font();
 
     // Precache resources (only sprites for now).
     public Resources()
@@ -25,6 +23,7 @@ public class Resources
         loadSpriteSheet( "placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255
         loadSpriteSheet( "chest_sprite.png", Color.WHITE );
         loadSpriteSheet( "bullet.png", Color.WHITE );
+        loadFont( "font.ttf" );
     }
 
     /** Loads sprite sheet
@@ -41,5 +40,11 @@ public class Resources
         catch ( TextureCreationException e )
         { e.printStackTrace(); }
         textures.add( tex );
+    }
+
+    public void loadFont( String path )
+    {
+        try{ font.loadFromFile( Paths.get( path ) ); }
+        catch( IOException e ) { e.printStackTrace(); }
     }
 }

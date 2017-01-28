@@ -5,6 +5,7 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import java.util.ArrayList;
 
+// This input behaviour uses key presses to control player.
 public class InputBehaviourOld implements InputBehaviour
 {
     private InputHandler input;
@@ -49,6 +50,7 @@ public class InputBehaviourOld implements InputBehaviour
     {
         Vector2f diff = Vector2f.sub( new Vector2f( dest ), sprite.getPosition() );
         sprite.setRotation( ( float ) ( Math.atan2( -diff.x, diff.y ) / Math.PI * 180.0 + 90.0 ) );
+        motion.direction = Vector2f.mul( Vec2f.normalize( diff ), 10.0f );
     }
 
 }

@@ -4,25 +4,35 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-// The World class holds all game objects and establishes communication between them.
+// The World class holds all game objects and establishes communication among them.
+// Handles creation and destruction of entities.
 public class World
 {
-    ArrayList<GameObject> gameObjects;
+    static ArrayList<GameObject> gameObjects;
 
     public World()
     {
         gameObjects = new ArrayList<>();
-        gameObjects.add( new GameObject() );
-        createPlayerBeta( gameObjects.get( 0 ) );
-        gameObjects.add( new GameObject() );
-        createDummy( gameObjects.get( 1 ) );
-        gameObjects.add( new GameObject() );
-        createDecoration( gameObjects.get( 2 ), Game.resources.textures.get( 2 ) );
+
+        //If you want to create something, just call some "create" function.
+        //createDecoration() is for walls, tiles and map stuff.
+        createPlayerBeta();
+        createPassiveEnemy();
+        //spawnDecoration( Game.resources.textures.get( 2 ), new Vector2f( 400, 100 ) );
     }
 
     public void update()
     {
+        if( Game.inputHandler.isMouseClicked == true )
+        {
+            spawnProjectile( Game.resources.textures.get( 3 ), gameObjects.get( 0 ).sprite.getPosition(), gameObjects.get( 0 ).motion.direction );
+            System.out.println( gameObjects.get( 0 ).motion.direction.toString() );
+        }
+
+        destroyObjects();
+
         for( GameObject object : gameObjects ) { object.update(); }
         checkCollisions();
     }
@@ -33,7 +43,7 @@ public class World
         {
             for( GameObject object2 : gameObjects )
             {
-                if( isCollision( object1.sprite, object2.sprite ) )
+                if( object1.equals( object2 ) == false && isCollision( object1.sprite, object2.sprite ) )
                 {
                     //object1.motion.onCollision();
                 }
@@ -62,8 +72,10 @@ public class World
         return ( ( Bx > Ax && Bx < Aw && By > Ay && By < Ah ) || ( Bw > Ax && Bh > Ay && Bw < Aw && Bh < Ah ) );
     }
 
-    public static void createPlayer( GameObject object )
+    public static void createPlayer()
     {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
         object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
         //object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.abilities ) );
@@ -74,8 +86,10 @@ public class World
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
     }
 
-    public static void createPlayerBeta( GameObject object )
+    public static void createPlayerBeta()
     {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
         object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
         object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.sprite, object.abilities ) );
@@ -84,6 +98,7 @@ public class World
 
     public static void createDummy( GameObject object )
     {
+
         object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
@@ -93,15 +108,59 @@ public class World
         object.sprite.setPosition( new Vector2f( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2 ) );
     }
 
-    // Use this to create tiles, walls, chests, whatever.
-    // If you don't know how to use it, see the example in the constructor.
-    public static void createDecoration( GameObject object, Texture tex )
+    public static void spawnDummy()
     {
-        object.addTexture( tex );
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        createDummy( object );
     }
 
-    public static void createBullet()
+    public static void createPassiveEnemy()
     {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
+        object.sprite.setPosition( new Vector2f( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2 ) );
+    }
 
+    // Use this to create tiles, walls, chests, whatever.
+    // If you don't know how to use it, see the example in the constructor.
+    public static void createDecoration( GameObject object, Texture tex, Vector2f pos )
+    {
+        object.addTexture( tex );
+        object.sprite.setPosition( pos );
+    }
+
+    public static void spawnDecoration( Texture tex, Vector2f pos )
+    {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        createDecoration( object, tex, pos );
+    }
+
+    public static void createProjectile( GameObject object, Texture tex, Vector2f pos, Vector2f direction )
+    {
+        object.addTexture( tex );
+        object.sprite.setPosition( pos );
+        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.motion.velocity = direction;
+    }
+
+    public static void spawnProjectile( Texture tex, Vector2f pos, Vector2f direction )
+    {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        createProjectile( object, tex, pos, direction );
+    }
+
+    public static void destroyObjects()
+    {
+        for( int i = gameObjects.size() - 1; i > 0; i -- )
+        {
+            if( gameObjects.get( i ).hasMotion() == true && gameObjects.get( i ).motion.isOutOfScreenBoundaries() == true )
+            {
+                gameObjects.remove( gameObjects.get( i ) );
+            }
+        }
     }
 }

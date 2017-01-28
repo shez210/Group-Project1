@@ -34,7 +34,8 @@ public class InputHandler
 
             if( event.type == Event.Type.MOUSE_MOVED ) { mouseCoords = event.asMouseEvent().position; }
 
-            isMouseClicked = ( event.type == Event.Type.MOUSE_BUTTON_PRESSED );
+            if( event.type == Event.Type.MOUSE_BUTTON_PRESSED ) { isMouseClicked = true; }
+            if( event.type == Event.Type.MOUSE_BUTTON_RELEASED ) { isMouseClicked = false; }
 
             if( event.type == Event.Type.CLOSED ) { Game.window.close(); }
         }

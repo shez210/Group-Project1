@@ -1,16 +1,18 @@
 TODO:
 
-0. We need to come up with some code structure. I wrote some code while doing my best to not commit to any structure.
+0. We need to come up with some code structure. I wrote some code while doing my best to not commit to any structure. DONE
 
 1. Someone needs to code the AnimationStateBehaviour class that should deal with switching between
 different types of animations, e.g. idle, attack1, attack2, death and so on.
-All that functionality should be encapsulated in an update() method.
+All that functionality should be encapsulated in an update() method.     DONE
 
-2. Someone needs to write a class that handles AI behaviour. This will be used for all enemies.
+2. Someone needs to write the collision code (player-map, player-enemy).   DONE
+
+3. Some of the entities should be able to fire projectiles. DONE
+
+3. Someone needs to write a class that handles AI behaviour. This will be used for all enemies.
 The simplest thing that they need to be able to do is to run towards the player and once they are close enough,
 to start hitting him repeatedly. All that functionality should be encapsulated in an update() method.
-
-3. Someone needs to write the collision code (player-map, player-enemy).
 
 4. Need a GameState class that switches between menus and also starts game.
 

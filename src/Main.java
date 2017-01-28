@@ -1,4 +1,5 @@
 
+import org.jsfml.graphics.Text;
 import org.jsfml.system.Clock;
 
 public class Main
@@ -9,8 +10,6 @@ public class Main
         World world = new World();
         Clock timer = new Clock();
 
-        long fps;
-
         while( Game.window.isOpen() )
         {
             Game.inputHandler.handleWindowEvents();
@@ -18,13 +17,12 @@ public class Main
             world.update();
             world.draw();
 
+            Game.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.", Game.resources.font, 30 ) );
+
             Game.window.display(); // Swap buffers
             //System.out.printf( "framerate is %d\n", 1000/timer.restart().asMilliseconds() );
-            while( timer.getElapsedTime().asSeconds() < 0.016f )
-            {
 
-            }
-            //or LockSupport.parkNanos ans System.
+            //or LockSupport.parkNanos and System.getnanos.
         }
     }
 }

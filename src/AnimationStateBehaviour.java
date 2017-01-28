@@ -1,7 +1,8 @@
 
 import java.util.ArrayList;
 
-// Will handle transitions between different animations.
+// This class handles transitions between different animations.
+// You don't have to know how it works, just use it.
 public class AnimationStateBehaviour
 {
     private ArrayList<AnimationBehaviour> anims;

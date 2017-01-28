@@ -2,6 +2,7 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
+// This input behaviour controls all player actions by mouse click/movement.
 public class InputBehaviourBeta implements InputBehaviour
 {
     InputHandler input;
@@ -18,6 +19,7 @@ public class InputBehaviourBeta implements InputBehaviour
 
     public void update()
     {
+
         headTowards( input.mouseCoords );
         lookAt( input.mouseCoords );
         System.out.println( motion.velocity.toString() );
