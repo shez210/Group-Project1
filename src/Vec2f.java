@@ -21,4 +21,14 @@ public class Vec2f
     {
         return ( vec1.x*vec2.x + vec1.y*vec2.y );
     }
+
+    public static boolean greaterThan( Vector2f vec1, Vector2f vec2 )
+    {
+        return ( vec1.x > vec2.x && vec1.y > vec2.y );
+    }
+
+    public static boolean lessThan( Vector2f vec1, Vector2f vec2 )
+    {
+        return ( vec1.x < vec2.x && vec1.y < vec2.y );
+    }
 }

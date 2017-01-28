@@ -10,6 +10,8 @@ import java.util.Collections;
 // There are some "create()" functions in the World class, use them to instantiate.
 public class GameObject
 {
+    public int type;
+    public int status = Status.ALIVE.ordinal();
     public Sprite sprite;
     public InputBehaviour input;
     public MotionBehaviour motion;
@@ -19,6 +21,8 @@ public class GameObject
     public Vector2f direction;
 
     public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, MOVE_ATTACK }
+    public enum Type{ PLAYER_BULLET, ENEMY }
+    public enum Status{ ALIVE, DEAD }
 
     // GameObject is created by instantiating all the needed components/behaviours.
     public GameObject()
