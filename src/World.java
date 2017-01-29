@@ -16,6 +16,7 @@ public class World
     static ArrayList<GameObject> gameObjects;
     static Clock timer = new Clock();
     static Clock timerShoot = new Clock();
+    static int playerIndex = -  1;
 
     public World()
     {
@@ -33,16 +34,14 @@ public class World
         if( Game.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
         {
             timerShoot.restart();
-            spawnProjectile( Game.resources.textures.get( 3 ), gameObjects.get( 0 ).sprite.getPosition(), gameObjects.get( 0 ).motion.direction );
+            createProjectile( Game.resources.textures.get( 3 ), gameObjects.get( 0 ).sprite.getPosition(), gameObjects.get( 0 ).motion.direction );
         }
 
         if( timer.getElapsedTime().asSeconds() > 0.2f ) { spawnEnemyRandom(); timer.restart(); }
 
-        checkForDeallocations();
-
         for( GameObject object : gameObjects ) { object.update(); }
         checkCollisions();
-
+        checkForDeallocations();
         //System.out.println( gameObjects.get( 0 ).sprite.getGlobalBounds().toString() );
     }
 
@@ -102,11 +101,13 @@ public class World
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
         object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.sprite, object.abilities ) );
         object.sprite.setPosition( 300, 300 );
+        playerIndex = gameObjects.size() - 1;
     }
 
-    public static void createDummy( GameObject object )
+    public static void createDummy()
     {
-
+        GameObject object = new GameObject();
+        gameObjects.add( object );
         object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
@@ -116,47 +117,25 @@ public class World
         object.sprite.setPosition( new Vector2f( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2 ) );
     }
 
-    public static void spawnDummy()
+    // Use this to create tiles, walls, chests, whatever.
+    // If you don't know how to use it, see the example in the constructor.
+
+    public static void createDecoration( Texture tex, Vector2f pos )
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        createDummy( object );
-    }
-
-    public static void createPassiveEnemy( GameObject object, Texture tex )
-    {
-        object.addTexture( tex );
-
-    }
-
-    // Use this to create tiles, walls, chests, whatever.
-    // If you don't know how to use it, see the example in the constructor.
-    public static void createDecoration( GameObject object, Texture tex, Vector2f pos )
-    {
         object.addTexture( tex );
         object.sprite.setPosition( pos );
     }
 
-    public static void spawnDecoration( Texture tex, Vector2f pos )
+    public static void createProjectile( Texture tex, Vector2f pos, Vector2f direction )
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        createDecoration( object, tex, pos );
-    }
-
-    public static void createProjectile( GameObject object, Texture tex, Vector2f pos, Vector2f direction )
-    {
         object.addTexture( tex );
         object.sprite.setPosition( pos );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
         object.motion.velocity = direction;
-    }
-
-    public static void spawnProjectile( Texture tex, Vector2f pos, Vector2f direction )
-    {
-        GameObject object = new GameObject();
-        gameObjects.add( object );
-        createProjectile( object, tex, pos, direction );
         object.type = GameObject.Type.PLAYER_BULLET.ordinal();
     }
 
@@ -171,7 +150,7 @@ public class World
         }
     }
 
-    public static void deallocateDeadObjects()
+    public static void deallocateInactiveObjects()
     {
         for( int i = gameObjects.size() - 1; i > 0; i -- )
         { if( gameObjects.get( i ).status == GameObject.Status.DEAD.ordinal() ) { gameObjects.remove( gameObjects.get( i ) ); } }
@@ -180,16 +159,20 @@ public class World
     public static void checkForDeallocations()
     {
         destroyOutOfBoundsObjects();
-        deallocateDeadObjects();
-
+        deallocateInactiveObjects();
     }
 
     public static void spawnEnemyRandom()
     {
+        int angle = new Random().nextInt( 360 );
+
         GameObject object = new GameObject();
         gameObjects.add( object );
-        createPassiveEnemy( object, new Texture( Game.resources.textures.get( 1 ) ) );
-        object.sprite.setPosition( new Vector2f( new Random().nextInt( Game.SCREEN_WIDTH ), new Random().nextInt( Game.SCREEN_HEIGHT ) ) );
+        object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
+        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( 0 ).sprite ) );
+        object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + Game.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + Game.SCREEN_HEIGHT/2 ) );
         object.type = GameObject.Type.ENEMY.ordinal();
+        System.out.println( "x = " + Math.sin( Math.toRadians( angle ) )+ " y = " + Math.cos( Math.toRadians( angle ) ) );
     }
 }

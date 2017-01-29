@@ -15,10 +15,10 @@ public class GameObject
     public Sprite sprite;
     public InputBehaviour input;
     public MotionBehaviour motion;
+    public AIBehaviour ai;
     public ArrayList<Boolean> abilities;
     public ArrayList<AnimationBehaviour> anims;
     public AnimationStateBehaviour animState;
-    public Vector2f direction;
 
     public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, MOVE_ATTACK }
     public enum Type{ PLAYER_BULLET, ENEMY }
@@ -34,9 +34,10 @@ public class GameObject
 
     void update()
     {
-        if ( input != null ) { input.update(); } // If the GameObject is controlled by input, handle the input.
-        if ( motion != null ) { motion.update(); } // If the GameObject can move, then move it.
-        if ( animState != null ) { animState.update(); } // If the GameObject supports animation, update it.
+        if( input != null ) { input.update(); } // If the GameObject is controlled by input, handle the input.
+        if( motion != null ) { motion.update(); } // If the GameObject can move, then move it.
+        if( animState != null ) { animState.update(); } // If the GameObject supports animation, update it.
+        if( ai != null ) { ai.update(); }
     }
 
     boolean hasMotion()
@@ -67,6 +68,11 @@ public class GameObject
     void addBehaviour( MotionBehaviour motion )
     {
         this.motion = motion;
+    }
+
+    void addBehaviour( AIBehaviour ai )
+    {
+        this.ai = ai;
     }
 
     void addTexture( Texture texture )
