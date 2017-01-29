@@ -12,7 +12,7 @@ All that functionality should be encapsulated in an update() method.     DONE
 
 3. Someone needs to write a class that handles AI behaviour. This will be used for all enemies.
 The simplest thing that they need to be able to do is to run towards the player and once they are close enough,
-to start hitting him repeatedly. All that functionality should be encapsulated in an update() method.
+to start hitting him repeatedly. All that functionality should be encapsulated in an update() method. DONE
 
 4. Need a GameState class that switches between menus and also starts game.
 
