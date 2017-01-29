@@ -1,14 +1,19 @@
 
 import java.util.ArrayList;
 
-// This class handles transitions between different animations.
-// You don't have to know how it works, just use it.
+/** This class handles transitions between different animations.
+ * You don't have to know how it works, just use it. */
 public class AnimationStateBehaviour
 {
     private ArrayList<AnimationBehaviour> anims;
     private ArrayList<Boolean> abilities;
     private AnimationBehaviour currentAnim;
 
+    /** Attaches animation to a certain ability/state. Use it if you have more than one animation.
+     *
+     * @param anims All animations that are going to be used.
+     * @param abilities All abilities that are going to be used.
+     */
     public AnimationStateBehaviour( ArrayList<AnimationBehaviour> anims, ArrayList<Boolean> abilities )
     {
         this.anims = anims;

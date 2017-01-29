@@ -4,30 +4,34 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 
-// Guys, try not to touch this code because it's barely working. Just use it if you want animations. It's really easy to use.
-// If you find a bug, PM me. @bogdann96
+// Guys, try not to touch this code because it's barely working. Just use it if you want animations.
+// It's really easy to use.
+
+// If someone finds a bug, PM me. @bogdann96
 
 // Description is above the constructor.
 
-// Animates an object using a spritesheet.
+/** Animates an object using a sprite sheet. */
 public class AnimationBehaviour
 {
     private Clock timer;
     private Sprite sprite;
     private Texture texture;
 
-    private final int SEQUENCE_SPEED_NORMAL = 80;
-    private int texWidth;
-    private int texHeight;
-    private int totalSequences;
-    private int currentSequence;
-    private int sequenceStart;
-    private int sequenceEnd;
+    private final int SEQUENCE_SPEED_NORMAL = 80; // Milliseconds spent on 1 sprite.
+    private int texWidth; // Width of texture used.
+    private int texHeight; // Height of texture.
+    private int totalSequences; // Total sprites in the sprite sheet.
+    private int currentSequence; // The sprite that is currently shown.
+    private int sequenceStart; // The index of the first sprite that is going to be used from the sprite sheet.
+    private int sequenceEnd; // The index of last sprite from sprite sheet.
     private int millisPerSequence = SEQUENCE_SPEED_NORMAL;
-    private int numSequencesRow;
-    private int numSequencesColumn;
+    private int numSequencesRow; // Number of sprites per row in the sprite sheet.
+    private int numSequencesColumn; // Number of sprites per column in the sprite sheet.
 
-    private boolean showOnlyOneFrame;
+    // Used for idle animations.
+    private boolean showOnlyOneFrame; // Supports the option to show only the first frame of a certain animation.
+
 
     /**
      * Automatically animates the sprite based on the spritesheet provided.
@@ -52,7 +56,7 @@ public class AnimationBehaviour
         this.totalSequences = totalSequences;
     }
 
-    // Sets the animation speed.
+    /** Sets the animation speed. */
     public void setAnimationSpeed( float factor )
     {
         millisPerSequence = ( int ) ( ( float ) SEQUENCE_SPEED_NORMAL/factor );
@@ -67,7 +71,7 @@ public class AnimationBehaviour
         showOnlyOneFrame = false;
     }
 
-    // Updates the animation. Should be called every frame.
+    /** Updates the animation. Should be called every frame. */
     public void update()
     {
         if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )

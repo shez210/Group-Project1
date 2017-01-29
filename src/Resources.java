@@ -5,24 +5,28 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-// Holds all game content (textures, sounds, music, etc).
+/** Holds all game content (textures, sounds, music, fonts, etc). */
 public class Resources
 {
     public ArrayList<Texture> textures = new ArrayList<>();
     public Font font = new Font();
 
-    // Precache resources (only sprites for now).
+    // Precache resources (only sprites and fonts for now).
     public Resources()
     {
-        // Every time loadSpriteSheet() is called, a new element is added into the textures array.
-        // So if you want to get the texture that you loaded the 2nd time you called loadSpriteSheet(), then you
-        // Need to use game.resources.texture.get( 1 ), to access the 2nd texture.
-
-        // The 2nd parameter is the background color of the sprite sheet. Need to be really precise.
+        /**
+        * Every time loadSpriteSheet() is called, a new element is added into the textures array.
+        * So if you want to get the texture that you loaded the 2nd time you called loadSpriteSheet(), then you
+        * Need to use game.resources.texture.get( 1 ), to access the 2nd texture.
+        * The 2nd parameter is the background color of the sprite sheet.
+        * You need to be really precise when specifying it or background wont be blended. */
         loadSpriteSheet( "player_running.png", new Color( 255, 254 ,254 ) );
         loadSpriteSheet( "placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255
         loadSpriteSheet( "chest_sprite.png", Color.WHITE );
         loadSpriteSheet( "bullet.png", Color.WHITE );
+        // If you want to call loadSpriteSheet(), do it here, not before the other function calls.
+        // load sprite sheet here.
+
         loadFont( "font.ttf" );
     }
 
@@ -42,6 +46,9 @@ public class Resources
         textures.add( tex );
     }
 
+    /** Loads a font at the specified path.
+     * @param path the path to the font.
+     */
     public void loadFont( String path )
     {
         try{ font.loadFromFile( Paths.get( path ) ); }

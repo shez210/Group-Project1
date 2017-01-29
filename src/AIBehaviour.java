@@ -7,6 +7,12 @@ public class AIBehaviour
     Sprite aiSprite;
     Sprite targetSprite;
 
+    /** Constructs the AI behaviour of a game object.
+     *
+     * @param motion the motion behaviour of the current game object.
+     * @param aiSprite the sprite of the current game object.
+     * @param targetSprite the sprite of the targeted game object.
+     */
     public AIBehaviour( MotionBehaviour motion, Sprite aiSprite, Sprite targetSprite )
     {
         this.motion = motion;
@@ -19,6 +25,7 @@ public class AIBehaviour
         chaseTarget();
     }
 
+    /** chases the target that was specified when the constructor was called. */
     public void chaseTarget()
     {
         Vector2f diff = Vector2f.sub( targetSprite.getPosition(), aiSprite.getPosition() );

@@ -5,7 +5,7 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import java.util.ArrayList;
 
-// This input behaviour uses key presses to control player.
+/** This input behaviour uses key presses to control player. */
 public class InputBehaviourOld implements InputBehaviour
 {
     private InputHandler input;

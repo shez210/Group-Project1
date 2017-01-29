@@ -3,7 +3,7 @@ import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 
-// Handles window initialization, settings, holds all resources and records input.
+/** Handles window initialization, settings, holds all resources and records input. */
 public class Game
 {
 	public static final int SCREEN_WIDTH  = 640;

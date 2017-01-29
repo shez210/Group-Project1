@@ -2,8 +2,7 @@
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 
-
-// Handles entity movement.
+/** Handles movement of entity. */
 public class MotionBehaviour
 {
     public Vector2f velocity;
@@ -18,6 +17,7 @@ public class MotionBehaviour
         velocity = new Vector2f( 0, 0 );
     }
 
+    /** Moves the entity to some direction by some velocity. */
     public void update()
     {
         stayInScreenBoundaries();
@@ -29,7 +29,9 @@ public class MotionBehaviour
         System.out.print( "gg" );
     }
 
-
+    /** Checks if an entity is out of the screen boundaries.
+     * @return true if its out of screen, false otherwise.
+     */
     boolean isOutOfScreenBoundaries()
     {
         return ( sprite.getPosition().x < 0 || sprite.getPosition().y < 0 ||
@@ -37,8 +39,9 @@ public class MotionBehaviour
                 sprite.getPosition().y > Game.SCREEN_HEIGHT - sprite.getTextureRect().height );
     }
 
-    // Check boundaries. Code is not pretty due to the way the JSFML Vector2f class is written.
-    // If I find time, I will write another vector class.
+    /** Check boundaries. Code is not pretty due to the way the JSFML Vector2f class is written.
+     * If I find time, I will write another vector class.
+     */
     void stayInScreenBoundaries()
     {
         if( sprite.getPosition().x < 0 ) { sprite.setPosition( 0, sprite.getPosition().y ); }
