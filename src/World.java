@@ -7,7 +7,7 @@ import org.jsfml.system.Vector2f;
 import java.util.ArrayList;
 import java.util.Random;
 
-// Guys try not to modify my functions without telling me because some other code may break. Just use it, and maybe add new stuff.
+// Guys try not to modify these functions without telling me because some other code may break. Just use it, and maybe add new stuff.
 
 /** The World class holds all game objects and establishes communication among them.
  * Handles creation and destruction of entities. */
@@ -22,8 +22,8 @@ public class World
     {
         gameObjects = new ArrayList<>(); // create empty arraylist.
 
-        //If you want to create something, just call some "create" function.
-        //createDecoration() is for walls, tiles and map stuff.
+        /** If you want to create something, just call some "create" function.
+         * createDecoration() is for walls, tiles and map stuff. */
         createPlayerBeta();
         createEnemyRandom();
     }
@@ -44,6 +44,7 @@ public class World
         checkForDeallocations();
     }
 
+    /** Resolves all collisions that happen. Still not finished. Works only to kill enemies. */
     public void resolveCollisions()
     {
         for( int i = gameObjects.size() - 1; i > 0; i -- )

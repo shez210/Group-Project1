@@ -13,6 +13,8 @@ public class Tutorial
         this.abilities = abilities;
     }
 
+    // Shaz, the while loop will block the whole game until that button is pressed.
+    // Use Clock() to check if a button is pressed within a certain period of time and then change the on-screen text.
     public void update()
     {
         boolean buttonPressed = false;

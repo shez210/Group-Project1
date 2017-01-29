@@ -25,4 +25,9 @@ public class PlayerShootBehaviour
         }
         else isProjectileLaunched = false;
     }
+
+    public boolean isProjectileLaunched()
+    {
+        return isProjectileLaunched;
+    }
 }
