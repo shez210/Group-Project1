@@ -20,10 +20,11 @@ public class Resources
         * Need to use game.resources.texture.get( 1 ), to access the 2nd texture.
         * The 2nd parameter is the background color of the sprite sheet.
         * You need to be really precise when specifying it or background wont be blended. */
-        loadSpriteSheet( "player_running.png", new Color( 255, 254 ,254 ) );
-        loadSpriteSheet( "placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255
-        loadSpriteSheet( "chest_sprite.png", Color.WHITE );
-        loadSpriteSheet( "bullet.png", Color.WHITE );
+        loadSpriteSheet( "sprites/player_running.png", new Color( 255, 254 ,254 ) );
+        loadSpriteSheet( "sprites/placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255
+        loadSpriteSheet( "sprites/chest_sprite.png", Color.WHITE );
+        loadSpriteSheet( "sprites/bullet.png", Color.WHITE );
+        loadSpriteSheet( "sprites/cursor.png", Color.WHITE );
         // If you want to call loadSpriteSheet(), do it here, not before the other function calls.
         // load sprite sheet here.
 
