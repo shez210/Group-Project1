@@ -2,7 +2,7 @@ TODO:
 
 0. We need to come up with some code structure. I wrote some code while doing my best to not commit to any structure. DONE
 
-1. Someone needs to code the engine2d.behaviour.AnimationStateBehaviour class that should deal with switching between
+1. Someone needs to code the AnimationStateBehaviour class that should deal with switching between
 different types of animations, e.g. idle, attack1, attack2, death and so on.
 All that functionality should be encapsulated in an update() method.     DONE
 
@@ -10,27 +10,31 @@ All that functionality should be encapsulated in an update() method.     DONE
 
 3. Some of the entities should be able to fire projectiles. DONE
 
-3. Someone needs to write a class that handles AI behaviour. This will be used for all enemies.
+4. Someone needs to write a class that handles AI behaviour. This will be used for all enemies.
 The simplest thing that they need to be able to do is to run towards the player and once they are close enough,
 to start hitting him repeatedly. All that functionality should be encapsulated in an update() method. DONE
 
-4. Need a engine2d.GameState class that switches between menus and also starts game.
+5. Need a GameState class that switches between menus and also starts game. DONE
 
-5. Need some nice design and pictures for start menu.
+6. Someone has to implement object creation and destruction. DONE
 
-6. We still don't have any sprites at all.
+7. Generate tiles with a .txt file. DONE
 
-7. We don't have any sounds and music.
+8. Implement scrolling.
 
-8. Need the code for random room- and enemy- generation.
+9. Need some nice design and pictures for start menu.
 
-9. Need tiles for map.
+10. We still don't have any sprites at all.
 
-10. Need to figure out how to make the final boss challenging enough.
+11. We don't have any sounds and music.
 
-11. Also tutorials, some score system, leveling, gold, treasure chests and weapons.(it's all in the report)
+12. Need the code for random room- and enemy- generation.
 
-12. Dodging range/magic attacks. (also in the report)
+13. Need to figure out how to make the final boss challenging enough.
 
-13. We've got plenty of tasks and not much time. Try to start as soon as you can.
+14. Also tutorials, some score system, leveling, gold, treasure chests and weapons.(it's all in the report)
+
+15. Dodging range/magic attacks. (also in the report)
+
+16. We've got plenty of tasks and not much time. Try to start as soon as you can.
 

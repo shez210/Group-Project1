@@ -1,0 +1,10 @@
+#
+# Really basic level editor.
+# Write a 'zero' to spawn a tile. (will make it better, later on)
+#
+#
+-start
+------------------------------
+000     000
+00       00
+0         0

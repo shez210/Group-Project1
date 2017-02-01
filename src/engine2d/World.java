@@ -2,23 +2,25 @@ package engine2d;
 
 import engine2d.behaviour.*;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-// Guys try not to modify these functions without telling me because some other code may break. Just use it, and maybe add new stuff.
+import static engine2d.Utility.readMapFromFile;
 
 /** The engine2d.World class holds all game objects and establishes communication among them.
  * Handles creation and destruction of entities. */
-public class World
+public class World implements GameState
 {
     static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
     static Clock timer = new Clock(); // doesnt belong here
     static Clock timerShoot = new Clock(); // doesnt belong here
-    static int playerIndex = -  1; // index of the player object in the array of game objects.
+    static int playerIndex = - 1; // index of the player object in the array of game objects.
 
     public World()
     {
@@ -26,6 +28,7 @@ public class World
 
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
+        buildLevel();
         createPlayerBeta();
         createEnemyRandom();
     }
@@ -36,7 +39,7 @@ public class World
         if( App.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
         {
             timerShoot.restart();
-            createProjectile( App.resources.textures.get( 3 ), gameObjects.get( 0 ).sprite.getPosition(), gameObjects.get( 0 ).motion.direction );
+            createProjectile( App.resources.textures.get( 3 ), gameObjects.get( playerIndex ).sprite.getPosition(), gameObjects.get( playerIndex ).motion.direction );
         }
 
         if( timer.getElapsedTime().asSeconds() > 0.2f ) { createEnemyRandom(); timer.restart(); }
@@ -44,6 +47,17 @@ public class World
         for( GameObject object : gameObjects ) { object.update(); }
         resolveCollisions();
         checkForDeallocations();
+        App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
+    }
+
+    /** Draws all created game objects on screen. */
+    public void draw()
+    {
+        App.window.clear();
+        for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
+        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 30 ) );
+        App.window.draw( App.resources.cursorSprite );
+        App.window.display();
     }
 
     /** Resolves all collisions that happen. Still not finished. Works only to kill enemies. */
@@ -61,12 +75,6 @@ public class World
                 }
             }
         }
-    }
-
-    /** Draws all created game objects on screen. */
-    public void draw()
-    {
-        for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
     }
 
     /** Checks if there is a collision between two entities.
@@ -191,8 +199,27 @@ public class World
         gameObjects.add( object );
         object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( 0 ).sprite ) );
+        object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
         object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_HEIGHT/2 ) );
         object.type = GameObject.Type.ENEMY.ordinal();
+    }
+
+    public static void buildLevel()
+    {
+        List<String> data = readMapFromFile( "levelEditor.txt" );
+        Texture tex = App.resources.textures.get( 5 );
+
+        for( int i = 0; i < data.size(); ++ i )
+        {
+            char[] line = data.get( i ).toCharArray();
+
+            for( int j = 0; j < line.length; ++ j )
+            {
+                if( line[ j ] == '0' )
+                {
+                    createDecoration( App.resources.textures.get( 5 ), new Vector2f( tex.getSize().x * ( 0.5f + j ), tex.getSize().y * ( 0.5f + i ) ) );
+                }
+            }
+        }
     }
 }

@@ -27,11 +27,13 @@ public class Resources
         loadSpriteSheet( "sprites/chest_sprite.png", Color.WHITE );
         loadSpriteSheet( "sprites/bullet.png", Color.WHITE );
         loadSpriteSheet( "sprites/cursor.png", Color.WHITE );
+        loadSpriteSheet( "sprites/placeholder_tile.png", Color.WHITE );
         // If you want to call loadSpriteSheet(), do it here, not before the other function calls.
         // load sprite sheet here.
 
         loadFont( "font.ttf" );
 
+        //Set the cursor stuff.
         cursorSprite = new Sprite( textures.get( 4 ) );
         cursorSprite.setScale( 0.47f, 0.47f );
     }
