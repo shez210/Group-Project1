@@ -1,4 +1,6 @@
+package engine2d;
 
+import engine2d.behaviour.*;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
@@ -9,7 +11,7 @@ import java.util.Random;
 
 // Guys try not to modify these functions without telling me because some other code may break. Just use it, and maybe add new stuff.
 
-/** The World class holds all game objects and establishes communication among them.
+/** The engine2d.World class holds all game objects and establishes communication among them.
  * Handles creation and destruction of entities. */
 public class World
 {
@@ -31,10 +33,10 @@ public class World
     /** Handles creation and destruction of entities and also resolves collision. */
     public void update()
     {
-        if( Game.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
+        if( App.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
         {
             timerShoot.restart();
-            createProjectile( Game.resources.textures.get( 3 ), gameObjects.get( 0 ).sprite.getPosition(), gameObjects.get( 0 ).motion.direction );
+            createProjectile( App.resources.textures.get( 3 ), gameObjects.get( 0 ).sprite.getPosition(), gameObjects.get( 0 ).motion.direction );
         }
 
         if( timer.getElapsedTime().asSeconds() > 0.2f ) { createEnemyRandom(); timer.restart(); }
@@ -64,7 +66,7 @@ public class World
     /** Draws all created game objects on screen. */
     public void draw()
     {
-        for( GameObject object : gameObjects ) { Game.window.draw( object.sprite ); }
+        for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
     }
 
     /** Checks if there is a collision between two entities.
@@ -91,9 +93,9 @@ public class World
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
+        object.addTexture( new Texture( App.resources.textures.get( 0 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        //object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.abilities ) );
+        //object.addBehaviour( new engine2d.behaviour.InputBehaviourOld( engine2d.App.inputHandler, object.motion, object.abilities ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 14, 21, 7, 28 ), GameObject.Ability.MOVE_LEFT.ordinal()  );
@@ -106,9 +108,9 @@ public class World
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
+        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new InputBehaviourOld( Game.inputHandler, object.motion, object.sprite, object.abilities ) );
+        object.addBehaviour( new InputBehaviourOld( App.inputHandler, object.motion, object.sprite, object.abilities ) );
         object.sprite.setPosition( 300, 300 );
         playerIndex = gameObjects.size() - 1;
     }
@@ -118,13 +120,13 @@ public class World
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( Game.resources.textures.get( 0 ) ) );
+        object.addTexture( new Texture( App.resources.textures.get( 0 ) ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 0, 7, 7, 28 ), GameObject.Ability.MOVE_DOWN.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 7, 14, 7, 28 ), GameObject.Ability.MOVE_UP.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 14, 21, 7, 28 ), GameObject.Ability.MOVE_LEFT.ordinal()  );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 21, 28, 7, 28 ), GameObject.Ability.MOVE_RIGHT.ordinal()  );
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
-        object.sprite.setPosition( new Vector2f( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2 ) );
+        object.sprite.setPosition( new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 ) );
     }
 
     /** Use this to create tiles, walls, chests, whatever.
@@ -187,10 +189,10 @@ public class World
         int angle = new Random().nextInt( 360 );
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( Game.resources.textures.get( 1 ) ) );
+        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
         object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( 0 ).sprite ) );
-        object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + Game.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + Game.SCREEN_HEIGHT/2 ) );
+        object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_HEIGHT/2 ) );
         object.type = GameObject.Type.ENEMY.ordinal();
     }
 }

@@ -1,4 +1,6 @@
+package engine2d.behaviour;
 
+import engine2d.App;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 
@@ -32,11 +34,11 @@ public class MotionBehaviour
     /** Checks if an entity is out of the screen boundaries.
      * @return true if its out of screen, false otherwise.
      */
-    boolean isOutOfScreenBoundaries()
+    public boolean isOutOfScreenBoundaries()
     {
         return ( sprite.getPosition().x < 0 || sprite.getPosition().y < 0 ||
-                sprite.getPosition().x > Game.SCREEN_WIDTH - sprite.getTextureRect().width ||
-                sprite.getPosition().y > Game.SCREEN_HEIGHT - sprite.getTextureRect().height );
+                sprite.getPosition().x > App.SCREEN_WIDTH - sprite.getTextureRect().width ||
+                sprite.getPosition().y > App.SCREEN_HEIGHT - sprite.getTextureRect().height );
     }
 
     /** Check boundaries. Code is not pretty due to the way the JSFML Vector2f class is written.
@@ -46,9 +48,9 @@ public class MotionBehaviour
     {
         if( sprite.getPosition().x < 0 ) { sprite.setPosition( 0, sprite.getPosition().y ); }
         if( sprite.getPosition().y < 0 ) { sprite.setPosition( sprite.getPosition().x, 0 ); }
-        if( sprite.getPosition().x > Game.SCREEN_WIDTH - sprite.getTextureRect().width )
-        { sprite.setPosition( Game.SCREEN_WIDTH - sprite.getTextureRect().width, sprite.getPosition().y ); }
-        if( sprite.getPosition().y > Game.SCREEN_HEIGHT - sprite.getTextureRect().height )
-        { sprite.setPosition( sprite.getPosition().x, Game.SCREEN_HEIGHT - sprite.getTextureRect().height );}
+        if( sprite.getPosition().x > App.SCREEN_WIDTH - sprite.getTextureRect().width )
+        { sprite.setPosition( App.SCREEN_WIDTH - sprite.getTextureRect().width, sprite.getPosition().y ); }
+        if( sprite.getPosition().y > App.SCREEN_HEIGHT - sprite.getTextureRect().height )
+        { sprite.setPosition( sprite.getPosition().x, App.SCREEN_HEIGHT - sprite.getTextureRect().height );}
     }
 }

@@ -1,3 +1,5 @@
+package engine2d.behaviour;
+
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 

@@ -1,4 +1,6 @@
+package engine2d.behaviour;
 
+import engine2d.InputHandler;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Clock;
 
