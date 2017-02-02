@@ -2,6 +2,7 @@ package game;
 import java.util.ArrayList;
 
 import game.ui.InputHandler;
+import game.world.object.GameObject;
 
 import static org.jsfml.window.Keyboard.Key;
 

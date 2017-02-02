@@ -1,4 +1,7 @@
 package game.ui;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Text;
@@ -18,13 +21,14 @@ public class GameWindow extends RenderWindow {
 	
 	private Game game;
 	private Cursor cursor;
-	private Text text = new Text("Use WASD to move and mouse to aim/shoot.\nUntil forever...", Game.resources.font, 30);
-	public static InputHandler inputHandler = new InputHandler();
+	private Text text;
+	public static InputHandler inputHandler;
 	
-	public GameWindow(Game game, Resources resources) {
+	public GameWindow(Game game, Resources resources, InputHandler inputHandler) {
 		this.game = game;
-		this.cursor = new Cursor(new Sprite(resources.textures.get(3)));
-		
+		this.cursor = new Cursor(new Sprite(resources.textures.get(4)));
+		this.text = new Text("Use WASD to move and mouse to aim/shoot.\nUntil forever...", resources.font, 30);
+		this.inputHandler = inputHandler;
 		
 		create(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), TITLE, WindowStyle.DEFAULT);
 		setFramerateLimit(120); // Avoid excessive updates
@@ -45,34 +49,28 @@ public class GameWindow extends RenderWindow {
 	
 	/** Polls all pending events. */
 	public void handleWindowEvents() {
-
-		for (Event event : pollEvents()) {
-			// If a key is pressed, store the key in the map with a value of
-			// 'true'.
-			if (event.type == Event.Type.KEY_PRESSED) {
+		pollEvents().forEach(event -> {
+			switch(event.type) {
+			case KEY_PRESSED:
 				inputHandler.keyState.put(event.asKeyEvent().key, true);
-			}
-			// If a key is released, store the key in the map with a value of
-			// 'false'.
-			if (event.type == Event.Type.KEY_RELEASED) {
+				break;
+			case KEY_RELEASED:
 				inputHandler.keyState.put(event.asKeyEvent().key, false);
-			}
-
-			if (event.type == Event.Type.MOUSE_MOVED) {
+				break;
+			case MOUSE_MOVED:
 				inputHandler.mouseCoords = event.asMouseEvent().position;
-			}
-
-			if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+				break;
+			case MOUSE_BUTTON_PRESSED:
 				inputHandler.isMouseClicked = true;
-			}
-			if (event.type == Event.Type.MOUSE_BUTTON_RELEASED) {
+				break;
+			case MOUSE_BUTTON_RELEASED:
 				inputHandler.isMouseClicked = false;
-			}
-
-			if (event.type == Event.Type.CLOSED) {
+				break;
+			case CLOSED:
 				close();
 			}
-		}
+		});
+
 		if ((boolean) inputHandler.keyState.get(Keyboard.Key.ESCAPE) == true) {
 			close();
 		}

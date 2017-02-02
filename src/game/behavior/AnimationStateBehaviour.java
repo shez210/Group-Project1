@@ -2,8 +2,8 @@ package game.behavior;
 
 import java.util.ArrayList;
 
-import game.GameObject;
-import game.GameObject.Ability;
+import game.world.object.GameObject;
+import game.world.object.GameObject.Ability;
 
 /**
  * This class handles transitions between different animations. You don't have

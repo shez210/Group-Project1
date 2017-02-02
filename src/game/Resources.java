@@ -1,19 +1,10 @@
 package game;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import org.jsfml.graphics.*;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import org.jsfml.graphics.Color;
-import org.jsfml.graphics.Font;
-import org.jsfml.graphics.Image;
-import org.jsfml.graphics.Texture;
-import org.jsfml.graphics.TextureCreationException;
 
 /** Holds all game content (textures, sounds, music, fonts, etc). */
 public class Resources {
@@ -34,7 +25,7 @@ public class Resources {
 		loadSpriteSheet("src/sprites/placeholder_sprite.png", Color.WHITE);
 		loadSpriteSheet("src/sprites/chest_sprite.png", Color.WHITE);
 		loadSpriteSheet("src/sprites/bullet.png", Color.WHITE);
-		//loadSpriteSheet("src/sprites/cursor.png", Color.WHITE);
+		loadSpriteSheet("src/sprites/cursor.png", Color.WHITE);
 		// If you want to call loadSpriteSheet(), do it here, not before the
 		// other function calls.
 		// load sprite sheet here.
@@ -50,6 +41,10 @@ public class Resources {
 	 */
 	public void loadSpriteSheet(String path, Color color) {
 		final Image img = new Image();
+		System.out.println(path);
+		System.out.println(Paths.get(path).toFile().exists());
+		System.out.println(Paths.get(path).toFile().isFile());
+		System.out.println(Paths.get(path).toFile().isDirectory());
 		try {
 			img.loadFromFile(Paths.get(path));
 		} catch (IOException e) {
