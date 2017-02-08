@@ -85,15 +85,8 @@ public class World implements GameState
      */
     public boolean isCollision( Sprite A, Sprite B )
     {
-        Vector2f topLeftA = new Vector2f( A.getGlobalBounds().left, A.getGlobalBounds().top );
-        Vector2f bottomRightA = new Vector2f( topLeftA.x + A.getGlobalBounds().width, topLeftA.y + A.getGlobalBounds().height );
-        Vector2f topLeftB = new Vector2f( B.getGlobalBounds().left, B.getGlobalBounds().top );
-        Vector2f bottomRightB = new Vector2f( topLeftB.x + B.getGlobalBounds().width, topLeftB.y + B.getGlobalBounds().height );
-
-        return ( ( Vec2f.greaterThan( topLeftB, topLeftA )     && Vec2f.lessThan( topLeftB, bottomRightA ) ) ||
-                 ( Vec2f.greaterThan( bottomRightB, topLeftA ) && Vec2f.lessThan( bottomRightB, bottomRightA ) ) ||
-                 ( Vec2f.greaterThan( topLeftA, topLeftB )     && Vec2f.lessThan( topLeftA, bottomRightB ) ) ||
-                 ( Vec2f.greaterThan( bottomRightA, topLeftB ) && Vec2f.lessThan( bottomRightA, bottomRightB ) ) );
+        if( A.getGlobalBounds().intersection( B.getGlobalBounds() ) == null ) { return false; }
+        return true;
     }
 
     /** Creates animated player. Don't use this for now. */
