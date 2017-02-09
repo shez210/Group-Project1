@@ -54,6 +54,22 @@ public class Resources
         textures.add( tex );
     }
 
+    /** Loads sprite sheet
+     * @param path the relative path to the file.
+     */
+    public void loadSpriteSheet( String path)
+    {
+        Image img = new Image();
+        try{ img.loadFromFile( Paths.get( path ) ); }
+        catch ( IOException e ) { e.printStackTrace(); }
+        Texture tex = new Texture();
+        try { tex.loadFromImage( img ); }
+        catch ( TextureCreationException e )
+        { e.printStackTrace(); }
+        textures.add( tex );
+    }
+
+
     /** Loads a font at the specified path.
      * @param path the path to the font.
      */
