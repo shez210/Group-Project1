@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Resources
 {
     public ArrayList<Texture> textures = new ArrayList<>();
-    public Font font,fontTwo = new Font();
+    public Font font= new Font();
     public Sprite cursorSprite;
     // Precache resources (only sprites and fonts for now).
     public Resources()
@@ -33,16 +33,6 @@ public class Resources
         loadSpriteSheet ( "sprites/Images/Backgrounds/deathscroll.png" );
 
         loadFont( "font.ttf" );
-        loadFontTwo("cartoonFont.ttf");
-
-        Font freeSans = new Font();
-        try {
-            freeSans.loadFromFile(Paths.get("cartoonFont.ttf"));
-        } catch(IOException ex) {
-            //Failed to load font
-            ex.printStackTrace();
-        }
-
 
 
         //Set the cursor stuff.
@@ -92,12 +82,6 @@ public class Resources
     public void loadFont( String path )
     {
         try{ font.loadFromFile( Paths.get( path ) ); }
-        catch( IOException e ) { e.printStackTrace(); }
-    }
-
-    public void loadFontTwo( String path )
-    {
-        try{ fontTwo.loadFromFile( Paths.get( path ) ); }
         catch( IOException e ) { e.printStackTrace(); }
     }
 

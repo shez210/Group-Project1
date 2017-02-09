@@ -16,7 +16,7 @@ import static engine2d.Utility.readMapFromFile;
 
 /** The engine2d.World class holds all game objects and establishes communication among them.
  * Handles creation and destruction of entities. */
-public class World implements GameState runable
+public class World implements GameState
 {
     static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
     static Clock timer = new Clock(); // doesnt belong here

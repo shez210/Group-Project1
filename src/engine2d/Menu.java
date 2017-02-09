@@ -38,10 +38,8 @@ public class Menu implements GameState
     {
         App.window.clear();
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
-        Text text1 = new Text("This is an example text.", App.resources.fontTwo, 24);
-        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.fontTwo, 90 ) );
-        text1.setPosition(100, 100);
-        App.window.draw(text1);
+
+        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 90 ) );
 
 
         App.window.display();
