@@ -14,6 +14,7 @@ public class InputHandler
     public Vector2i mouseCoords = new Vector2i( 1, 1 ); // Don't set to 0. Vector2.div() returns NaN if 0 in division.
     public boolean isMouseClicked;
 
+
     /** The way to use the map is like this:
      * if( (boolean) input.keyState.get(Key.A) == true ) { doSomething; }
      * All possible keys are in the Keyboard.Key enum. It's available on the JSFML doc here: https://jsfml.sfmlprojects.org/javadoc/index.html?help-doc.html

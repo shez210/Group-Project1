@@ -8,8 +8,8 @@ import org.jsfml.window.WindowStyle;
 /** Handles window initialization, settings, holds all resources and records input. */
 public class App
 {
-	public static final int SCREEN_WIDTH  = 615;
-	public static final int SCREEN_HEIGHT = 480;
+	public static final int SCREEN_WIDTH  = 796;
+	public static final int SCREEN_HEIGHT = 621;
 	private static final String TITLE = "Dungeon Crawler";
 
 	public static RenderWindow window;

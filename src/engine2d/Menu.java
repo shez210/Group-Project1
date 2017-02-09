@@ -1,6 +1,7 @@
 package engine2d;
 
 
+import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
@@ -10,11 +11,18 @@ import java.util.ArrayList;
 public class Menu implements GameState
 {
     static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
+    public Sprite backgroundSprite;
 
     public Menu()
     {
         gameObjects = new ArrayList<>( 5 );
-        createDecoration( App.resources.textures.get( 6 ), new Vector2f( 0.0f, 0.0f ) );
+
+
+        createDecoration( App.resources.textures.get( 6 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 ) );
+        backgroundSprite = new Sprite( App.resources.textures.get( 6 ) );
+        backgroundSprite.setScale(0.5f, 0.5f);
+
+
     }
 
     public void update()

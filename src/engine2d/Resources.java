@@ -31,7 +31,7 @@ public class Resources
         // If you want to call loadSpriteSheet(), do it HERE, not before the other function calls.
         // load sprite sheet here.
 
-        loadSpriteSheet( "sprites/Images/Backgrounds/playbackground.png" );
+        loadSpriteSheet ( "sprites/Images/Backgrounds/deathscroll.png" );
 
         loadFont( "font.ttf" );
 
