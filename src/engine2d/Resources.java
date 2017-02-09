@@ -28,10 +28,13 @@ public class Resources
         loadSpriteSheet( "sprites/bullet.png", Color.WHITE );
         loadSpriteSheet( "sprites/cursor.png", Color.WHITE );
         loadSpriteSheet( "sprites/placeholder_tile.png", Color.WHITE );
-        // If you want to call loadSpriteSheet(), do it here, not before the other function calls.
+        // If you want to call loadSpriteSheet(), do it HERE, not before the other function calls.
         // load sprite sheet here.
 
+        loadSpriteSheet( "sprites/Images/Backgrounds/playbackground.png" );
+
         loadFont( "font.ttf" );
+
 
         //Set the cursor stuff.
         cursorSprite = new Sprite( textures.get( 4 ) );
@@ -40,7 +43,7 @@ public class Resources
 
     /** Loads sprite sheet
      * @param path the relative path to the file.
-     */
+      TODO: 2 constructors, one without color */
     public void loadSpriteSheet( String path, Color color )
     {
         Image img = new Image();

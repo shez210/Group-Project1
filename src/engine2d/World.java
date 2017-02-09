@@ -6,6 +6,7 @@ import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
+import org.jsfml.window.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,13 @@ public class World implements GameState
         resolveCollisions();
         checkForDeallocations();
         App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
+
+        //Transition
+        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.A ) && ( GameState.toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
+        {
+            GameState.toggleDelayTimer.restart();
+            App.currentState = new Menu();
+        }
     }
 
     /** Draws all created game objects on screen. */

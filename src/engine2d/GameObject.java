@@ -22,6 +22,7 @@ public class GameObject
     public ArrayList<AnimationBehaviour> anims;
     public AnimationStateBehaviour animState;
 
+
     public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, MOVE_ATTACK }
     public enum Type{ PLAYER_BULLET, ENEMY }
     public enum Status{ ALIVE, DEAD }

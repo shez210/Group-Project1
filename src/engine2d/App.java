@@ -1,6 +1,7 @@
 package engine2d;
 
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.system.Clock;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 
@@ -15,12 +16,13 @@ public class App
 	public static InputHandler inputHandler = new InputHandler();
 	public static Resources resources = new Resources();
 	public static GameState currentState;
+	public static Clock timer = new Clock();
 
 
 	public App()
 	{
 		initWindow();
-		currentState = new World();
+		currentState = new Menu();
 	}
 
 	public static void init()

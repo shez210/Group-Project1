@@ -5,7 +5,7 @@ package engine2d.behaviour;
 
 import java.util.Arrays;
 import java.util.Random;
-
+/*
 public class LevelGenerator
 {
 
@@ -76,3 +76,4 @@ public class LevelGenerator
     }
 
 }
+*/
