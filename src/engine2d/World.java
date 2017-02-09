@@ -25,7 +25,7 @@ public class World implements GameState
 
     public World()
     {
-        gameObjects = new ArrayList<>(); // create empty arraylist.
+        gameObjects = new ArrayList<>(); // create empty araraylist.
 
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */

@@ -2,6 +2,7 @@ package engine2d;
 
 
 import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
@@ -19,8 +20,6 @@ public class Menu implements GameState
 
 
         createDecoration( App.resources.textures.get( 6 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 ) );
-        backgroundSprite = new Sprite( App.resources.textures.get( 6 ) );
-        backgroundSprite.setScale(0.5f, 0.5f);
 
 
     }
@@ -39,6 +38,8 @@ public class Menu implements GameState
     {
         App.window.clear();
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
+        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 30 ) );
+
         App.window.display();
     }
 
