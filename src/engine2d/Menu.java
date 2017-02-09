@@ -6,6 +6,7 @@ import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
+import org.jsfml.window.Mouse;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Menu implements GameState
 
 
         createDecoration( App.resources.textures.get( 6 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 ) );
+        createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
 
 
     }
@@ -39,7 +41,7 @@ public class Menu implements GameState
         App.window.clear();
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
 
-        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 90 ) );
+        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 20 ) );
 
 
         App.window.display();
