@@ -1,54 +1,154 @@
-package engine2d; /**
- * Created by faisals1 on 25/01/2017.
- */
-import java.util.*;
-import java.io.*;
-public class PlayerInformation {
-        private int px = 0;
-        private int py = 0;
-        private int gold = 0;
-        public static final int startingHealth = 100;
-        private int health = startingHealth;
-        int[][] level = new int[5][5];
-        public PlayerInformation(int posx, int posy, int g, int h, int[][] l){
-            this.px = posx;
-            this.py = posy;
-            this.gold = g;
-            this.health = h;
-            this.level = l;
-        }
+package engine2d;
+import org.jsfml.system.Clock;
 
-        public int getX(){
-            return px;
-        }
-        public void setX(int i){
-            px = i;
-        }
 
-        public int getY(){
-            return py;
-        }
+import java.io.Serializable;
 
-        public void setY(int i){
-            py = i;
-        }
 
-        public int getGold(){
-            return gold;
-        }
-        public void setGold(int i){
-            gold = i;
-        }
+abstract class PlayerInformation implements Serializable
+{
 
-        public int getHealth(){
-            return health;
-        }
+    private int x = 0;  // Current X-coordinate
+    private int y = 0;  // Current Y-coordinate
+    private int health = 20;
+    private int maxHealth = 20;
+    private int armour = 100;
 
-        public void setHealth(int i){
-            health = i;
-        }
+    transient Clock timer = new Clock();
+    transient Clock shootingClock = new Clock();
+    transient Clock killCooldown = new Clock();
 
-        public int[][] getLevel(){
-            return level;
-        }
+    private String lastDamagedBy = "";
+
+    private int totalKills = 0;
+    private int totalDamageDealt = 0;
+
+    /**
+     * Resets the clock, for use after Deserialization
+     */
+    public void newClock()
+    {
+        timer = new Clock();
+    }
+
+    /**
+     * Sets the clock to the provided one
+     */
+    public void setClock(Clock clock)
+    {
+        timer = clock;
+    }
+
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
+    }
+
+    public void setShootingClock(Clock clock) { shootingClock = clock; }
+
+    public void setKillCooldownClock(Clock clock) { killCooldown = clock; }
+
+    /**
+     * @return the X position of the Actor instance called on
+     */
+    public int getX()
+    {
+        return x;
+    }
+
+    /**
+     * @return the Y position of the Actor instance called on
+     */
+    public int getY()
+    {
+        return y;
+    }
+
+    /**
+     * @return the Health of the Actor instance called on
+     */
+    public int getHealth()
+    {
+        return health;
+    }
+
+    /**
+     * Set the X position of the Actor instance called on to the provided variable
+     *
+     * @param x the variable to set the X position to
+     */
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+
+    /**
+     * Set the Y position of the Actor instance called on to the provided variable
+     *
+     * @param y the variable to set the Y position to
+     */
+    public void setY(int y)
+    {
+        this.y = y;
+    }
+
+    /**
+     * Set the Health of the Actor instance called on to the provided variable
+     *
+     * @param health the variable to set the Health to
+     */
+    public void setHealth(int health)
+    {
+        this.health = health;
+    }
+
+    /**
+     * @return the FloatRect representing the hitbox of the Actor instance called on
+     */
+
+    public int getArmour()
+    {
+        return armour;
+    }
+
+    public void setArmour(int armour)
+    {
+        this.armour = armour;
+    }
+
+    String getLastDamagedBy()
+    {
+        return lastDamagedBy;
+    }
+
+    public void setLastDamagedBy(String lastDamagedBy)
+    {
+        this.lastDamagedBy = lastDamagedBy;
+    }
+
+    public int getTotalKills()
+    {
+        return totalKills;
+    }
+
+    public void setTotalKills(int totalKills)
+    {
+        this.totalKills = totalKills;
+    }
+
+    public int getTotalDamageDealt()
+    {
+        return totalDamageDealt;
+    }
+
+    public void setTotalDamageDealt(int totalDamageDealt)
+    {
+        this.totalDamageDealt = totalDamageDealt;
+    }
 }
+
