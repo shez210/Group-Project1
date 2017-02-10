@@ -50,7 +50,7 @@ public class World implements GameState
         App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
 
         //Transition
-        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.A ) && ( GameState.toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
+        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.ESCAPE ) && ( GameState.toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
         {
             GameState.toggleDelayTimer.restart();
             App.currentState = new Menu();

@@ -16,9 +16,10 @@ public class Menu implements GameState
     public Sprite backgroundSprite;
     public InputHandler input;
 
-    public Vector2f centerOfScreen = new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 );
-    public Vector2f newGamePos = new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 );
-    public Vector2f quitPos = new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2+100 );
+    public Vector2f centerOfScreen = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 );
+    public Vector2f newGamePos = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 );
+    public Vector2f quitPos = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 + 100 );
+    public Vector2f gameTitlePos = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 - 180 );
 
 
     public Menu()
@@ -27,26 +28,20 @@ public class Menu implements GameState
 
 
         createDecoration( App.resources.textures.get( 6 ), centerOfScreen );
-        createDecoration(App.resources.textures.get(7), centerOfScreen );
-        createDecoration(App.resources.textures.get(9), quitPos );
-        createDecoration( App.resources.textures.get( 11 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2-180 ) );
+        createDecoration( App.resources.textures.get( 7 ), centerOfScreen );
+        createDecoration( App.resources.textures.get( 9 ), quitPos );
+        createDecoration( App.resources.textures.get( 11 ), gameTitlePos );
 
 
     }
 
     public void update()
     {
-        //logic
-        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.A ) && GameState.toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY )
-        {
-            App.currentState = new World();
-            GameState.toggleDelayTimer.restart();
-        }
-
-        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ))
+        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) )
         {
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
-            if( App.inputHandler.isMouseClicked){
+            if( App.inputHandler.isMouseClicked )
+            {
                 App.currentState = new World();
             }
         }
@@ -56,20 +51,23 @@ public class Menu implements GameState
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 7 ) );
         }
 
-        if (App.inputHandler.isMouseOver(gameObjects.get(2).sprite)) {
+        if( App.inputHandler.isMouseOver( gameObjects.get( 2 ).sprite ) )
+        {
             gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 10 ) );
-            if( App.inputHandler.isMouseClicked){
+            if( App.inputHandler.isMouseClicked )
+            {
                 App.window.close();
             }
 
-        } else {
+        }
+        else
+        {
             gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 9 ) );
         }
 
 
-
         //if(input.isMouseClicked){App.currentState = new World();}
-        App.resources.cursorSprite.setPosition(new Vector2f(App.inputHandler.mouseCoords)); //Set cursor position.
+        App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
     }
 
     public void draw()
@@ -77,15 +75,16 @@ public class Menu implements GameState
         App.window.clear();
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
 
-        App.window.draw( new Text( "Click On The Buttons...", App.resources.font, 20 ) );
         App.window.draw( App.resources.cursorSprite );
 
         App.window.display();
     }
 
-    /** Use this to create tiles, walls, chests, whatever.
-     * If you don't know how to use it, see the example in the constructor. */
-    public static void createDecoration(Texture tex, Vector2f pos )
+    /**
+     * Use this to create tiles, walls, chests, whatever.
+     * If you don't know how to use it, see the example in the constructor.
+     */
+    public static void createDecoration( Texture tex, Vector2f pos )
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
