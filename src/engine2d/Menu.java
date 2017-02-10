@@ -14,16 +14,21 @@ public class Menu implements GameState
 {
     static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
     public Sprite backgroundSprite;
-    public  InputHandler input;
+    public InputHandler input;
+
+    public Vector2f centerOfScreen = new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 );
+    public Vector2f newGamePos = new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 );
+    public Vector2f quitPos = new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2+100 );
+
 
     public Menu()
     {
         gameObjects = new ArrayList<>( 5 );
 
 
-        createDecoration( App.resources.textures.get( 6 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 ) );
-        createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
-        createDecoration(App.resources.textures.get(9), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2+100));
+        createDecoration( App.resources.textures.get( 6 ), centerOfScreen );
+        createDecoration(App.resources.textures.get(7), centerOfScreen );
+        createDecoration(App.resources.textures.get(9), quitPos );
         createDecoration( App.resources.textures.get( 11 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2-180 ) );
 
 
@@ -38,18 +43,19 @@ public class Menu implements GameState
             GameState.toggleDelayTimer.restart();
         }
 
-        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite )) {
-            createDecoration(App.resources.textures.get(8), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2));
-            }
+        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ))
+        {
+            gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
+        }
         else
         {
-            createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
+            gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 7 ) );
         }
 
         if (App.inputHandler.isMouseOver(gameObjects.get(2).sprite)) {
-            createDecoration(App.resources.textures.get(10), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2+100));
+            gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 10 ) );
         } else {
-            createDecoration(App.resources.textures.get(9), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2+100));
+            gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 9 ) );
         }
 
         //if(input.isMouseClicked){App.currentState = new World();}
