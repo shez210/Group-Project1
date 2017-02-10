@@ -16,11 +16,11 @@ public class Button
         {
             texture.loadFromFile(Paths.get(buttonImage));
             size = texture.getSize();
-        }
+    }
         catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
+    {
+        ex.printStackTrace();
+    }
 
     }
 }
