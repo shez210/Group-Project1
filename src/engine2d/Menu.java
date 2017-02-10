@@ -46,7 +46,11 @@ public class Menu implements GameState
         if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ))
         {
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
+            if( App.inputHandler.isMouseClicked){
+                App.currentState = new World();
+            }
         }
+
         else
         {
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 7 ) );
@@ -54,9 +58,15 @@ public class Menu implements GameState
 
         if (App.inputHandler.isMouseOver(gameObjects.get(2).sprite)) {
             gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 10 ) );
+            if( App.inputHandler.isMouseClicked){
+                App.window.close();
+            }
+
         } else {
             gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 9 ) );
         }
+
+
 
         //if(input.isMouseClicked){App.currentState = new World();}
         App.resources.cursorSprite.setPosition(new Vector2f(App.inputHandler.mouseCoords)); //Set cursor position.
