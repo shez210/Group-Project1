@@ -31,6 +31,7 @@ public class Menu implements GameState
 
     public void update()
     {
+        System.out.println(gameObjects.size());
         //logic
         if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.A ) && GameState.toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY )
         {
@@ -40,6 +41,9 @@ public class Menu implements GameState
 
         if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite )) {
             createDecoration(App.resources.textures.get(8), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2));
+            if( App.inputHandler.isMouseClicked){
+                App.currentState = new World();
+            }
             }
         else
         {
@@ -48,6 +52,9 @@ public class Menu implements GameState
 
         if (App.inputHandler.isMouseOver(gameObjects.get(2).sprite)) {
             createDecoration(App.resources.textures.get(10), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2+100));
+            if( App.inputHandler.isMouseClicked){
+                App.window.close();
+            }
         } else {
             createDecoration(App.resources.textures.get(9), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2+100));
         }
