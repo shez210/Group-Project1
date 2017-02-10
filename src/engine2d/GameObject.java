@@ -15,9 +15,11 @@ public class GameObject
     public int type;
     public int status = Status.ALIVE.ordinal();
     public Sprite sprite;
+    public ArrayList textures;
     public InputBehaviour input;
     public MotionBehaviour motion;
     public AIBehaviour ai;
+    public StatsBehaviour stats;
     public ArrayList<Boolean> abilities;
     public ArrayList<AnimationBehaviour> anims;
     public AnimationStateBehaviour animState;
@@ -31,6 +33,7 @@ public class GameObject
     public GameObject()
     {
         sprite = new Sprite();
+        textures = new ArrayList();
         abilities = new ArrayList<>( Collections.nCopies( Ability.values().length, false ) );
         anims = new ArrayList<>( Collections.nCopies( Ability.values().length, null ) );
     }
@@ -78,9 +81,19 @@ public class GameObject
         this.ai = ai;
     }
 
+    void addBehaviour( StatsBehaviour stats )
+    {
+        this.stats = stats;
+    }
+
     void addTexture( Texture texture )
     {
         sprite.setTexture( texture );
         sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
+    }
+
+    void addArrayOfTextures( ArrayList<Texture> textures )
+    {
+        this.textures = textures;
     }
 }

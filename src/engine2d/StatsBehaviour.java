@@ -2,7 +2,7 @@
 package engine2d;
 import org.jsfml.system.Clock;
 
-public class Status
+public class StatsBehaviour
 {
     private int currentHealth = 20;
     private int maxHealth = 20;

@@ -5,6 +5,8 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 
+import java.util.ArrayList;
+
 // Guys, try not to touch this code because it's barely working. Just use it if you want animations.
 // It's really easy to use.
 
@@ -16,6 +18,7 @@ public class AnimationBehaviour
     private Clock timer;
     private Sprite sprite;
     private Texture texture;
+    private ArrayList<Texture> textures;
 
     private final int SEQUENCE_SPEED_NORMAL = 80; // Milliseconds spent on 1 sprite.
     private int texWidth; // Width of texture used.
@@ -30,6 +33,8 @@ public class AnimationBehaviour
 
     // Used for idle animations.
     private boolean showOnlyOneFrame; // Supports the option to show only the first frame of a certain animation.
+    private boolean spriteSheetMode = false;
+    private int currentTextureIndex = 0;
 
 
     /**
@@ -41,6 +46,7 @@ public class AnimationBehaviour
      */
     public AnimationBehaviour( Sprite spr, int sequenceStart, int sequenceEnd, int numSequencesRow, int totalSequences )
     {
+        spriteSheetMode = true;
         timer = new Clock();
         sprite = spr;
         texture = ( Texture ) sprite.getTexture();
@@ -53,6 +59,13 @@ public class AnimationBehaviour
         currentSequence = sequenceStart;
         this.sequenceEnd = sequenceEnd;
         this.totalSequences = totalSequences;
+    }
+
+    public AnimationBehaviour( Sprite sprite, ArrayList<Texture> textures )
+    {
+        this.sprite = sprite;
+        this.textures = textures;
+        timer = new Clock();
     }
 
     /** Sets the animation speed. */
@@ -73,17 +86,32 @@ public class AnimationBehaviour
     /** Updates the animation. Should be called every frame. */
     public void update()
     {
-        if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
+        if( spriteSheetMode == true )
         {
-            currentSequence ++;
-            if( currentSequence == sequenceEnd ) { currentSequence = sequenceStart; }
-            if( showOnlyOneFrame == true ) { currentSequence = sequenceStart; }
-            timer.restart();
-            int rectX = ( currentSequence%numSequencesRow )*texWidth/numSequencesRow;
-            int rectY = ( currentSequence/numSequencesRow )*texHeight/numSequencesColumn;
-            int rectW = texWidth/numSequencesRow;
-            int rectH = texHeight/numSequencesColumn;
-            sprite.setTextureRect( new IntRect( rectX, rectY, rectW, rectH ) );
+            if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
+            {
+                currentSequence++;
+                if( currentSequence == sequenceEnd ) { currentSequence = sequenceStart; }
+                if( showOnlyOneFrame == true ) { currentSequence = sequenceStart; }
+                timer.restart();
+                int rectX = ( currentSequence % numSequencesRow ) * texWidth / numSequencesRow;
+                int rectY = ( currentSequence / numSequencesRow ) * texHeight / numSequencesColumn;
+                int rectW = texWidth / numSequencesRow;
+                int rectH = texHeight / numSequencesColumn;
+                sprite.setTextureRect( new IntRect( rectX, rectY, rectW, rectH ) );
+            }
+        }
+        else
+        {
+            System.out.print( "gg" );
+
+            if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
+            {
+                timer.restart();
+                sprite.setTexture( textures.get( currentTextureIndex ) );
+                currentTextureIndex ++;
+                if( currentTextureIndex == textures.size() ) { currentTextureIndex = 0; }
+            }
         }
     }
 }

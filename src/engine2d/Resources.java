@@ -12,6 +12,8 @@ public class Resources
     public ArrayList<Texture> textures = new ArrayList<>();
     public Font font= new Font();
     public Sprite cursorSprite;
+    public ArrayList<Texture> knightTextures = new ArrayList<>();
+
     // Precache resources (only sprites and fonts for now).
     public Resources()
     {
@@ -36,6 +38,13 @@ public class Resources
         loadSpriteSheet("sprites/Images/Buttons/Quit.png");
         loadSpriteSheet("sprites/Images/Buttons/QutHover.png");
         loadSpriteSheet("sprites/Images/Buttons/Title.png");
+
+        for( int i = 1; i <= 10; ++ i )
+        {
+            loadSpriteSheet( new String( "sprites/freeknight/png/Idle (" + i + ").png" ), knightTextures, Color.WHITE );
+        }
+
+
         loadFont( "font.ttf" );
 
 
@@ -52,6 +61,19 @@ public class Resources
      * @param path the relative path to the file.
       TODO: 2 constructors, one without color */
     public void loadSpriteSheet( String path, Color color )
+    {
+        Image img = new Image();
+        try{ img.loadFromFile( Paths.get( path ) ); }
+        catch ( IOException e ) { e.printStackTrace(); }
+        img.createMaskFromColor( color, 0 );
+        Texture tex = new Texture();
+        try { tex.loadFromImage( img ); }
+        catch ( TextureCreationException e )
+        { e.printStackTrace(); }
+        textures.add( tex );
+    }
+
+    public void loadSpriteSheet( String path, ArrayList<Texture> textures, Color color )
     {
         Image img = new Image();
         try{ img.loadFromFile( Paths.get( path ) ); }

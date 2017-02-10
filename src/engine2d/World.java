@@ -30,10 +30,13 @@ public class World implements GameState
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
         buildLevel();
-        createPlayerBeta();
+        //createPlayer();
+        //createPlayerBeta();
+        createPlayerKnight();
         createEnemyRandom();
+        //createDecoration( App.resources.knightTextures.get( 1 ), new Vector2f( 50, 50 ) );
     }
-    /** Handles creation and destruction of entities and also resolves collision. */
+    /** Handles creation and destruction o  f entities and also resolves collision. */
     public void update()
     {
         if( App.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
@@ -55,6 +58,8 @@ public class World implements GameState
             GameState.toggleDelayTimer.restart();
             App.currentState = new Menu();
         }
+
+        gameObjects.get( playerIndex ).sprite.getPosition().toString();
     }
 
     /** Draws all created game objects on screen. */
@@ -109,6 +114,7 @@ public class World implements GameState
         object.addBehaviour( new AnimationBehaviour( object.sprite, 14, 21, 7, 28 ), GameObject.Ability.MOVE_LEFT.ordinal()  );
         object.addBehaviour( new AnimationBehaviour( object.sprite, 21, 28, 7, 28 ), GameObject.Ability.MOVE_RIGHT.ordinal()  );
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
+        playerIndex = gameObjects.size() - 1;
     }
 
     /** Creates test player. Uses the placeholder sprite. */
@@ -135,6 +141,17 @@ public class World implements GameState
         object.addBehaviour( new AnimationBehaviour( object.sprite, 21, 28, 7, 28 ), GameObject.Ability.MOVE_RIGHT.ordinal()  );
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
         object.sprite.setPosition( new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 ) );
+    }
+
+    public static void createPlayerKnight()
+    {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.addBehaviour( new InputBehaviourOld( App.inputHandler, object.motion, object.sprite, object.abilities ) );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightTextures ), 0 );
+        object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
+        playerIndex = gameObjects.size() - 1;
     }
 
     /** Use this to create tiles, walls, chests, whatever.
