@@ -33,6 +33,8 @@ public class Resources
         loadSpriteSheet ( "sprites/Images/Backgrounds/deathscroll.png" );
         loadSpriteSheet("sprites/Images/Buttons/NewGame.png");
         loadSpriteSheet("sprites/Images/Buttons/NewGmeHover.png");
+        loadSpriteSheet("sprites/Images/Buttons/Quit.png");
+        loadSpriteSheet("sprites/Images/Buttons/QutHover.png");
 
         loadFont( "font.ttf" );
 
