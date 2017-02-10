@@ -14,6 +14,7 @@ public class Menu implements GameState
 {
     static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
     public Sprite backgroundSprite;
+    public  InputHandler input;
 
     public Menu()
     {
@@ -23,6 +24,7 @@ public class Menu implements GameState
         createDecoration( App.resources.textures.get( 6 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 ) );
         createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
         createDecoration(App.resources.textures.get(9), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2+100));
+        createDecoration( App.resources.textures.get( 11 ), new Vector2f( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2-180 ) );
 
 
     }
@@ -36,10 +38,9 @@ public class Menu implements GameState
             GameState.toggleDelayTimer.restart();
         }
 
-        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) ) {
+        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite )) {
             createDecoration(App.resources.textures.get(8), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2));
-            System.out.print(gameObjects.get(1));
-        }
+            }
         else
         {
             createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
@@ -50,6 +51,8 @@ public class Menu implements GameState
         } else {
             createDecoration(App.resources.textures.get(9), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2+100));
         }
+
+        //if(input.isMouseClicked){App.currentState = new World();}
         App.resources.cursorSprite.setPosition(new Vector2f(App.inputHandler.mouseCoords)); //Set cursor position.
     }
 

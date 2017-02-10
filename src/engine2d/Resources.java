@@ -35,7 +35,7 @@ public class Resources
         loadSpriteSheet("sprites/Images/Buttons/NewGmeHover.png");
         loadSpriteSheet("sprites/Images/Buttons/Quit.png");
         loadSpriteSheet("sprites/Images/Buttons/QutHover.png");
-
+        loadSpriteSheet("sprites/Images/Buttons/Title.png");
         loadFont( "font.ttf" );
 
 
