@@ -34,6 +34,10 @@ public class Menu implements GameState
             App.currentState = new World();
             GameState.toggleDelayTimer.restart();
         }
+
+        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) ) { System.out.print( "asd" ); }
+        App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
+
     }
 
     public void draw()
@@ -42,7 +46,7 @@ public class Menu implements GameState
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
 
         App.window.draw( new Text( "Click On The Buttons...", App.resources.font, 20 ) );
-
+        App.window.draw( App.resources.cursorSprite );
 
         App.window.display();
     }

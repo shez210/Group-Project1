@@ -1,5 +1,7 @@
 package engine2d;
 
+import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
@@ -43,5 +45,10 @@ public class InputHandler
             if( event.type == Event.Type.CLOSED ) { App.window.close(); }
         }
         if( ( boolean ) keyState.get( Keyboard.Key.ESCAPE ) == true ) { App.window.close(); }
+    }
+
+    public boolean isMouseOver( Sprite sprite )
+    {
+        return sprite.getGlobalBounds().intersection( new FloatRect( mouseCoords.x, mouseCoords.y, 1.0f, 1.0f ) ) != null;
     }
 }

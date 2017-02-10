@@ -1,5 +1,7 @@
 package engine2d;
 
+import org.jsfml.graphics.Sprite;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
