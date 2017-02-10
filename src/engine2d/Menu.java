@@ -37,22 +37,20 @@ public class Menu implements GameState
         }
 
         if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) ) {
-            createDecoration(App.resources.textures.get(8), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
+            createDecoration(App.resources.textures.get(8), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2));
+            System.out.print(gameObjects.get(1));
         }
         else
         {
             createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
         }
 
-        if( App.inputHandler.isMouseOver( gameObjects.get( 2 ).sprite ) ) {
-            createDecoration(App.resources.textures.get(8), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
+        if (App.inputHandler.isMouseOver(gameObjects.get(2).sprite)) {
+            createDecoration(App.resources.textures.get(10), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2+100));
+        } else {
+            createDecoration(App.resources.textures.get(9), new Vector2f(App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2+100));
         }
-        else
-        {
-            createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
-        }
-        App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
-
+        App.resources.cursorSprite.setPosition(new Vector2f(App.inputHandler.mouseCoords)); //Set cursor position.
     }
 
     public void draw()
