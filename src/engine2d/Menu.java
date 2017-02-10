@@ -41,7 +41,7 @@ public class Menu implements GameState
         App.window.clear();
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
 
-        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 20 ) );
+        App.window.draw( new Text( "Click On The Buttons...", App.resources.font, 20 ) );
 
 
         App.window.display();
