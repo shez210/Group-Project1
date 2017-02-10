@@ -35,7 +35,14 @@ public class Menu implements GameState
             GameState.toggleDelayTimer.restart();
         }
 
-        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) ) { System.out.print( "asd" ); }
+        if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) ) {
+            createDecoration(App.resources.textures.get(8), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
+            System.out.print( "asd" );
+        }
+        else
+        {
+            createDecoration(App.resources.textures.get(7), new Vector2f(App.SCREEN_WIDTH/2 , App.SCREEN_HEIGHT/2));
+        }
         App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
 
     }
