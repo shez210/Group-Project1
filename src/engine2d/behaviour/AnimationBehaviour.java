@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /** Animates an object using a sprite sheet. */
 public class AnimationBehaviour
 {
-    private Clock timer;
+    public Clock timer;
     private Sprite sprite;
     private Texture texture;
     private ArrayList<Texture> textures;
@@ -30,6 +30,7 @@ public class AnimationBehaviour
     private int millisPerSequence = SEQUENCE_SPEED_NORMAL;
     private int numSequencesRow; // Number of sprites per row in the sprite sheet.
     private int numSequencesColumn; // Number of sprites per column in the sprite sheet.
+    public int maxAnimationTimeMillis = totalSequences * SEQUENCE_SPEED_NORMAL;
 
     // Used for idle animations.
     private boolean showOnlyOneFrame; // Supports the option to show only the first frame of a certain animation.
@@ -103,8 +104,6 @@ public class AnimationBehaviour
         }
         else
         {
-            System.out.print( "gg" );
-
             if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
             {
                 timer.restart();

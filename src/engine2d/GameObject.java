@@ -25,7 +25,7 @@ public class GameObject
     public AnimationStateBehaviour animState;
 
 
-    public enum Ability{ MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, MOVE_ATTACK }
+    public enum Ability{ IDLE, MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, ATTACK }
     public enum Type{ PLAYER_BULLET, ENEMY }
     public enum Status{ ALIVE, DEAD }
 
@@ -36,6 +36,7 @@ public class GameObject
         textures = new ArrayList();
         abilities = new ArrayList<>( Collections.nCopies( Ability.values().length, false ) );
         anims = new ArrayList<>( Collections.nCopies( Ability.values().length, null ) );
+
     }
 
     void update()
@@ -95,5 +96,8 @@ public class GameObject
     void addArrayOfTextures( ArrayList<Texture> textures )
     {
         this.textures = textures;
+        sprite.setTexture( textures.get( 0 ) );
+        sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
+
     }
 }

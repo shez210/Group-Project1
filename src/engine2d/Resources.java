@@ -12,7 +12,10 @@ public class Resources
     public ArrayList<Texture> textures = new ArrayList<>();
     public Font font= new Font();
     public Sprite cursorSprite;
-    public ArrayList<Texture> knightTextures = new ArrayList<>();
+    public ArrayList<Texture> knightIdle = new ArrayList<>();
+    public ArrayList<Texture> knightRunLeft = new ArrayList<>();
+    public ArrayList<Texture> knightAttack = new ArrayList<>();
+
 
     // Precache resources (only sprites and fonts for now).
     public Resources()
@@ -41,9 +44,18 @@ public class Resources
 
         for( int i = 1; i <= 10; ++ i )
         {
-            loadSpriteSheet( new String( "sprites/freeknight/png/Idle (" + i + ").png" ), knightTextures, Color.WHITE );
+            loadSpriteSheet( new String( "sprites/freeknight/png/Idle (" + i + ").png" ), knightIdle, Color.WHITE );
         }
 
+        for( int i = 1; i <= 10; ++ i )
+        {
+            loadSpriteSheet( new String( "sprites/freeknight/png/Run (" + i + ").png" ), knightRunLeft, Color.WHITE );
+        }
+
+        for( int i = 1; i <= 10; ++ i )
+        {
+            loadSpriteSheet( new String( "sprites/freeknight/png/Attack (" + i + ").png" ), knightAttack, Color.WHITE );
+        }
 
         loadFont( "font.ttf" );
 

@@ -37,6 +37,12 @@ public class Menu implements GameState
 
     public void update()
     {
+
+        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.RETURN ) )
+        {
+            App.currentState = new World();
+        }
+
         if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) )
         {
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
@@ -45,7 +51,6 @@ public class Menu implements GameState
                 App.currentState = new World();
             }
         }
-
         else
         {
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 7 ) );

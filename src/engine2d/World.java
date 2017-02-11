@@ -33,19 +33,20 @@ public class World implements GameState
         //createPlayer();
         //createPlayerBeta();
         createPlayerKnight();
-        createEnemyRandom();
-        //createDecoration( App.resources.knightTextures.get( 1 ), new Vector2f( 50, 50 ) );
+        //createEnemyRandom();
+        //createDecoration( App.resources.knightIdle.get( 1 ), new Vector2f( 50, 50 ) );
     }
-    /** Handles creation and destruction o  f entities and also resolves collision. */
+
+    /** Handles creation and destruction of entities and also resolves collision. */
     public void update()
     {
         if( App.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
         {
             timerShoot.restart();
-            createProjectile( App.resources.textures.get( 3 ), gameObjects.get( playerIndex ).sprite.getPosition(), gameObjects.get( playerIndex ).motion.direction );
+            //createProjectile( App.resources.textures.get( 3 ), gameObjects.get( playerIndex ).sprite.getPosition(), gameObjects.get( playerIndex ).motion.direction );
         }
 
-        if( timer.getElapsedTime().asSeconds() > 0.2f ) { createEnemyRandom(); timer.restart(); }
+        //if( timer.getElapsedTime().asSeconds() > 0.2f ) { createEnemyRandom(); timer.restart(); }
 
         for( GameObject object : gameObjects ) { object.update(); }
         resolveCollisions();
@@ -83,6 +84,7 @@ public class World implements GameState
                        && gameObjects.get( j ).type == GameObject.Type.ENEMY.ordinal()
                        && isCollision( gameObjects.get( i ).sprite, gameObjects.get( j ).sprite ) )
                 {
+
                     gameObjects.get( j ).status = GameObject.Status.DEAD.ordinal();
                 }
             }
@@ -147,9 +149,17 @@ public class World implements GameState
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
+        object.sprite.setScale( new Vector2f( 0.2f, 0.2f ) );
+        object.sprite.setPosition( 300, 300 );
+        object.addArrayOfTextures( App.resources.knightIdle );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
         object.addBehaviour( new InputBehaviourOld( App.inputHandler, object.motion, object.sprite, object.abilities ) );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightTextures ), 0 );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), GameObject.Ability.IDLE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRunLeft ), GameObject.Ability.MOVE_LEFT.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRunLeft ), GameObject.Ability.MOVE_RIGHT.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRunLeft ), GameObject.Ability.MOVE_UP.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRunLeft ), GameObject.Ability.MOVE_DOWN.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), GameObject.Ability.ATTACK.ordinal() );
         object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
         playerIndex = gameObjects.size() - 1;
     }

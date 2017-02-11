@@ -31,6 +31,7 @@ public class InputBehaviourOld implements InputBehaviour
         abilities.set( GameObject.Ability.MOVE_RIGHT.ordinal(), ( Boolean ) input.keyState.get( Keyboard.Key.D ) );
         abilities.set( GameObject.Ability.MOVE_UP.ordinal(), ( Boolean ) input.keyState.get( Keyboard.Key.W ) );
         abilities.set( GameObject.Ability.MOVE_DOWN.ordinal(), ( Boolean ) input.keyState.get( Keyboard.Key.S ) );
+        abilities.set( GameObject.Ability.ATTACK.ordinal(), ( Boolean ) input.keyState.get( Keyboard.Key.Q ) );
 
         motion.velocity = new Vector2f( 0, 0 );
 
@@ -46,7 +47,7 @@ public class InputBehaviourOld implements InputBehaviour
         if( abilities.get( GameObject.Ability.MOVE_DOWN.ordinal() ) == true )
         { motion.velocity = Vector2f.add( motion.velocity, new Vector2f( 0, motion.speed ) ); }
 
-        lookAt( input.mouseCoords );
+        //lookAt( input.mouseCoords );
 
     }
 
