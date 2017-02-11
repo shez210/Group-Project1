@@ -62,7 +62,9 @@ public class Menu implements GameState
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
             if( App.inputHandler.isMouseClicked )
             {
+                menuMusic.stop();
                 App.currentState = new World();
+
             }
         }
 
