@@ -1,6 +1,8 @@
 package engine2d;
 
 import engine2d.behaviour.*;
+import engine2d.behaviour.Sound;
+import org.jsfml.audio.*;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
@@ -8,6 +10,8 @@ import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,9 +26,25 @@ public class World implements GameState
     static Clock timer = new Clock(); // doesnt belong here
     static Clock timerShoot = new Clock(); // doesnt belong here
     static int playerIndex = - 1; // index of the player object in the array of game objects.
+    public org.jsfml.audio.Sound shootMusic;
 
     public World()
     {
+        SoundBuffer backgroundMusic = new SoundBuffer();
+        try
+        {
+            backgroundMusic.loadFromFile(Paths.get("Music/Projectile.wav"));
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        //Create a sound and set its buffer
+        shootMusic = new org.jsfml.audio.Sound();
+        shootMusic.setBuffer(backgroundMusic);
+        shootMusic.setLoop(true);
+        shootMusic.play();
         gameObjects = new ArrayList<>(); // create empty araraylist.
 
         /** If you want to create something, just call some "create" function.
@@ -41,6 +61,7 @@ public class World implements GameState
     {
         if( App.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
         {
+            shootMusic.play();
             timerShoot.restart();
             createProjectile( App.resources.textures.get( 3 ), gameObjects.get( playerIndex ).sprite.getPosition(), gameObjects.get( playerIndex ).motion.direction );
         }
