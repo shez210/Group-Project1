@@ -25,7 +25,7 @@ public class GameObject
     public AnimationStateBehaviour animState;
 
 
-    public enum Ability{ IDLE, MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, ATTACK }
+    public enum Ability{ IDLE, MOVE, ATTACK }
     public enum Type{ PLAYER_BULLET, ENEMY }
     public enum Status{ ALIVE, DEAD }
 

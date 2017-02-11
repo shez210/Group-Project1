@@ -1,5 +1,5 @@
 
-package engine2d;
+package engine2d.behaviour;
 import org.jsfml.system.Clock;
 
 public class StatsBehaviour

@@ -12,8 +12,8 @@ public class AnimationStateBehaviour
     private ArrayList<Boolean> abilities;
     private AnimationBehaviour currentAnim;
 
-    private int requestedAnim;
     private int animRecoilMillis = 30;
+    private int currentAnimIndex;
 
     public enum Type{ INTERRUPTABLE, WAIT_TO_FINISH }
 
@@ -33,42 +33,40 @@ public class AnimationStateBehaviour
     public void update()
     {
         int i;
-        for( i = 0; i < abilities.size(); i ++ ) { if( abilities.get( i ) == true ) { break; } }
-
-        if( i < abilities.size() )
+        for( i = 1; i < abilities.size(); i ++ ) // 'i' starts at IDLE + 1
         {
-            if( abilities.get( GameObject.Ability.MOVE_UP.ordinal() ) == true )
-            { changeAnimationTo( GameObject.Ability.MOVE_UP.ordinal(), Type.INTERRUPTABLE.ordinal() ); }
-
-            if( abilities.get( GameObject.Ability.MOVE_DOWN.ordinal() ) == true )
-            { changeAnimationTo( GameObject.Ability.MOVE_UP.ordinal(), Type.INTERRUPTABLE.ordinal() ); }
-
-            if( abilities.get( GameObject.Ability.MOVE_LEFT.ordinal() ) == true )
-            { changeAnimationTo( GameObject.Ability.MOVE_UP.ordinal(), Type.INTERRUPTABLE.ordinal() ); }
-
-            if( abilities.get( GameObject.Ability.MOVE_RIGHT.ordinal() ) == true )
-            { changeAnimationTo( GameObject.Ability.MOVE_UP.ordinal(), Type.INTERRUPTABLE.ordinal() ); }
-
-            if( abilities.get( GameObject.Ability.ATTACK.ordinal() ) == true )
-            { changeAnimationTo( GameObject.Ability.ATTACK.ordinal(), Type.WAIT_TO_FINISH.ordinal() ); }
+            if( abilities.get( i ) == true )
+            {
+                abilities.set( GameObject.Ability.IDLE.ordinal(), false );
+                break;
+            }
         }
-        else
-        {
-            changeAnimationTo( GameObject.Ability.IDLE.ordinal(), Type.INTERRUPTABLE.ordinal() );
-        }
+        if( i == abilities.size() ) { abilities.set( GameObject.Ability.IDLE.ordinal(), true ); }
+
+        if( abilities.get( GameObject.Ability.MOVE.ordinal() ) == true )
+        { changeAnimationTo( GameObject.Ability.MOVE.ordinal(), Type.INTERRUPTABLE.ordinal() ); }
+
+        if( abilities.get( GameObject.Ability.ATTACK.ordinal() ) == true )
+        { changeAnimationTo( GameObject.Ability.ATTACK.ordinal(), Type.WAIT_TO_FINISH.ordinal() ); }
+
+        if( abilities.get( GameObject.Ability.IDLE.ordinal() ) == true )
+        { changeAnimationTo( GameObject.Ability.IDLE.ordinal(), Type.INTERRUPTABLE.ordinal() ); }
+
         //else currentAnim.showOnlyFirstFrame();
+
+        System.out.println( currentAnimIndex );
 
         currentAnim.update();
     }
 
-    public void changeAnimationTo( int anim, int flag )
+    public void changeAnimationTo( int requestedAnimType, int flag )
     {
-        requestedAnim = anim;
-    }
-
-    public void startNewAnimation( int anim )
-    {
-        currentAnim = anims.get( anim );
+        if( requestedAnimType != currentAnimIndex )
+        {
+            currentAnim.reset();
+            currentAnimIndex = requestedAnimType;
+            currentAnim = anims.get( requestedAnimType );
+        }
     }
 
     public boolean isEndOfCurrentAnimation()

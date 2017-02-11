@@ -35,7 +35,6 @@ public class AnimationBehaviour
     // Used for idle animations.
     private boolean showOnlyOneFrame; // Supports the option to show only the first frame of a certain animation.
     private boolean spriteSheetMode = false;
-    private int currentTextureIndex = 0;
 
 
     /**
@@ -64,6 +63,7 @@ public class AnimationBehaviour
 
     public AnimationBehaviour( Sprite sprite, ArrayList<Texture> textures )
     {
+        this.sequenceStart = 0;
         this.sprite = sprite;
         this.textures = textures;
         timer = new Clock();
@@ -73,6 +73,12 @@ public class AnimationBehaviour
     public void setAnimationSpeed( float factor )
     {
         millisPerSequence = ( int ) ( ( float ) SEQUENCE_SPEED_NORMAL/factor );
+    }
+
+    public void reset()
+    {
+        timer.restart();
+        currentSequence = sequenceStart;
     }
 
     public void showOnlyFirstFrame()
@@ -107,9 +113,9 @@ public class AnimationBehaviour
             if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
             {
                 timer.restart();
-                sprite.setTexture( textures.get( currentTextureIndex ) );
-                currentTextureIndex ++;
-                if( currentTextureIndex == textures.size() ) { currentTextureIndex = 0; }
+                sprite.setTexture( textures.get( currentSequence ) );
+                currentSequence ++;
+                if( currentSequence == textures.size() ) { currentSequence = sequenceStart; }
             }
         }
     }
