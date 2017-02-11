@@ -29,6 +29,7 @@ public class World implements GameState
     public Vector2f healthPos = new Vector2f( App.SCREEN_WIDTH / 2+295, App.SCREEN_HEIGHT/2-275 );
     public Vector2f healthPos1 = new Vector2f( App.SCREEN_WIDTH / 2+360, App.SCREEN_HEIGHT/2-275 );
     public Vector2f healthPos2 = new Vector2f( App.SCREEN_WIDTH / 2+230, App.SCREEN_HEIGHT/2-275 );
+    public Vector2f backGround = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT/2 );
     public World()
     {
         SoundBuffer backgroundMusic = new SoundBuffer();
@@ -47,6 +48,7 @@ public class World implements GameState
         shootMusic.setLoop(true);
         shootMusic.play();
         gameObjects = new ArrayList<>(); // create empty araraylist.
+        createDecoration( App.resources.textures.get( 13 ), backGround );
         createDecoration( App.resources.textures.get( 12 ), healthPos );
         createDecoration( App.resources.textures.get( 12 ), healthPos1 );
         createDecoration( App.resources.textures.get( 12 ), healthPos2 );

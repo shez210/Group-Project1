@@ -42,6 +42,7 @@ public class Resources
         loadSpriteSheet("sprites/Images/Buttons/QutHover.png");
         loadSpriteSheet("sprites/Images/Buttons/Title.png");
         loadSpriteSheet("sprites/Images/Icons/health.png");
+        loadSpriteSheet("sprites/Images/Backgrounds/newBg.png");
         for( int i = 1; i <= 10; ++ i )
         {
             loadSpriteSheet( new String( "sprites/freeknight/png/Idle (" + i + ").png" ), knightIdle, Color.WHITE );
