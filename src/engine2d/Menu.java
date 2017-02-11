@@ -1,6 +1,8 @@
 package engine2d;
 
 
+import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
@@ -8,6 +10,8 @@ import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.Mouse;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Menu implements GameState
@@ -15,6 +19,7 @@ public class Menu implements GameState
     static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
     public Sprite backgroundSprite;
     public InputHandler input;
+    public Sound menuMusic;
 
     public Vector2f centerOfScreen = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 );
     public Vector2f newGamePos = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 );
@@ -24,6 +29,21 @@ public class Menu implements GameState
 
     public Menu()
     {
+        SoundBuffer backgroundMusic = new SoundBuffer();
+        try
+        {
+            backgroundMusic.loadFromFile(Paths.get("Music/repentant.wav"));
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        //Create a sound and set its buffer
+        menuMusic = new Sound();
+        menuMusic.setBuffer(backgroundMusic);
+        menuMusic.setLoop(true);
+        menuMusic.play();
         gameObjects = new ArrayList<>( 5 );
 
 
@@ -48,7 +68,9 @@ public class Menu implements GameState
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
             if( App.inputHandler.isMouseClicked )
             {
+                menuMusic.stop();
                 App.currentState = new World();
+
             }
         }
         else
