@@ -30,6 +30,7 @@ public class World implements GameState
     public Vector2f healthPos1 = new Vector2f( App.SCREEN_WIDTH / 2+360, App.SCREEN_HEIGHT/2-275 );
     public Vector2f healthPos2 = new Vector2f( App.SCREEN_WIDTH / 2+230, App.SCREEN_HEIGHT/2-275 );
     public Vector2f backGround = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT/2 );
+    public Vector2f door = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT/2 );
     public World()
     {
         SoundBuffer backgroundMusic = new SoundBuffer();
@@ -52,6 +53,9 @@ public class World implements GameState
         createDecoration( App.resources.textures.get( 12 ), healthPos );
         createDecoration( App.resources.textures.get( 12 ), healthPos1 );
         createDecoration( App.resources.textures.get( 12 ), healthPos2 );
+        createDecoration( App.resources.textures.get( 14 ), door );
+
+
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
         buildLevel();
