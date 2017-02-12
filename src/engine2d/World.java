@@ -26,7 +26,11 @@ public class World implements GameState
     static Clock timerShoot = new Clock(); // doesnt belong here
     static int playerIndex = - 1; // index of the player object in the array of game objects.
     public org.jsfml.audio.Sound shootMusic;
-
+    public Vector2f healthPos = new Vector2f( App.SCREEN_WIDTH / 2+295, App.SCREEN_HEIGHT/2-275 );
+    public Vector2f healthPos1 = new Vector2f( App.SCREEN_WIDTH / 2+360, App.SCREEN_HEIGHT/2-275 );
+    public Vector2f healthPos2 = new Vector2f( App.SCREEN_WIDTH / 2+230, App.SCREEN_HEIGHT/2-275 );
+    public Vector2f backGround = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT/2 );
+    public Vector2f door = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT/2 );
     public World()
     {
         SoundBuffer backgroundMusic = new SoundBuffer();
@@ -45,6 +49,12 @@ public class World implements GameState
         shootMusic.setLoop(true);
         shootMusic.play();
         gameObjects = new ArrayList<>(); // create empty araraylist.
+        createDecoration( App.resources.textures.get( 13 ), backGround );
+        createDecoration( App.resources.textures.get( 12 ), healthPos );
+        createDecoration( App.resources.textures.get( 12 ), healthPos1 );
+        createDecoration( App.resources.textures.get( 12 ), healthPos2 );
+        createDecoration( App.resources.textures.get( 14 ), door );
+
 
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
@@ -90,6 +100,7 @@ public class World implements GameState
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
         App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 30 ) );
         App.window.draw( App.resources.cursorSprite );
+
         App.window.display();
     }
 
