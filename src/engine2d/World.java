@@ -141,7 +141,6 @@ public class World implements GameState
         gameObjects.add( object );
         object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new InputBehaviourOld( App.inputHandler, object.motion, object.sprite, object.abilities ) );
         object.sprite.setPosition( 300, 300 );
         playerIndex = gameObjects.size() - 1;
     }
@@ -154,11 +153,11 @@ public class World implements GameState
         object.sprite.setPosition( 300, 300 );
         object.addArrayOfTextures( App.resources.knightIdle );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new InputBehaviourOld( App.inputHandler, object.motion, object.sprite, object.abilities ) );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), GameObject.Ability.IDLE.ordinal() );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRunLeft ), GameObject.Ability.MOVE.ordinal() );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), GameObject.Ability.ATTACK.ordinal() );
-        object.addBehaviour( new AnimationStateBehaviour( object.anims, object.abilities ) );
+        object.addBehaviour( new InputBehaviourOld( App.inputHandler, object.motion, object.sprite ) );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), StateBehaviour.State.IDLE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRunLeft ), StateBehaviour.State.MOVE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), StateBehaviour.State.ATTACK.ordinal() );
+        object.addBehaviour( new StateBehaviour( App.inputHandler, object.sprite, object.motion, object.anims ) );
         playerIndex = gameObjects.size() - 1;
     }
 
