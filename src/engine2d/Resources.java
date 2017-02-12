@@ -54,7 +54,7 @@ public class Resources
         precacheTexture("sprites/Images/Buttons/QutHover.png");
         precacheTexture("sprites/Images/Buttons/Title.png");
         precacheTexture("sprites/Images/Icons/health.png");
-        //precacheTexture("sprites/Images/Backgrounds/newBg.png");
+        precacheTexture("sprites/Images/Backgrounds/newBg.png");
         precacheTexture("sprites/Images/Tiles/passable/6.png");
 
         loadFont( "font.ttf" );
