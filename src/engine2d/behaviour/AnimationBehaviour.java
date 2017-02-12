@@ -6,6 +6,7 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 // Guys, try not to touch this code because it's barely working. Just use it if you want animations.
 // It's really easy to use.
@@ -15,26 +16,28 @@ import java.util.ArrayList;
 /** Animates an object using a sprite sheet. */
 public class AnimationBehaviour
 {
-    public Clock timer;
+    private Clock sequenceTimer = new Clock();
     private Sprite sprite;
     private Texture texture;
     private ArrayList<Texture> textures;
 
-    private final int SEQUENCE_SPEED_NORMAL = 80; // Milliseconds spent on 1 sprite.
+    private final int SEQUENCE_SPEED_NORMAL = 65; // Milliseconds spent on 1 sprite.
     private int texWidth; // Width of texture used.
     private int texHeight; // Height of texture.
     private int totalSequences; // Total sprites in the sprite sheet.
-    private int currentSequence; // The sprite that is currently shown.
+    public int currentSequence; // The sprite that is currently shown.
     private int sequenceStart; // The index of the first sprite that is going to be used from the sprite sheet.
-    private int sequenceEnd; // The index of last sprite from sprite sheet.
+    public int sequenceEnd; // The index of last sprite from sprite sheet.
     private int millisPerSequence = SEQUENCE_SPEED_NORMAL;
     private int numSequencesRow; // Number of sprites per row in the sprite sheet.
     private int numSequencesColumn; // Number of sprites per column in the sprite sheet.
-    public int maxAnimationTimeMillis = totalSequences * SEQUENCE_SPEED_NORMAL;
+    public int maxAnimationTimeMillis;
 
     // Used for idle animations.
     private boolean showOnlyOneFrame; // Supports the option to show only the first frame of a certain animation.
     private boolean spriteSheetMode = false;
+
+    public enum animType{ INTERRUPTABLE, NON_INTERRUPTABLE }
 
 
     /**
@@ -47,7 +50,6 @@ public class AnimationBehaviour
     public AnimationBehaviour( Sprite spr, int sequenceStart, int sequenceEnd, int numSequencesRow, int totalSequences )
     {
         spriteSheetMode = true;
-        timer = new Clock();
         sprite = spr;
         texture = ( Texture ) sprite.getTexture();
         texWidth  = texture.copyToImage().toBufferedImage().getWidth();
@@ -59,6 +61,7 @@ public class AnimationBehaviour
         currentSequence = sequenceStart;
         this.sequenceEnd = sequenceEnd;
         this.totalSequences = totalSequences;
+        maxAnimationTimeMillis = totalSequences * millisPerSequence;
     }
 
     public AnimationBehaviour( Sprite sprite, ArrayList<Texture> textures )
@@ -66,7 +69,8 @@ public class AnimationBehaviour
         this.sequenceStart = 0;
         this.sprite = sprite;
         this.textures = textures;
-        timer = new Clock();
+        maxAnimationTimeMillis = textures.size() * millisPerSequence;
+        sequenceEnd = textures.size();
     }
 
     /** Sets the animation speed. */
@@ -77,8 +81,13 @@ public class AnimationBehaviour
 
     public void reset()
     {
-        timer.restart();
+        sequenceTimer.restart();
         currentSequence = sequenceStart;
+    }
+
+    public boolean isEnding()
+    {
+        return currentSequence == sequenceEnd - 1 && sequenceTimer.getElapsedTime().asMilliseconds() > millisPerSequence - 10 ;
     }
 
     public void showOnlyFirstFrame()
@@ -95,12 +104,12 @@ public class AnimationBehaviour
     {
         if( spriteSheetMode == true )
         {
-            if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
+            if( sequenceTimer.getElapsedTime().asMilliseconds() > millisPerSequence )
             {
                 currentSequence++;
                 if( currentSequence == sequenceEnd ) { currentSequence = sequenceStart; }
                 if( showOnlyOneFrame == true ) { currentSequence = sequenceStart; }
-                timer.restart();
+                sequenceTimer.restart();
                 int rectX = ( currentSequence % numSequencesRow ) * texWidth / numSequencesRow;
                 int rectY = ( currentSequence / numSequencesRow ) * texHeight / numSequencesColumn;
                 int rectW = texWidth / numSequencesRow;
@@ -110,9 +119,9 @@ public class AnimationBehaviour
         }
         else
         {
-            if( timer.getElapsedTime().asMilliseconds() > millisPerSequence )
+            if( sequenceTimer.getElapsedTime().asMilliseconds() > millisPerSequence )
             {
-                timer.restart();
+                sequenceTimer.restart();
                 sprite.setTexture( textures.get( currentSequence ) );
                 currentSequence ++;
                 if( currentSequence == textures.size() ) { currentSequence = sequenceStart; }

@@ -19,13 +19,10 @@ public class GameObject
     public InputBehaviour input;
     public MotionBehaviour motion;
     public AIBehaviour ai;
-    public StatsBehaviour stats;
-    public ArrayList<Boolean> abilities;
     public ArrayList<AnimationBehaviour> anims;
-    public AnimationStateBehaviour animState;
+    public StatsBehaviour stats;
+    public StateBehaviour state;
 
-
-    public enum Ability{ IDLE, MOVE, ATTACK }
     public enum Type{ PLAYER_BULLET, ENEMY }
     public enum Status{ ALIVE, DEAD }
 
@@ -34,16 +31,14 @@ public class GameObject
     {
         sprite = new Sprite();
         textures = new ArrayList();
-        abilities = new ArrayList<>( Collections.nCopies( Ability.values().length, false ) );
-        anims = new ArrayList<>( Collections.nCopies( Ability.values().length, null ) );
-
+        anims = new ArrayList<>( Collections.nCopies( StateBehaviour.State.values().length, null ) );
     }
 
     void update()
     {
         if( input != null ) { input.update(); } // If the engine2d.GameObject is controlled by input, handle the input.
         if( motion != null ) { motion.update(); } // If the engine2d.GameObject can move, then move it.
-        if( animState != null ) { animState.update(); } // If the engine2d.GameObject supports animation, update it.
+        if( state != null ) { state.update(); } // If the engine2d.GameObject supports animation, update it.
         if( ai != null ) { ai.update(); }
     }
 
@@ -54,17 +49,12 @@ public class GameObject
 
     void addBehaviour( AnimationBehaviour anim, int abilityIndex )
     {
-        this.anims.set( abilityIndex, anim );
+        anims.set( abilityIndex, anim );
     }
 
-    void addBehaviour( AnimationBehaviour anim )
+    void addBehaviour( StateBehaviour state )
     {
-        this.anims.add( anim );
-    }
-
-    void addBehaviour( AnimationStateBehaviour animState )
-    {
-        this.animState = animState;
+        this.state = state;
     }
 
     void addBehaviour( InputBehaviour input )
@@ -98,6 +88,5 @@ public class GameObject
         this.textures = textures;
         sprite.setTexture( textures.get( 0 ) );
         sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
-
     }
 }

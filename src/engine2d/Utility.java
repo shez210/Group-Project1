@@ -1,6 +1,7 @@
 package engine2d;
 
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Vector2f;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -25,5 +26,18 @@ public class Utility
         }
 
         return lines;
+    }
+
+
+    public static void turnLeft( Sprite sprite )
+    {
+        sprite.setScale( Vector2f.componentwiseMul( sprite.getScale(), new Vector2f( -1.0f, 1.0f ) ) );
+        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( sprite.getGlobalBounds().width/2, 0 ) ) );
+    }
+
+    public static void turnRight( Sprite sprite )
+    {
+        sprite.setScale( Vector2f.componentwiseMul( sprite.getScale(), new Vector2f( -1.0f, 1.0f ) ) );
+        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( -sprite.getGlobalBounds().width/2, 0 ) ) );
     }
 }
