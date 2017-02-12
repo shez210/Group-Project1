@@ -16,7 +16,6 @@ public class GameObject
     public int status = Status.ALIVE.ordinal();
     public Sprite sprite;
     public ArrayList textures;
-    public InputBehaviour input;
     public MotionBehaviour motion;
     public AIBehaviour ai;
     public ArrayList<AnimationBehaviour> anims;
@@ -36,7 +35,6 @@ public class GameObject
 
     void update()
     {
-        if( input != null ) { input.update(); } // If the engine2d.GameObject is controlled by input, handle the input.
         if( motion != null ) { motion.update(); } // If the engine2d.GameObject can move, then move it.
         if( state != null ) { state.update(); } // If the engine2d.GameObject supports animation, update it.
         if( ai != null ) { ai.update(); }
@@ -55,11 +53,6 @@ public class GameObject
     void addBehaviour( StateBehaviour state )
     {
         this.state = state;
-    }
-
-    void addBehaviour( InputBehaviour input )
-    {
-        this.input = input;
     }
 
     void addBehaviour( MotionBehaviour motion )

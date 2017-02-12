@@ -48,12 +48,12 @@ public class World implements GameState
         shootMusic.setBuffer(backgroundMusic);
         shootMusic.setLoop(true);
         shootMusic.play();
-        gameObjects = new ArrayList<>(); // create empty araraylist.
+        gameObjects = new ArrayList<>();
         createDecoration( App.resources.textures.get( 13 ), backGround );
         createDecoration( App.resources.textures.get( 12 ), healthPos );
         createDecoration( App.resources.textures.get( 12 ), healthPos1 );
         createDecoration( App.resources.textures.get( 12 ), healthPos2 );
-        createDecoration( App.resources.textures.get( 14 ), door );
+        //createDecoration( App.resources.textures.get( 14 ), door );
 
 
         /** If you want to create something, just call some "create" function.
@@ -98,7 +98,7 @@ public class World implements GameState
     {
         App.window.clear();
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
-        App.window.draw( new Text( "Use WASD to move and mouse to aim/shoot.\nUntil forever...", App.resources.font, 30 ) );
+        App.window.draw( new Text( "Use WASD to move and Q to attack.", App.resources.font, 30 ) );
         App.window.draw( App.resources.cursorSprite );
 
         App.window.display();
@@ -153,9 +153,8 @@ public class World implements GameState
         object.sprite.setPosition( 300, 300 );
         object.addArrayOfTextures( App.resources.knightIdle );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new InputBehaviourOld( App.inputHandler, object.motion, object.sprite ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), StateBehaviour.State.IDLE.ordinal() );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRunLeft ), StateBehaviour.State.MOVE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun ), StateBehaviour.State.MOVE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), StateBehaviour.State.ATTACK.ordinal() );
         object.addBehaviour( new StateBehaviour( App.inputHandler, object.sprite, object.motion, object.anims ) );
         playerIndex = gameObjects.size() - 1;
