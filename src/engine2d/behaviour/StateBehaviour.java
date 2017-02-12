@@ -10,11 +10,10 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 /**
- * This class handles transitions between different animations.
- * You don't have to know how it works, just use it.
+ * Very fragile code. Try not to touch.
  */
 public class StateBehaviour
 {
@@ -41,20 +40,6 @@ public class StateBehaviour
         this.motion = motion;
         this.anims = anims;
         this.currentAnim = anims.get( 0 );
-    }
-
-    public void changeAnimTo( int requestedAnimType, int flag )
-    {
-        if( requestedAnimType != currentAnimIndex ) // If requested anim is different that the current one.
-        {
-            if( currentAnimType == AnimationBehaviour.animType.INTERRUPTABLE.ordinal() || ( currentAnimType == AnimationBehaviour.animType.NON_INTERRUPTABLE.ordinal() && currentAnim.isEnding() ) )
-            {
-                currentAnimIndex = requestedAnimType;
-                currentAnim = anims.get( requestedAnimType );
-                currentAnim.reset();
-                currentAnimType = flag;
-            }
-        }
     }
 
     public void changeAnimationTo( State requestedAnim )

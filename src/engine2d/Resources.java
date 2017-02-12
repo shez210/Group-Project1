@@ -1,10 +1,13 @@
 package engine2d;
 
+import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.*;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /** Holds all game content (textures, sounds, music, fonts, etc). */
 public class Resources
@@ -15,6 +18,7 @@ public class Resources
     public ArrayList<Texture> knightIdle = new ArrayList<>();
     public ArrayList<Texture> knightRun = new ArrayList<>();
     public ArrayList<Texture> knightAttack = new ArrayList<>();
+    private HashMap<String, Sound> sounds = new HashMap<>();
 
 
     // Precache resources (only sprites and fonts for now).
@@ -54,6 +58,9 @@ public class Resources
         precacheTexture("sprites/Images/Tiles/passable/6.png");
 
         loadFont( "font.ttf" );
+
+        loadSound( "Music/repentant.wav" );
+        loadSound( "Music/Projectile.wav" );
 
         //Set the cursor stuff.
         cursorSprite = new Sprite( textures.get( 4 ) );
@@ -114,4 +121,21 @@ public class Resources
         catch( IOException e ) { e.printStackTrace(); }
     }
 
+    public void loadSound( String path )
+    {
+        // Load the file in a sound buffer.
+        SoundBuffer buffer = new SoundBuffer();
+        try{ buffer.loadFromFile( Paths.get( path ) ); }
+        catch( IOException ex ) { ex.printStackTrace(); }
+
+        //Create a sound from sound buffer and store it in a hashmap.
+        Sound sound = new Sound( buffer );
+        //sound.setLoop( true );
+        sounds.put( Utility.getNameOnly( path ), sound );
+    }
+
+    public Sound getSound( String name )
+    {
+        return sounds.get( name );
+    }
 }

@@ -8,8 +8,7 @@ import org.jsfml.system.Vector2f;
 import java.util.ArrayList;
 import java.util.Collections;
 
-// This is the class that is used to instantiate every game object you want.
-// There are some "create()" functions in the engine2d.World class, use them to instantiate.
+/** Try not to touch */
 public class GameObject
 {
     public int type;

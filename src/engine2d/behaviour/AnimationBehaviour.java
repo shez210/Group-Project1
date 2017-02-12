@@ -8,12 +8,13 @@ import org.jsfml.system.Clock;
 import java.util.ArrayList;
 import java.util.Collections;
 
-// Guys, try not to touch this code because it's barely working. Just use it if you want animations.
+
 // It's really easy to use.
 
 // Description is above the constructor.
 
-/** Animates an object using a sprite sheet. */
+/** Try not to touch this code. Just use it if you want animations.
+ *  Animates an object using a sprite sheet. */
 public class AnimationBehaviour
 {
     private Clock sequenceTimer = new Clock();

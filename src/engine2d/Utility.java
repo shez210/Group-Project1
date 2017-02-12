@@ -1,8 +1,10 @@
 package engine2d;
 
+import org.jsfml.audio.Sound;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -28,6 +30,11 @@ public class Utility
         return lines;
     }
 
+    public static String getNameOnly( String path )
+    {
+        String string = new File( path ).getName();
+        return string.substring( 0, string.lastIndexOf( '.' ) );
+    }
 
     public static void turnLeft( Sprite sprite )
     {
