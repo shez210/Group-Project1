@@ -30,6 +30,22 @@ public class Utility
         return lines;
     }
 
+    public static String renameBulk( String folderName, String ReplaceFrom, String ReplaceWith )
+    {
+        try
+        {
+            File folder = new File( folderName );
+            File[] filesList = folder.listFiles();
+            for( int i = 0; i < filesList.length; i++ )
+            {
+                String newName = ( filesList[ i ].toString().replaceAll( ReplaceFrom, ReplaceWith ) );
+                filesList[ i ].renameTo( new File( newName ) );
+            }
+            return "Successfully renamed " + filesList.length + " files.";
+        }
+        catch( Exception e ) { return ( e.getMessage() ); }
+    }
+
     public static String getNameOnly( String path )
     {
         String string = new File( path ).getName();
@@ -38,13 +54,13 @@ public class Utility
 
     public static void turnLeft( Sprite sprite )
     {
-        sprite.setScale( Vector2f.componentwiseMul( sprite.getScale(), new Vector2f( -1.0f, 1.0f ) ) );
-        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( sprite.getGlobalBounds().width/2, 0 ) ) );
+        sprite.setScale( -1.0f, 1.001f );
+        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( sprite.getGlobalBounds().width/4, 0 ) ) );
     }
 
     public static void turnRight( Sprite sprite )
     {
-        sprite.setScale( Vector2f.componentwiseMul( sprite.getScale(), new Vector2f( -1.0f, 1.0f ) ) );
-        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( -sprite.getGlobalBounds().width/2, 0 ) ) );
+        sprite.setScale( 1.0f, 1.001f );
+        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( -sprite.getGlobalBounds().width/4, 0 ) ) );
     }
 }

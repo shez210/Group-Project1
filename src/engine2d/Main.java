@@ -6,6 +6,9 @@ public class Main
     {
         App.init();
 
+        //Utility.renameBulk( "sprites\\knight\\idle", "Armature-", "" );
+        //Utility.renameBulk( "sprites\\knight", "_", "_0" );
+
         while( App.window.isOpen() )
         {
             App.inputHandler.handleWindowEvents();

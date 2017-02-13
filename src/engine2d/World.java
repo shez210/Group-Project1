@@ -35,16 +35,16 @@ public class World implements GameState
     public World()
     {
         gameObjects = new ArrayList<>();
-        createDecoration( App.resources.textures.get( 13 ), backGround );
+        //createDecoration( App.resources.textures.get( 13 ), backGround );
         createDecoration( App.resources.textures.get( 12 ), healthPos );
-        createDecoration( App.resources.textures.get( 12 ), healthPos1 );
-        createDecoration( App.resources.textures.get( 12 ), healthPos2 );
+        //createDecoration( App.resources.textures.get( 12 ), healthPos1 );
+        //createDecoration( App.resources.textures.get( 12 ), healthPos2 );
         //createDecoration( App.resources.textures.get( 14 ), door );
 
 
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
-        buildLevel();
+        //buildLevel();
         //createPlayer();
         //createPlayerBeta();
         createPlayerKnight();
@@ -75,6 +75,9 @@ public class World implements GameState
             GameState.toggleDelayTimer.restart();
             App.currentState = new Menu();
         }
+
+        //System.out.println();
+        if( gameObjects.size() > playerIndex ) System.out.println( gameObjects.get( playerIndex ).sprite.getGlobalBounds().toString() );
     }
 
     /** Draws all created game objects on screen. */
@@ -133,7 +136,7 @@ public class World implements GameState
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.sprite.setScale( new Vector2f( 0.2f, 0.2f ) );
+        //object.sprite.setScale( new Vector2f( 0.18f, 0.18f ) );
         object.sprite.setPosition( 300, 300 );
         object.addArrayOfTextures( App.resources.knightIdle );
         object.addBehaviour( new MotionBehaviour( object.sprite ) );

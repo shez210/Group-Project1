@@ -4,14 +4,12 @@ import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
+import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-
-// It's really easy to use.
-
-// Description is above the constructor.
 
 /** Try not to touch this code. Just use it if you want animations.
  *  Animates an object using a sprite sheet. */
@@ -22,7 +20,7 @@ public class AnimationBehaviour
     private Texture texture;
     private ArrayList<Texture> textures;
 
-    private final int SEQUENCE_SPEED_NORMAL = 65; // Milliseconds spent on 1 sprite.
+    private final int SEQUENCE_SPEED_NORMAL = 10; // Milliseconds spent on 1 sprite.
     private int texWidth; // Width of texture used.
     private int texHeight; // Height of texture.
     private int totalSequences; // Total sprites in the sprite sheet.
@@ -37,9 +35,6 @@ public class AnimationBehaviour
     // Used for idle animations.
     private boolean showOnlyOneFrame; // Supports the option to show only the first frame of a certain animation.
     private boolean spriteSheetMode = false;
-
-    public enum animType{ INTERRUPTABLE, NON_INTERRUPTABLE }
-
 
     /**
      * Automatically animates the sprite based on the spritesheet provided.
@@ -123,10 +118,12 @@ public class AnimationBehaviour
             if( sequenceTimer.getElapsedTime().asMilliseconds() > millisPerSequence )
             {
                 sequenceTimer.restart();
+                sprite.setTextureRect( new IntRect( new Vector2i( 0, 0 ), new Vector2i( sprite.getTexture().getSize().x, sprite.getTexture().getSize().y ) ) );
                 sprite.setTexture( textures.get( currentSequence ) );
                 currentSequence ++;
                 if( currentSequence == textures.size() ) { currentSequence = sequenceStart; }
             }
+            //System.out.println( currentSequence );
         }
     }
 }

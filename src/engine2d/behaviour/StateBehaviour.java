@@ -17,16 +17,13 @@ import java.util.ArrayList;
  */
 public class StateBehaviour
 {
-    public State currentState = State.IDLE;
-    public State previousState = State.MOVE;
+    private State currentState = State.IDLE;
+    private State previousState = State.MOVE;
     private InputHandler input;
     private Sprite sprite;
     private MotionBehaviour motion;
-
     private ArrayList<AnimationBehaviour> anims;
-    public AnimationBehaviour currentAnim;
-    private int currentAnimIndex;
-    private int currentAnimType;
+    private AnimationBehaviour currentAnim;
 
     public enum State
     {
