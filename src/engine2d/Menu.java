@@ -88,6 +88,7 @@ public class Menu implements GameState
 
         App.window.draw( App.resources.cursorSprite );
 
+
         App.window.display();
     }
 
