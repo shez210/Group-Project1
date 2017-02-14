@@ -19,12 +19,11 @@ import static engine2d.Utility.readMapFromFile;
 
 /** The engine2d.World class holds all game objects and establishes communication among them.
  * Handles creation and destruction of entities. */
-public class World implements GameState
+public class World extends GameState
 {
-    static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
-    static Clock timer = new Clock(); // doesnt belong here
-    static Clock timerShoot = new Clock(); // doesnt belong here
-    static int playerIndex = - 1; // index of the player object in the array of game objects.
+    public Clock timer = new Clock(); // doesnt belong here
+    public Clock timerShoot = new Clock(); // doesnt belong here
+    public int playerIndex = - 1; // index of the player object in the array of game objects.
     public Vector2f healthPos = new Vector2f( App.SCREEN_WIDTH / 2+295, App.SCREEN_HEIGHT/2-275 );
     public Vector2f healthPos1 = new Vector2f( App.SCREEN_WIDTH / 2+360, App.SCREEN_HEIGHT/2-275 );
     public Vector2f healthPos2 = new Vector2f( App.SCREEN_WIDTH / 2+230, App.SCREEN_HEIGHT/2-275 );
@@ -34,7 +33,6 @@ public class World implements GameState
 
     public World()
     {
-        gameObjects = new ArrayList<>();
         //createDecoration( App.resources.textures.get( 13 ), backGround );
         createDecoration( App.resources.textures.get( 12 ), healthPos );
         //createDecoration( App.resources.textures.get( 12 ), healthPos1 );
@@ -48,6 +46,7 @@ public class World implements GameState
         //createPlayer();
         //createPlayerBeta();
         createPlayerKnight();
+        createEnemy();
         //createEnemyRandom();
         //createDecoration( App.resources.knightIdle.get( 1 ), new Vector2f( 50, 50 ) );
     }
@@ -55,35 +54,36 @@ public class World implements GameState
     /** Handles creation and destruction of entities and also resolves collision. */
     public void update()
     {
+        /*
         if( App.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
         {
             App.resources.getSound( "Projectile" ).play();
             timerShoot.restart();
             //createProjectile( App.resources.textures.get( 3 ), gameObjects.get( playerIndex ).sprite.getPosition(), gameObjects.get( playerIndex ).motion.direction );
         }
-
+        */
         //if( timer.getElapsedTime().asSeconds() > 0.2f ) { createEnemyRandom(); timer.restart(); }
+
 
         for( GameObject object : gameObjects ) { object.update(); }
         resolveCollisions();
+        resolveKills();
         checkForDeallocations();
         App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
 
         //Transition
-        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.ESCAPE ) && ( GameState.toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
+        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.ESCAPE ) && ( toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
         {
-            GameState.toggleDelayTimer.restart();
+            toggleDelayTimer.restart();
             App.currentState = new Menu();
         }
-
-        //System.out.println();
-        if( gameObjects.size() > playerIndex ) System.out.println( gameObjects.get( playerIndex ).sprite.getGlobalBounds().toString() );
     }
 
     /** Draws all created game objects on screen. */
     public void draw()
     {
         App.window.clear();
+
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
         App.window.draw( new Text( "Use WASD to move and Q to attack.", App.resources.font, 30 ) );
         App.window.draw( App.resources.cursorSprite );
@@ -98,13 +98,16 @@ public class World implements GameState
         {
             for( int j = gameObjects.size() - 1; j > 0; j -- )
             {
+
+
+                /*
                 if( i != j && gameObjects.get( i ).type == GameObject.Type.PLAYER_BULLET.ordinal()
                        && gameObjects.get( j ).type == GameObject.Type.ENEMY.ordinal()
                        && isCollision( gameObjects.get( i ).sprite, gameObjects.get( j ).sprite ) )
                 {
-
                     gameObjects.get( j ).status = GameObject.Status.DEAD.ordinal();
                 }
+                */
             }
         }
     }
@@ -122,39 +125,58 @@ public class World implements GameState
     }
 
     /** Creates test player. Uses the placeholder sprite. */
-    public static void createPlayerBeta()
+    public void createPlayerBeta()
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
         object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
-        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5, 5 ) ) );
         object.sprite.setPosition( 300, 300 );
         playerIndex = gameObjects.size() - 1;
     }
 
-    public static void createPlayerKnight()
+    public void createPlayerKnight()
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        //object.sprite.setScale( new Vector2f( 0.18f, 0.18f ) );
         object.sprite.setPosition( 300, 300 );
-        object.addArrayOfTextures( App.resources.knightIdle );
-        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5, 5 ) ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), StateBehaviour.State.IDLE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun ), StateBehaviour.State.MOVE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), StateBehaviour.State.ATTACK.ordinal() );
-        object.addBehaviour( new StateBehaviour( App.inputHandler, object.sprite, object.motion, object.anims ) );
+        object.addBehaviour( new PlayerStateBehaviour( App.inputHandler, object.sprite, object.motion, object.anims ) );
+        object.sprite.setOrigin( object.sprite.getGlobalBounds().width/2, object.sprite.getGlobalBounds().height );
         playerIndex = gameObjects.size() - 1;
+        object.type = GameObject.Type.PLAYER;
     }
 
-    /** Use this to create tiles, walls, chests, whatever.
-     * If you don't know how to use it, see the example in the constructor. */
-    public static void createDecoration( Texture tex, Vector2f pos )
+    /** Creates an enemy. Spawn position is across a circle around the screen. */
+    public void createEnemy()
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( tex );
-        object.sprite.setPosition( pos );
+        object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5, 5 ) ) );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), StateBehaviour.State.IDLE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun ), StateBehaviour.State.MOVE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), StateBehaviour.State.ATTACK.ordinal() );
+        object.addBehaviour( new NPCStateBehaviour(  object.sprite, object.motion, object.anims, gameObjects.get( playerIndex ).sprite ) );
+        //object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
+        object.sprite.setPosition( 300, 100 );
+        object.sprite.setOrigin( object.sprite.getGlobalBounds().width/2, object.sprite.getGlobalBounds().height );
+        object.type = GameObject.Type.ENEMY;
+    }
+
+    /** Creates an enemy. Spawn position is across a circle around the screen. */
+    public void createEnemyRandom()
+    {
+        int angle = new Random().nextInt( 360 );
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
+        object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5 ,5 ) ) );
+        object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
+        object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_HEIGHT/2 ) );
+        object.type = GameObject.Type.ENEMY;
     }
 
     /** Creates a projectile and moves it in a certain direction.
@@ -163,19 +185,19 @@ public class World implements GameState
      * @param pos the starting position of the projectile
      * @param direction the moving direction of the projectile.
      */
-    public static void createProjectile( Texture tex, Vector2f pos, Vector2f direction )
+    public void createProjectile( Texture tex, Vector2f pos, Vector2f direction )
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
         object.addTexture( tex );
         object.sprite.setPosition( pos );
-        object.addBehaviour( new MotionBehaviour( object.sprite ) );
+        object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5, 5 ) ) );
         object.motion.velocity = direction;
-        object.type = GameObject.Type.PLAYER_BULLET.ordinal();
+        object.type = GameObject.Type.PLAYER_BULLET;
     }
 
     /** Destroy all objects that are out of the screen. */
-    public static void destroyOutOfBoundsObjects()
+    public void destroyOutOfBoundsObjects()
     {
 
         for( int i = gameObjects.size() - 1; i > 0; i -- ) // Counts backwards for performance reasons.
@@ -188,33 +210,45 @@ public class World implements GameState
     }
 
     /** Deallocate all objects that are already dead. */
-    public static void destroyDeadObjects()
+    public void destroyDeadObjects()
     {
         for( int i = gameObjects.size() - 1; i > 0; i -- )
         { if( gameObjects.get( i ).status == GameObject.Status.DEAD.ordinal() ) { gameObjects.remove( gameObjects.get( i ) ); } }
     }
 
     /** Wrapper function, handles all deallocations. */
-    public static void checkForDeallocations()
+    public void checkForDeallocations()
     {
         destroyOutOfBoundsObjects();
         destroyDeadObjects();
     }
 
-    /** Creates an enemy. Spawn position is across a circle around the screen. */
-    public static void createEnemyRandom()
+    public void resolveKills()
     {
-        int angle = new Random().nextInt( 360 );
-        GameObject object = new GameObject();
-        gameObjects.add( object );
-        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
-        object.addBehaviour( new MotionBehaviour( object.sprite ) );
-        object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
-        object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_HEIGHT/2 ) );
-        object.type = GameObject.Type.ENEMY.ordinal();
+        for( int i = gameObjects.size() - 1; i > 0; i -- )
+        {
+            for( int j = gameObjects.size() - 1; j > 0; j-- )
+            {
+                if( i != j )
+                {
+                    GameObject objectA = gameObjects.get( i );
+                    GameObject objectB = gameObjects.get( j );
+
+                    if( objectA.type == GameObject.Type.PLAYER
+                    &&  objectB.type == GameObject.Type.ENEMY
+                    &&  isCollision( objectA.sprite, objectB.sprite )
+                    &&  objectA.state.currentState == StateBehaviour.State.ATTACK
+                    &&  objectA.state.currentAnim.isEnding() )
+                    {
+                        System.out.println( "Enemy hit." );
+                        //objectB.state.currentStat
+                    }
+                }
+            }
+        }
     }
 
-    public static void buildLevel()
+    public void buildLevel()
     {
         List<String> data = readMapFromFile( "levelEditor.txt" );
         Texture tex = App.resources.textures.get( 5 );

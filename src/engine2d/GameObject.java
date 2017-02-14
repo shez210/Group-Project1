@@ -11,24 +11,22 @@ import java.util.Collections;
 /** Try not to touch */
 public class GameObject
 {
-    public int type;
+    public Type type;
     public int status = Status.ALIVE.ordinal();
     public Sprite sprite;
-    public ArrayList textures;
     public MotionBehaviour motion;
     public AIBehaviour ai;
     public ArrayList<AnimationBehaviour> anims;
     public StatsBehaviour stats;
     public StateBehaviour state;
 
-    public enum Type{ PLAYER_BULLET, ENEMY }
+    public enum Type{ PLAYER, PLAYER_BULLET, ENEMY }
     public enum Status{ ALIVE, DEAD }
 
     // engine2d.GameObject is created by instantiating all the needed components/behaviours.
     public GameObject()
     {
         sprite = new Sprite();
-        textures = new ArrayList();
         anims = new ArrayList<>( Collections.nCopies( StateBehaviour.State.values().length, null ) );
     }
 
@@ -72,13 +70,5 @@ public class GameObject
     void addTexture( Texture texture )
     {
         sprite.setTexture( texture );
-        sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
-    }
-
-    void addArrayOfTextures( ArrayList<Texture> textures )
-    {
-        this.textures = textures;
-        sprite.setTexture( textures.get( 0 ) );
-        sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
     }
 }

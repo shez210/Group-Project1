@@ -13,9 +13,10 @@ public class MotionBehaviour
     private final float SPEED_NORMAL = 2.0f;
     public float speed = SPEED_NORMAL;
     
-    public MotionBehaviour( Sprite sprite )
+    public MotionBehaviour( Sprite sprite, Vector2f velocity )
     {
         this.sprite = sprite;
+        this.velocity = velocity;
     }
 
     /** Moves the entity to some direction by some velocity. */

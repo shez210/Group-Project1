@@ -67,6 +67,7 @@ public class AnimationBehaviour
         this.textures = textures;
         maxAnimationTimeMillis = textures.size() * millisPerSequence;
         sequenceEnd = textures.size();
+        this.sprite.setTexture( textures.get( 0 ) );
     }
 
     /** Sets the animation speed. */
@@ -83,7 +84,7 @@ public class AnimationBehaviour
 
     public boolean isEnding()
     {
-        return currentSequence == sequenceEnd - 1 && sequenceTimer.getElapsedTime().asMilliseconds() > millisPerSequence - 10 ;
+        return currentSequence == sequenceEnd - 1;
     }
 
     public void showOnlyFirstFrame()

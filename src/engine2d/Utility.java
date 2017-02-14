@@ -55,12 +55,10 @@ public class Utility
     public static void turnLeft( Sprite sprite )
     {
         sprite.setScale( -1.0f, 1.001f );
-        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( sprite.getGlobalBounds().width/4, 0 ) ) );
     }
 
     public static void turnRight( Sprite sprite )
     {
         sprite.setScale( 1.0f, 1.001f );
-        sprite.setPosition( Vector2f.add( sprite.getPosition(), new Vector2f( -sprite.getGlobalBounds().width/4, 0 ) ) );
     }
 }
