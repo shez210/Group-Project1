@@ -3,7 +3,7 @@ TODO:
 0. We need to come up with some code structure. I wrote some code while doing my best to not commit to any structure. DONE
 
 1. Someone needs to code the AnimationStateBehaviour class that should deal with switching between
-different types of animations, e.g. idle, attack1, attack2, death and so on.
+different types of animations, e.g. idle, run, attack, death and so on.
 All that functionality should be encapsulated in an update() method.     DONE
 
 2. Someone needs to write the collision code (player-map, player-enemy).   DONE
@@ -20,21 +20,34 @@ to start hitting him repeatedly. All that functionality should be encapsulated i
 
 7. Generate tiles with a .txt file. DONE
 
-8. Implement scrolling.
+8. Need some nice design and pictures for start menu. DONE
 
-9. Need some nice design and pictures for start menu.
+9. We still don't have any sprites at all. DONE
 
-10. We still don't have any sprites at all.
+10. We don't have any sounds and music. DONE
 
-11. We don't have any sounds and music.
+11. Need code for attacking and killing enemies, dying when killed, etc.
 
-12. Need the code for random room- and enemy- generation.
+12. Need code for UI, most importantly - healthbar decreasing smoothly when player is hit.
 
-13. Need to figure out how to make the final boss challenging enough.
+13. Someone needs to create a proper map with the level editor.
+We need multiple levels, doors, high-quality tiles, walls, etc.
 
-14. Also tutorials, some score system, leveling, gold, treasure chests and weapons.(it's all in the report)
+14. Implement scrolling.
 
-15. Dodging range/magic attacks. (also in the report)
+15. Need some particle effects when enemy is hit. Bleeding or explosion or whatever.
 
-16. We've got plenty of tasks and not much time. Try to start as soon as you can.
+16. Need the code for random room and enemy generation.
+
+17. Need to figure out how to make the enemies challenging enough.
+
+18. Levelling and score system.
+
+19. Gold, treasure chests and items.(it's all in the report)
+
+20. Tutorials.
+
+21. Dodging range/magic attacks. (also in the report)
+
+22. We've got plenty of tasks and not much time. Try to start as soon as you can.
 
