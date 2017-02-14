@@ -35,10 +35,10 @@ public class Resources
         * You need to be really precise when specifying it or background wont be blended. */
 
 
-        loadTexturesFromFolder( "sprites/knight/idle", knightIdle, new Color( 3, 2, 1 ) );
-        loadTexturesFromFolder( "sprites/knight/run", knightRun, new Color( 3, 2, 1 ) );
-        loadTexturesFromFolder( "sprites/knight/attack", knightAttack, new Color( 3, 2, 1 ) );
-        loadTexturesFromFolder( "sprites/knight/dead", knightDead, new Color( 3, 2, 1 ) );
+        loadTexturesFromFolder( "sprites/knight/Idle", knightIdle, new Color( 3, 2, 1 ) );
+        loadTexturesFromFolder( "sprites/knight/Run", knightRun, new Color( 3, 2, 1 ) );
+        loadTexturesFromFolder( "sprites/knight/Attack", knightAttack, new Color( 3, 2, 1 ) );
+        loadTexturesFromFolder( "sprites/knight/Dead", knightDead, new Color( 3, 2, 1 ) );
 
         loadTexture( "sprites/player_running.png", new Color( 255, 254 ,254 ) );
         loadTexture( "sprites/placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255
