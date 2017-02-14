@@ -53,6 +53,7 @@ public class Menu implements GameState
             if( App.inputHandler.isMouseClicked )
             {
                 App.resources.getSound( "repentant" ).stop();
+                App.resources.getSound("repentant").setLoop(true);
                 App.currentState = new World();
 
             }

@@ -8,9 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-/**
- * Created by Jonnys on 21/02/2016.
- */
 public class SpriteWrapper extends Sprite implements Serializable
 {
 
