@@ -25,7 +25,7 @@ public class Menu extends GameState
     public Menu()
     {
         //Create a sound and set its buffer
-        App.resources.getSound( "repentant" ).play();
+        App.resources.getSound( "menu" ).play();
 
         createDecoration( App.resources.textures.get( 6 ), centerOfScreen );
         createDecoration( App.resources.textures.get( 7 ), centerOfScreen );
@@ -46,8 +46,8 @@ public class Menu extends GameState
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
             if( App.inputHandler.isMouseClicked )
             {
-                App.resources.getSound( "repentant" ).stop();
-                App.resources.getSound("repentant").setLoop(true);
+                App.resources.getSound( "menu" ).stop();
+                App.resources.getSound("menu").setLoop(true);
                 App.currentState = new World();
 
             }

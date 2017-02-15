@@ -63,6 +63,7 @@ public class Resources
 
         loadSound( "Music/repentant.wav" );
         loadSound( "Music/Projectile.wav" );
+        loadSound( "Music/menu.wav" );
 
         //Set the cursor stuff.
         cursorSprite = new Sprite( textures.get( 4 ) );
