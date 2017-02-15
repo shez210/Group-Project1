@@ -1,12 +1,11 @@
 
 package engine2d.behaviour;
 
+import engine2d.App;
 import engine2d.InputHandler;
 import engine2d.Utility;
-import engine2d.Vec2f;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public class PlayerStateBehaviour extends StateBehaviour
                 }
                 if( ( boolean )input.keyState.get( Keyboard.Key.Q ) )
                 {
+                    App.resources.getSound( "Projectile" ).play();
                     currentState = StateBehaviour.State.ATTACK;
                 }
             case ATTACK:
