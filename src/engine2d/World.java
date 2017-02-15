@@ -29,7 +29,7 @@ public class World extends GameState
 
     public World()
     {
-        App.resources.getSound( "repentant" ).play();
+        //App.resources.getSound( "repentant" ).play();
         //createDecoration( App.resources.textures.get( 13 ), backGround );
         //createDecoration( App.resources.textures.get( 12 ), healthPos );
         //createDecoration( App.resources.textures.get( 12 ), healthPos1 );
@@ -84,7 +84,6 @@ public class World extends GameState
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
         App.window.draw( new Text( "Use WASD to move and Q to attack.", App.resources.font, 30 ) );
         App.window.draw( App.resources.cursorSprite );
-
         App.window.display();
     }
 
@@ -222,9 +221,9 @@ public class World extends GameState
 
     public void resolveKills()
     {
-        for( int i = gameObjects.size() - 1; i > 0; i -- )
+        for( int i = gameObjects.size() - 1; i >= 0; i -- )
         {
-            for( int j = gameObjects.size() - 1; j > 0; j-- )
+            for( int j = gameObjects.size() - 1; j >= 0; j-- )
             {
                 if( i != j )
                 {

@@ -8,7 +8,6 @@ import org.jsfml.system.Clock;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-/** its an overkill, this class. but makes the code more readable. */
 public class PlayerShootBehaviour
 {
     private InputHandler input;
@@ -24,7 +23,6 @@ public class PlayerShootBehaviour
 
     public void update()
     {
-
         if( input.isMouseClicked == true && launchCooldown.getElapsedTime().asSeconds() > 0.1f )
         {
             isProjectileLaunched = true;

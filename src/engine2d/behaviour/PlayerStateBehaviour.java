@@ -43,7 +43,7 @@ public class PlayerStateBehaviour extends StateBehaviour
                 }
                 if( ( boolean )input.keyState.get( Keyboard.Key.Q ) )
                 {
-                    App.resources.getSound( "Projectile" ).play();
+                    //App.resources.getSound( "Projectile" ).play();
                     currentState = StateBehaviour.State.ATTACK;
                 }
             case ATTACK:

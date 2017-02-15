@@ -1,7 +1,6 @@
 
 package engine2d.behaviour;
 
-import engine2d.InputHandler;
 import engine2d.Utility;
 import engine2d.Vec2f;
 import org.jsfml.graphics.Sprite;
@@ -27,7 +26,7 @@ public class NPCStateBehaviour extends StateBehaviour
 
         Vector2f diff = Vector2f.sub( player.getPosition(), sprite.getPosition() );
         float diffX = ( diff.x ) > 0 ? diff.x - fightingDistance : diff.x + fightingDistance;
-        Vector2f nearPlayer = player.getPosition();//Vector2f.add( sprite.getPosition(), new Vector2f( diff.x, diff.y ) );
+        Vector2f nearPlayer = Vector2f.add( sprite.getPosition(), new Vector2f( diffX, diff.y ) );
 
         // Handle state switch.
         switch( currentState )

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 /**
- * Very fragile code. Try not to touch.
+ * State machine for npcs.
  */
 public abstract class StateBehaviour
 {
@@ -44,7 +44,7 @@ public abstract class StateBehaviour
             currentAnim = anims.get( requestedAnim.ordinal() );
             currentAnim.reset();
             previousState = currentState;
-            System.out.println("animation changed to " + requestedAnim.ordinal());
+            //System.out.println("animation changed to " + requestedAnim.ordinal());
         }
     }
 
