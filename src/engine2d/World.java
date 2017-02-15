@@ -1,7 +1,6 @@
 package engine2d;
 
 import engine2d.behaviour.*;
-import org.jsfml.audio.*;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
@@ -9,9 +8,6 @@ import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -33,8 +29,9 @@ public class World extends GameState
 
     public World()
     {
+        App.resources.getSound( "repentant" ).play();
         //createDecoration( App.resources.textures.get( 13 ), backGround );
-        createDecoration( App.resources.textures.get( 12 ), healthPos );
+        //createDecoration( App.resources.textures.get( 12 ), healthPos );
         //createDecoration( App.resources.textures.get( 12 ), healthPos1 );
         //createDecoration( App.resources.textures.get( 12 ), healthPos2 );
         //createDecoration( App.resources.textures.get( 14 ), door );
