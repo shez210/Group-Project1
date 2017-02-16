@@ -16,10 +16,10 @@ public class Menu extends GameState
     {
         App.resources.getSound( "menu" ).play();
 
-        createDecoration( App.resources.textures.get( 6 ), centerOfScreen );
-        createDecoration( App.resources.textures.get( 7 ), centerOfScreen );
-        createDecoration( App.resources.textures.get( 9 ), quitPos );
-        createDecoration( App.resources.textures.get( 11 ), gameTitlePos );
+        createDecoration( App.resources.props.get( "deathscroll" ), centerOfScreen );
+        createDecoration( App.resources.props.get( "NewGame" ), centerOfScreen );
+        createDecoration( App.resources.props.get( "Quit" ), quitPos );
+        createDecoration( App.resources.props.get( "Title" ), gameTitlePos );
     }
 
     public void update()
@@ -32,7 +32,7 @@ public class Menu extends GameState
 
         if( App.inputHandler.isMouseOver( gameObjects.get( 1 ).sprite ) )
         {
-            gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
+            gameObjects.get( 1 ).sprite.setTexture( App.resources.props.get( "NewGmeHover" ) );
             if( App.inputHandler.isMouseClicked )
             {
                 App.resources.getSound( "menu" ).stop();
@@ -43,12 +43,12 @@ public class Menu extends GameState
         }
         else
         {
-            gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 7 ) );
+            gameObjects.get( 1 ).sprite.setTexture( App.resources.props.get( "NewGame" ) );
         }
 
         if( App.inputHandler.isMouseOver( gameObjects.get( 2 ).sprite ) )
         {
-            gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 10 ) );
+            gameObjects.get( 2 ).sprite.setTexture( App.resources.props.get( "QutHover" ) );
             if( App.inputHandler.isMouseClicked )
             {
                 App.window.close();
@@ -57,7 +57,7 @@ public class Menu extends GameState
         }
         else
         {
-            gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 9 ) );
+            gameObjects.get( 2 ).sprite.setTexture( App.resources.props.get( "Quit" ) );
         }
 
         if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.T ) && ( toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )

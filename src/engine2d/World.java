@@ -41,13 +41,12 @@ public class World extends GameState
          * createDecoration() is for walls, tiles and map stuff. */
         //createPlayer();
         //createPlayerBeta();
+        buildLevel();
         createPlayerKnight();
-        createEnemy();
-        createDecoration( App.resources.textures.get( 5 ), new Vector2f( 50, 50 ) );
+        //createEnemy();
         //addHealth();
         //createEnemyRandom();
         //createDecoration( App.resources.knightIdle.get( 1 ), new Vector2f( 50, 50 ) );
-        buildLevel();
     }
 
 
@@ -86,11 +85,11 @@ public class World extends GameState
 
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
         App.window.draw( new Text( "Use WASD to move and Space to attack.", App.resources.font, 30 ) );
-        App.window.draw( new Text( "\nhealth = " + gameObjects.get( playerIndex ).health, App.resources.font, 30 ) );
-        if( gameObjects.size() - 1 >= playerIndex + 1 )
-        {
-            App.window.draw( new Text( "\n                             enemy health = " + gameObjects.get( playerIndex + 1 ).health, App.resources.font, 30 ) );
-        }
+        //App.window.draw( new Text( "\nhealth = " + gameObjects.get( playerIndex ).health, App.resources.font, 30 ) );
+        //if( gameObjects.size() - 1 >= playerIndex + 1 )
+        //{
+          //  App.window.draw( new Text( "\n                             enemy health = " + gameObjects.get( playerIndex + 1 ).health, App.resources.font, 30 ) );
+        //}
 
         App.window.draw( App.resources.cursorSprite );
         App.window.display();
@@ -134,7 +133,7 @@ public class World extends GameState
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
+        object.addTexture( new Texture( App.resources.props.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5, 5 ) ) );
         object.sprite.setPosition( 300, 300 );
         playerIndex = gameObjects.size() - 1;
@@ -186,7 +185,7 @@ public class World extends GameState
         int angle = new Random().nextInt( 360 );
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
+        object.addTexture( new Texture( App.resources.props.get( 1 ) ) );
         object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5 ,5 ) ) );
         object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
         object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_HEIGHT/2 ) );
@@ -261,7 +260,9 @@ public class World extends GameState
     public void buildLevel()
     {
         List<String> data = readMapFromFile( "levelEditor.txt" );
-        Texture tex = App.resources.textures.get( 5 );
+
+        int texSide = 114;
+        int maxTileIndex = 3;
 
         for( int i = 0; i < data.size(); ++ i )
         {
@@ -269,11 +270,65 @@ public class World extends GameState
 
             for( int j = 0; j < line.length; ++ j )
             {
+                float x = texSide * ( j );
+                float y = texSide * ( i );
+                Vector2f pos = new Vector2f( x, y );
+
                 if( line[ j ] == '0' )
                 {
-                    createDecoration( App.resources.textures.get( 5 ), new Vector2f( tex.getSize().x * ( 0.5f + j ), tex.getSize().y * ( 0.5f + i ) ) );
+                    createDecoration( App.resources.props.get( "stoneFloor1" ), pos );
+                }
+
+                if( line[ j ] == '1' )
+                {
+                    createWallTexture( i, j, maxTileIndex, pos, data );
                 }
             }
         }
+    }
+
+    /** messed up level editor code */
+    public void createWallTexture( int i, int j, int maxTileIndex, Vector2f pos, List<String> data )
+    {
+        char[] topRow = data.get( i - 1 ).toCharArray();
+        char[] currentRow = data.get( i ).toCharArray();
+        char[] bottomRow = data.get( i + 1 ).toCharArray();
+
+        if( currentRow[ j - 1 ] == '1' && currentRow[ j + 1 ] == '1' && bottomRow[ j ] == '0' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallNorth1" ), pos );
+        }
+        if( currentRow[ j - 1 ] == '1' && currentRow[ j + 1 ] == '1' && topRow[ j ] == '0' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallSouth1" ), pos );
+        }
+        if( topRow[ j ] == '1' && bottomRow[ j ] == '1' && currentRow[ j + 1 ] == '0' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallWest1" ), pos );
+        }
+        if( topRow[ j ] == '1' && bottomRow[ j ] == '1' && currentRow[ j - 1 ] == '0' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallEast1" ), pos );
+        }
+
+        if( currentRow[ j + 1 ] == '1' && bottomRow[ j ] == '1' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallNorthWest1" ), pos );
+        }
+        if( currentRow[ j - 1 ] == '1' && bottomRow[ j ] == '1' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallNorthEast1" ), pos );
+        }
+        if( currentRow[ j + 1 ] == '1' && topRow[ j ] == '1' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallSouthWest1" ), pos );
+        }
+        if( currentRow[ j - 1 ] == '1' && topRow[ j ] == '1' )
+        {
+            createDecoration( App.resources.props.get( "stoneWallSouthEast1" ), pos );
+        }
+
+
+        //else if( )
     }
 }

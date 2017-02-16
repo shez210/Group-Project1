@@ -4,6 +4,7 @@ import org.jsfml.audio.Sound;
 import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,6 @@ import java.util.HashMap;
 /** Holds all game content (textures, sounds, music, fonts, etc). */
 public class Resources
 {
-    public ArrayList<Texture> textures = new ArrayList<>();
     public Font font = new Font();
     public Sprite cursorSprite;
     public ArrayList<Texture> knightIdle = new ArrayList<>();
@@ -23,6 +23,7 @@ public class Resources
     public ArrayList<Texture> knightAttack = new ArrayList<>();
     public ArrayList<Texture> knightDead = new ArrayList<>();
     public HashMap<String, Vector2f> pointsOfOrigin = new HashMap<>();
+    public HashMap<String, Texture> props = new HashMap<>();
     private HashMap<String, Sound> sounds = new HashMap<>();
 
 
@@ -65,6 +66,18 @@ public class Resources
         loadTexture("sprites/Images/Backgrounds/newBg.png", Color.WHITE);
         loadTexture("sprites/Images/Tiles/passable/6.png", Color.WHITE);
 
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "greenFloor1", 2, 114, new Vector2i( 1, 0 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "greenFloor2", 2, 114, new Vector2i( 2, 0 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneFloor1", 2, 114, new Vector2i( 3, 3 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorth1", 2, 114, new Vector2i( 16, 2 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouth1", 2, 114, new Vector2i( 2, 16 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallWest1", 2, 114, new Vector2i( 7, 2 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallEast1", 2, 114, new Vector2i( 2, 10 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthWest1", 2, 114, new Vector2i( 4, 2 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthEast1", 2, 114, new Vector2i( 3, 2 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthWest1", 2, 114, new Vector2i( 6, 2 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthEast1", 2, 114, new Vector2i( 5, 2 ) );
+
         loadFont( "font.ttf" );
 
         loadSound( "Music/repentant.wav" );
@@ -72,7 +85,7 @@ public class Resources
         loadSound( "Music/menu.wav" );
 
         //Set the cursor stuff.
-        cursorSprite = new Sprite( textures.get( 4 ) );
+        cursorSprite = new Sprite( props.get( "cursor" ) );
         cursorSprite.setScale( 0.47f, 0.47f );
     }
 
@@ -89,7 +102,7 @@ public class Resources
         try { tex.loadFromImage( img ); }
         catch ( TextureCreationException e )
         { e.printStackTrace(); }
-        textures.add( tex );
+        props.put( Utility.getNameOnly( path ), tex );
     }
 
     public void loadTexture( String path, ArrayList<Texture> textures, Color color )
@@ -120,6 +133,17 @@ public class Resources
             }
         }
         catch( Exception e ) { e.printStackTrace(); }
+    }
+
+    public void loadTextureFromSpriteSheet( String path, String name, int offset, int tileSize, Vector2i pos )
+    {
+        Texture tex = new Texture();
+        int x = ( pos.x + 1 )*offset + pos.x*tileSize;
+        int y = ( pos.y + 1 )*offset + pos.y*tileSize;
+        try{ tex.loadFromFile( Paths.get( path ), new IntRect( x, y, tileSize, tileSize ) ); }
+        catch ( IOException e ) { e.printStackTrace(); }
+        tex.setSmooth( true );
+        props.put( name, tex );
     }
 
     /** Loads a font at the specified path.

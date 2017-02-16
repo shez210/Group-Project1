@@ -14,7 +14,7 @@ public class Tutorial extends GameState
     {
         App.resources.getSound( "menu" ).play();
 
-        createDecoration( App.resources.textures.get( 6 ), centerOfScreen );
+        createDecoration( App.resources.props.get( 6 ), centerOfScreen );
 
     }
 

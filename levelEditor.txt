@@ -1,10 +1,17 @@
-#
+# A line that starts with "#" won't be parsed, so use it for comments.
 # Really basic level editor.
-# Write a 'zero' to spawn a box.
-# Write a 'one' to spawn a road tile.
+# Write a 'zero' to spawn 'floor' tile.
+# Write a 'one' to spawn 'wall' tile.
+# Write a 'two' to spawn 'enemy' tile.
+# Write a 'three' to spawn 'door' tile.
+# Write a 'four' to spawn 'empty' tile.
+# Will add some more stuff later on.
 #
--start
-------------------------------
-111     111
-11       11
-1         1
+############Level Editor################
+-------
+-111111---
+-100001--
+-100001--
+-100001--
+-111111-
+---------

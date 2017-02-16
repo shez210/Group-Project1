@@ -24,7 +24,7 @@ public class Utility
         for( Iterator<String> i = lines.iterator(); i.hasNext();)
         {
             String line = i.next();
-            if( line.isEmpty() == false && Character.isDigit( line.charAt( 0 ) ) == false ) { i.remove(); }
+            if( line.isEmpty() == false && line.charAt( 0 ) == '#' ) { i.remove(); }
         }
 
         return lines;
