@@ -7,28 +7,28 @@ import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** Try not to touch */
 public class GameObject
 {
-    public int type;
-    public int status = Status.ALIVE.ordinal();
+    public Type type;
+    public Status status = Status.ACTIVE;
     public Sprite sprite;
-    public ArrayList textures;
     public MotionBehaviour motion;
     public AIBehaviour ai;
     public ArrayList<AnimationBehaviour> anims;
     public StatsBehaviour stats;
     public StateBehaviour state;
+    public AtomicInteger health = new AtomicInteger( 100 );
 
-    public enum Type{ PLAYER_BULLET, ENEMY }
-    public enum Status{ ALIVE, DEAD }
+    public enum Type{ PLAYER, PLAYER_BULLET, ENEMY }
+    public enum Status{ ACTIVE, INACTIVE }
 
     // engine2d.GameObject is created by instantiating all the needed components/behaviours.
     public GameObject()
     {
         sprite = new Sprite();
-        textures = new ArrayList();
         anims = new ArrayList<>( Collections.nCopies( StateBehaviour.State.values().length, null ) );
     }
 
@@ -72,13 +72,5 @@ public class GameObject
     void addTexture( Texture texture )
     {
         sprite.setTexture( texture );
-        sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
-    }
-
-    void addArrayOfTextures( ArrayList<Texture> textures )
-    {
-        this.textures = textures;
-        sprite.setTexture( textures.get( 0 ) );
-        sprite.setOrigin( new Vector2f( sprite.getGlobalBounds().width/2.0f, sprite.getGlobalBounds().height/2.0f ) );
     }
 }

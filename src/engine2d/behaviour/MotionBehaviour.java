@@ -10,19 +10,19 @@ public class MotionBehaviour
 {
     public Vector2f velocity = new Vector2f( 0, 0 );
     private Sprite sprite;
-    private final float SPEED_NORMAL = 2.0f;
+    private final float SPEED_NORMAL = 1.0f;
     public float speed = SPEED_NORMAL;
     
-    public MotionBehaviour( Sprite sprite )
+    public MotionBehaviour( Sprite sprite, Vector2f velocity )
     {
         this.sprite = sprite;
+        this.velocity = velocity;
     }
 
     /** Moves the entity to some direction by some velocity. */
     public void update()
     {
         sprite.setPosition( Vector2f.add( sprite.getPosition(), velocity ) ); // Move the sprite.
-        velocity = new Vector2f( 0, 0 );
     }
 
     void onCollision()

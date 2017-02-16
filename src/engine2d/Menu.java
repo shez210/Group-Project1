@@ -14,10 +14,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Menu implements GameState
+public class Menu extends GameState
 {
-    static ArrayList<GameObject> gameObjects; // All game objects in the game are stored here.
-
     public Vector2f centerOfScreen = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 );
     public Vector2f newGamePos = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 );
     public Vector2f quitPos = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT / 2 + 100 );
@@ -26,17 +24,12 @@ public class Menu implements GameState
 
     public Menu()
     {
-
-        //Create a sound and set its buffer
-        App.resources.getSound( "repentant" ).play();
-        gameObjects = new ArrayList<>( 5 );
+        App.resources.getSound( "menu" ).play();
 
         createDecoration( App.resources.textures.get( 6 ), centerOfScreen );
         createDecoration( App.resources.textures.get( 7 ), centerOfScreen );
         createDecoration( App.resources.textures.get( 9 ), quitPos );
         createDecoration( App.resources.textures.get( 11 ), gameTitlePos );
-
-
     }
 
     public void update()
@@ -52,7 +45,8 @@ public class Menu implements GameState
             gameObjects.get( 1 ).sprite.setTexture( App.resources.textures.get( 8 ) );
             if( App.inputHandler.isMouseClicked )
             {
-                App.resources.getSound( "repentant" ).stop();
+                App.resources.getSound( "menu" ).stop();
+                //App.resources.getSound("menu").setLoop(true);
                 App.currentState = new World();
 
             }
@@ -90,17 +84,5 @@ public class Menu implements GameState
 
 
         App.window.display();
-    }
-
-    /**
-     * Use this to create tiles, walls, chests, whatever.
-     * If you don't know how to use it, see the example in the constructor.
-     */
-    public static void createDecoration( Texture tex, Vector2f pos )
-    {
-        GameObject object = new GameObject();
-        gameObjects.add( object );
-        object.addTexture( tex );
-        object.sprite.setPosition( pos );
     }
 }
