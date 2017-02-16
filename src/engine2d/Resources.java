@@ -48,7 +48,7 @@ public class Resources
 
         loadTexture( "sprites/player_running.png", new Color( 255, 254 ,254 ) );
         loadTexture( "sprites/placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255
-        loadTexture( "sprites/chest_sprite.png", Color.WHITE );
+        loadTexture( "sprites/chest_open.png", Color.WHITE );
         loadTexture( "sprites/bullet.png", Color.WHITE );
         loadTexture( "sprites/cursor.png", Color.WHITE );
         loadTexture( "sprites/placeholder_tile.png", Color.WHITE );

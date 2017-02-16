@@ -39,14 +39,15 @@ public class World extends GameState
 
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
-        //buildLevel();
         //createPlayer();
         //createPlayerBeta();
         createPlayerKnight();
         createEnemy();
+        createDecoration( App.resources.textures.get( 5 ), new Vector2f( 50, 50 ) );
         //addHealth();
         //createEnemyRandom();
         //createDecoration( App.resources.knightIdle.get( 1 ), new Vector2f( 50, 50 ) );
+        buildLevel();
     }
 
 
@@ -247,7 +248,7 @@ public class World extends GameState
                     GameObject objectA = gameObjects.get( i );
                     GameObject objectB = gameObjects.get( j );
 
-                    if( objectA.state.isAttacking( objectB ) )
+                    if( objectA.state != null && objectA.state.isAttacking( objectB ) )
                     {
                         objectB.health.set( objectB.health.get() - 10 );
                         //objectB.state.currentStat
