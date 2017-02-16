@@ -1,18 +1,8 @@
 package engine2d;
 
 
-import org.jsfml.audio.Sound;
-import org.jsfml.audio.SoundBuffer;
-import org.jsfml.graphics.Sprite;
-import org.jsfml.graphics.Text;
-import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
-import org.jsfml.window.Mouse;
-
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class Menu extends GameState
 {
@@ -70,6 +60,11 @@ public class Menu extends GameState
             gameObjects.get( 2 ).sprite.setTexture( App.resources.textures.get( 9 ) );
         }
 
+        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.T ) && ( toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
+        {
+            toggleDelayTimer.restart();
+            App.currentState = new Tutorial();
+        }
 
         //if(input.isMouseClicked){App.currentState = new World();}
         App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.

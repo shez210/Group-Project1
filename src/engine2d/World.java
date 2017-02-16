@@ -44,7 +44,7 @@ public class World extends GameState
         //createPlayerBeta();
         createPlayerKnight();
         createEnemy();
-        //createHealth();w
+        //addHealth();
         //createEnemyRandom();
         //createDecoration( App.resources.knightIdle.get( 1 ), new Vector2f( 50, 50 ) );
     }
@@ -169,6 +169,14 @@ public class World extends GameState
         //object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
         object.sprite.setPosition( 300, 100 );
         object.type = GameObject.Type.ENEMY;
+    }
+
+    public void addHealth()
+    {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        object.sprite.setPosition(App.SCREEN_HEIGHT/2, App.SCREEN_WIDTH/2);
+        object.type = GameObject.Type.PLAYER;
     }
 
     /** Creates an enemy. Spawn position is across a circle around the screen. */
