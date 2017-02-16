@@ -5,13 +5,9 @@ import engine2d.App;
 import engine2d.GameObject;
 import engine2d.InputHandler;
 import engine2d.Utility;
-import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
-
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class PlayerStateBehaviour extends StateBehaviour
 {
@@ -37,7 +33,7 @@ public class PlayerStateBehaviour extends StateBehaviour
                 {
                     currentState = StateBehaviour.State.MOVE;
                 }
-                if( ( boolean )input.keyState.get( Keyboard.Key.Q ) )
+                if( ( boolean )input.keyState.get( Keyboard.Key.SPACE ) )
                 {
                     currentState = StateBehaviour.State.ATTACK;
                 }
@@ -48,7 +44,7 @@ public class PlayerStateBehaviour extends StateBehaviour
                 {
                     currentState = StateBehaviour.State.IDLE;
                 }
-                if( ( boolean )input.keyState.get( Keyboard.Key.Q ) )
+                if( ( boolean )input.keyState.get( Keyboard.Key.SPACE ) )
                 {
                     //App.resources.getSound( "Projectile" ).play();
                     currentState = StateBehaviour.State.ATTACK;
