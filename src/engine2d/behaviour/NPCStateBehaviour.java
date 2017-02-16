@@ -1,11 +1,12 @@
 
 package engine2d.behaviour;
 
-import engine2d.Utility;
-import engine2d.Vec2f;
+import engine2d.*;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
+import org.jsfml.window.Keyboard;
 
 import java.util.ArrayList;
 
@@ -13,10 +14,14 @@ public class NPCStateBehaviour extends StateBehaviour
 {
     private Sprite player;
     private float fightingDistance;
+    private Clock attackCooldownCounter = new Clock();
+    private float attackCooldown = 1.0f;
+    private GameObject object;
 
-    public NPCStateBehaviour( Sprite sprite, MotionBehaviour motion, ArrayList<AnimationBehaviour> anims, Sprite player )
+    public NPCStateBehaviour( GameObject object, Sprite player )
     {
-        super( sprite, motion, anims );
+        super( object.sprite, object.motion, object.anims );
+        this.object = object;
         this.player = player;
         fightingDistance = player.getGlobalBounds().width/2 + sprite.getGlobalBounds().width/2;
     }
@@ -34,30 +39,64 @@ public class NPCStateBehaviour extends StateBehaviour
             case IDLE:
                 if( hasArrived( nearPlayer ) == false )
                 {
-                    //System.out.println("gogo");
                     currentState = StateBehaviour.State.MOVE;
                 }
+                if( hasArrived( nearPlayer ) && attackCooldownCounter.getElapsedTime().asSeconds() > 1.0f )
+                {
+                    currentState = State.ATTACK;
+                }
+                break;
 
             case MOVE:
-                if( hasArrived( nearPlayer ) )//&& Math.abs( player.getPosition().y - sprite.getPosition().y ) <= 10.0f )
+                if( hasArrived( nearPlayer ) && attackCooldownCounter.getElapsedTime().asSeconds() > 1.0f )//&& Math.abs( player.getPosition().y - sprite.getPosition().y ) <= 10.0f )
                 {
                     currentState = StateBehaviour.State.ATTACK;
                 }
+                if( hasArrived( nearPlayer ) && attackCooldownCounter.getElapsedTime().asSeconds() < 1.0f )//&& Math.abs( player.getPosition().y - sprite.getPosition().y ) <= 10.0f )
+                {
+                    currentState = StateBehaviour.State.IDLE;
+                }
+                break;
 
             case ATTACK:
                 if( currentAnim.isEnding() )
                 {
-                    if( hasArrived( nearPlayer ) == false )// && Math.abs( player.getPosition().y - sprite.getPosition().y ) > 10.0f )
+                    if( hasArrived( nearPlayer ) )
                     {
-                        currentState = StateBehaviour.State.MOVE;
+                        currentState = State.IDLE;
+                    }
+                    if( hasArrived( nearPlayer ) == false )
+                    {
+                        currentState = State.MOVE;
                     }
                 }
+                break;
+        }
+
+        if( object.health.get() <= 0 ) { currentState = State.DEAD; }
+
+
+        //System.out.println( hasArrived(  nearPlayer ));
+
+        if( currentState == State.ATTACK )
+        {
+            motion.velocity = new Vector2f( 0, 0 );
+            attackCooldownCounter.restart();
         }
 
         if( currentState == State.MOVE )
         {
+            motion.velocity = new Vector2f( 0, 0 );
             headTowards( nearPlayer );
             turnTowards( player.getPosition() );
+        }
+
+        if( currentState == State.DEAD )
+        {
+            if( currentAnim.isEnding() )
+            {
+                object.status = GameObject.Status.INACTIVE;
+            }
         }
     }
 
@@ -65,7 +104,7 @@ public class NPCStateBehaviour extends StateBehaviour
     void headTowards( Vector2f dest )
     {
         Vector2f diff = Vec2f.normalize( Vector2f.sub( dest, sprite.getPosition() ) );
-        motion.velocity = diff;
+        motion.velocity = new Vector2f( diff.x/2, diff.y/2 );
     }
 
     void turnTowards( Vector2f dest )
@@ -78,7 +117,11 @@ public class NPCStateBehaviour extends StateBehaviour
     boolean hasArrived( Vector2f dest )
     {
         Vector2f diff = Vector2f.sub( dest, sprite.getPosition() );
-        return Vec2f.length( diff ) < 5;
+        if( Vec2f.length( diff ) < 5 )
+        {
+            return true;
+        }
+        return false;
     }
 
     /** Rotates toward a specified point.

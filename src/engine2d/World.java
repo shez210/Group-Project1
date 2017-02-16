@@ -83,6 +83,12 @@ public class World extends GameState
 
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
         App.window.draw( new Text( "Use WASD to move and Q to attack.", App.resources.font, 30 ) );
+        App.window.draw( new Text( "\nhealth = " + gameObjects.get( playerIndex ).health, App.resources.font, 30 ) );
+        if( gameObjects.size() - 1 >= playerIndex + 1 )
+        {
+            App.window.draw( new Text( "\n                             enemy health = " + gameObjects.get( playerIndex + 1 ).health, App.resources.font, 30 ) );
+        }
+
         App.window.draw( App.resources.cursorSprite );
         App.window.display();
     }
@@ -90,9 +96,9 @@ public class World extends GameState
     /** Resolves all collisions that happen. Still not finished. Works only to kill enemies. */
     public void resolveCollisions()
     {
-        for( int i = gameObjects.size() - 1; i > 0; i -- )
+        for( int i = gameObjects.size() - 1; i >= 0; i -- )
         {
-            for( int j = gameObjects.size() - 1; j > 0; j -- )
+            for( int j = gameObjects.size() - 1; j >= 0; j -- )
             {
 
 
@@ -114,7 +120,7 @@ public class World extends GameState
      * @param B sprite of second entity
      * @return true if there is a collision, false otherwise.
      */
-    public boolean isCollision( Sprite A, Sprite B )
+    public static boolean isCollision( Sprite A, Sprite B )
     {
         if( A.getGlobalBounds().intersection( B.getGlobalBounds() ) == null ) { return false; }
         return true;
@@ -137,11 +143,11 @@ public class World extends GameState
         gameObjects.add( object );
         object.sprite.setPosition( 300, 300 );
         object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5, 5 ) ) );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), StateBehaviour.State.IDLE.ordinal() );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun ), StateBehaviour.State.MOVE.ordinal() );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), StateBehaviour.State.ATTACK.ordinal() );
-        object.addBehaviour( new PlayerStateBehaviour( App.inputHandler, object.sprite, object.motion, object.anims ) );
-        object.sprite.setOrigin( object.sprite.getGlobalBounds().width/2, object.sprite.getGlobalBounds().height );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle, App.resources.pointsOfOrigin.get( "knightIdle") ), StateBehaviour.State.IDLE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun, App.resources.pointsOfOrigin.get( "knightRun") ), StateBehaviour.State.MOVE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack, App.resources.pointsOfOrigin.get( "knightAttack") ), StateBehaviour.State.ATTACK.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightDead, App.resources.pointsOfOrigin.get( "knightDead") ), StateBehaviour.State.DEAD.ordinal() );
+        object.addBehaviour( new PlayerStateBehaviour( App.inputHandler, object ) );
         playerIndex = gameObjects.size() - 1;
         object.type = GameObject.Type.PLAYER;
     }
@@ -152,13 +158,14 @@ public class World extends GameState
         GameObject object = new GameObject();
         gameObjects.add( object );
         object.addBehaviour( new MotionBehaviour( object.sprite, new Vector2f( 5, 5 ) ) );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle ), StateBehaviour.State.IDLE.ordinal() );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun ), StateBehaviour.State.MOVE.ordinal() );
-        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack ), StateBehaviour.State.ATTACK.ordinal() );
-        object.addBehaviour( new NPCStateBehaviour(  object.sprite, object.motion, object.anims, gameObjects.get( playerIndex ).sprite ) );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle, App.resources.pointsOfOrigin.get( "knightIdle") ), StateBehaviour.State.IDLE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun, App.resources.pointsOfOrigin.get( "knightRun") ), StateBehaviour.State.MOVE.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack, App.resources.pointsOfOrigin.get( "knightAttack") ), StateBehaviour.State.ATTACK.ordinal() );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightDead, App.resources.pointsOfOrigin.get( "knightDead") ), StateBehaviour.State.DEAD.ordinal() );
+
+        object.addBehaviour( new NPCStateBehaviour( object, gameObjects.get( playerIndex ).sprite ) );
         //object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
         object.sprite.setPosition( 300, 100 );
-        object.sprite.setOrigin( object.sprite.getGlobalBounds().width/2, object.sprite.getGlobalBounds().height );
         object.type = GameObject.Type.ENEMY;
     }
 
@@ -196,9 +203,9 @@ public class World extends GameState
     public void destroyOutOfBoundsObjects()
     {
 
-        for( int i = gameObjects.size() - 1; i > 0; i -- ) // Counts backwards for performance reasons.
+        for( int i = gameObjects.size() - 1; i >= 0; i -- ) // Counts backwards for performance reasons.
         {
-            if( !gameObjects.get( i ).hasMotion() == true  )//&& gameObjects.get( i ).motion.isOutOfScreenBoundaries() == true )
+            if( gameObjects.get( i ).hasMotion() == true  )//&& gameObjects.get( i ).motion.isOutOfScreenBoundaries() == true )
             {
                 gameObjects.remove( gameObjects.get( i ) );
             }
@@ -208,14 +215,14 @@ public class World extends GameState
     /** Deallocate all objects that are already dead. */
     public void destroyDeadObjects()
     {
-        for( int i = gameObjects.size() - 1; i > 0; i -- )
-        { if( gameObjects.get( i ).status == GameObject.Status.DEAD.ordinal() ) { gameObjects.remove( gameObjects.get( i ) ); } }
+        for( int i = gameObjects.size() - 1; i >= 0; i -- )
+        { if( gameObjects.get( i ).status == GameObject.Status.INACTIVE ) { gameObjects.remove( gameObjects.get( i ) ); } }
     }
 
     /** Wrapper function, handles all deallocations. */
     public void checkForDeallocations()
     {
-        destroyOutOfBoundsObjects();
+        //destroyOutOfBoundsObjects();
         destroyDeadObjects();
     }
 
@@ -230,13 +237,9 @@ public class World extends GameState
                     GameObject objectA = gameObjects.get( i );
                     GameObject objectB = gameObjects.get( j );
 
-                    if( objectA.type == GameObject.Type.PLAYER
-                    &&  objectB.type == GameObject.Type.ENEMY
-                    &&  isCollision( objectA.sprite, objectB.sprite )
-                    &&  objectA.state.currentState == StateBehaviour.State.ATTACK
-                    &&  objectA.state.currentAnim.isEnding() )
+                    if( objectA.state.isAttacking( objectB ) )
                     {
-                        System.out.println( "Enemy hit." );
+                        objectB.health.set( objectB.health.get() - 25 );
                         //objectB.state.currentStat
                     }
                 }

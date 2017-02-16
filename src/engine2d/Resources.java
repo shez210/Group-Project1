@@ -3,6 +3,7 @@ package engine2d;
 import org.jsfml.audio.Sound;
 import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.*;
+import org.jsfml.system.Vector2f;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class Resources
     public ArrayList<Texture> knightRun = new ArrayList<>();
     public ArrayList<Texture> knightAttack = new ArrayList<>();
     public ArrayList<Texture> knightDead = new ArrayList<>();
+    public HashMap<String, Vector2f> pointsOfOrigin = new HashMap<>();
     private HashMap<String, Sound> sounds = new HashMap<>();
 
 
@@ -39,6 +41,10 @@ public class Resources
         loadTexturesFromFolder( "sprites/knight/Run", knightRun, new Color( 3, 2, 1 ) );
         loadTexturesFromFolder( "sprites/knight/Attack", knightAttack, new Color( 3, 2, 1 ) );
         loadTexturesFromFolder( "sprites/knight/Dead", knightDead, new Color( 3, 2, 1 ) );
+        pointsOfOrigin.put( "knightIdle", new Vector2f( 36, 94 ) );
+        pointsOfOrigin.put( "knightRun", new Vector2f( 44, 101 ) );
+        pointsOfOrigin.put( "knightAttack", new Vector2f( 44, 99 ) );
+        pointsOfOrigin.put( "knightDead", new Vector2f( 132, 99 ) );
 
         loadTexture( "sprites/player_running.png", new Color( 255, 254 ,254 ) );
         loadTexture( "sprites/placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255

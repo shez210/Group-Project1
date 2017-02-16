@@ -2,7 +2,7 @@ package engine2d;
 
 import org.jsfml.system.Vector2f;
 
-/** This class adds additional functionality to JSFML Vector2f. Im not even allowed to modify the lib... */
+/** This class provides additional functionality to JSFML Vector2f. */
 public class Vec2f
 {
     /** Normalizes a 2D vector.

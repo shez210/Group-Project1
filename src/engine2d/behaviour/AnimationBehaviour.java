@@ -31,6 +31,7 @@ public class AnimationBehaviour
     private int numSequencesRow; // Number of sprites per row in the sprite sheet.
     private int numSequencesColumn; // Number of sprites per column in the sprite sheet.
     public int maxAnimationTimeMillis;
+    public Vector2f originPoint;
 
     // Used for idle animations.
     private boolean showOnlyOneFrame; // Supports the option to show only the first frame of a certain animation.
@@ -60,7 +61,7 @@ public class AnimationBehaviour
         maxAnimationTimeMillis = totalSequences * millisPerSequence;
     }
 
-    public AnimationBehaviour( Sprite sprite, ArrayList<Texture> textures )
+    public AnimationBehaviour( Sprite sprite, ArrayList<Texture> textures, Vector2f originPoint )
     {
         this.sequenceStart = 0;
         this.sprite = sprite;
@@ -68,6 +69,7 @@ public class AnimationBehaviour
         maxAnimationTimeMillis = textures.size() * millisPerSequence;
         sequenceEnd = textures.size();
         this.sprite.setTexture( textures.get( 0 ) );
+        this.originPoint = originPoint;
     }
 
     /** Sets the animation speed. */
@@ -80,6 +82,9 @@ public class AnimationBehaviour
     {
         sequenceTimer.restart();
         currentSequence = sequenceStart;
+        sprite.setTexture( textures.get( currentSequence ) );
+        sprite.setTextureRect( new IntRect( new Vector2i( 0, 0 ), new Vector2i( sprite.getTexture().getSize().x, sprite.getTexture().getSize().y ) ) );
+        sprite.setOrigin( originPoint );
     }
 
     public boolean isEnding()
@@ -99,6 +104,7 @@ public class AnimationBehaviour
     /** Updates the animation. Should be called every frame. */
     public void update()
     {
+
         if( spriteSheetMode == true )
         {
             if( sequenceTimer.getElapsedTime().asMilliseconds() > millisPerSequence )
@@ -119,11 +125,14 @@ public class AnimationBehaviour
             if( sequenceTimer.getElapsedTime().asMilliseconds() > millisPerSequence )
             {
                 sequenceTimer.restart();
-                sprite.setTextureRect( new IntRect( new Vector2i( 0, 0 ), new Vector2i( sprite.getTexture().getSize().x, sprite.getTexture().getSize().y ) ) );
-                sprite.setTexture( textures.get( currentSequence ) );
                 currentSequence ++;
                 if( currentSequence == textures.size() ) { currentSequence = sequenceStart; }
+
+                sprite.setTexture( textures.get( currentSequence ) );
+                sprite.setTextureRect( new IntRect( new Vector2i( 0, 0 ), new Vector2i( sprite.getTexture().getSize().x, sprite.getTexture().getSize().y ) ) );
+
             }
+
             //System.out.println( currentSequence );
         }
     }

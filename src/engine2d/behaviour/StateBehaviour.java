@@ -1,9 +1,6 @@
 package engine2d.behaviour;
 
-import engine2d.GameObject;
-import engine2d.InputHandler;
-import engine2d.Utility;
-import engine2d.Vec2f;
+import engine2d.*;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
@@ -26,7 +23,7 @@ public abstract class StateBehaviour
 
     public enum State
     {
-        IDLE, MOVE, ATTACK
+        IDLE, MOVE, ATTACK, DEAD
     }
 
     public StateBehaviour( Sprite sprite, MotionBehaviour motion, ArrayList<AnimationBehaviour> anims )
@@ -44,8 +41,15 @@ public abstract class StateBehaviour
             currentAnim = anims.get( requestedAnim.ordinal() );
             currentAnim.reset();
             previousState = currentState;
-            //System.out.println("animation changed to " + requestedAnim.ordinal());
+            System.out.println("animation changed to " + requestedAnim.ordinal());
         }
+    }
+
+
+    public boolean isAttacking( GameObject object )
+    {
+        return currentState == StateBehaviour.State.ATTACK && currentAnim.isEnding()
+        && World.isCollision( sprite, object.sprite );
     }
 
     abstract void handleInput();
