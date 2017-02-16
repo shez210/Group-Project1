@@ -29,7 +29,7 @@ public class World extends GameState
 
     public World()
     {
-        //App.resources.getSound( "repentant" ).play();
+        App.resources.getSound( "repentant" ).play();
         //createDecoration( App.resources.textures.get( 13 ), backGround );
         //createDecoration( App.resources.textures.get( 12 ), healthPos );
         //createDecoration( App.resources.textures.get( 12 ), healthPos1 );
@@ -44,9 +44,11 @@ public class World extends GameState
         //createPlayerBeta();
         createPlayerKnight();
         createEnemy();
+        //createHealth();w
         //createEnemyRandom();
         //createDecoration( App.resources.knightIdle.get( 1 ), new Vector2f( 50, 50 ) );
     }
+
 
     /** Handles creation and destruction of entities and also resolves collision. */
     public void update()
@@ -69,7 +71,7 @@ public class World extends GameState
         App.resources.cursorSprite.setPosition( new Vector2f( App.inputHandler.mouseCoords ) ); //Set cursor position.
 
         //Transition
-        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.ESCAPE ) && ( toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
+        if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.M ) && ( toggleDelayTimer.getElapsedTime().asSeconds() > TOGGLE_DELAY ) )
         {
             toggleDelayTimer.restart();
             App.currentState = new Menu();
@@ -82,7 +84,7 @@ public class World extends GameState
         App.window.clear();
 
         for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
-        App.window.draw( new Text( "Use WASD to move and Q to attack.", App.resources.font, 30 ) );
+        App.window.draw( new Text( "Use WASD to move and Space to attack.", App.resources.font, 30 ) );
         App.window.draw( new Text( "\nhealth = " + gameObjects.get( playerIndex ).health, App.resources.font, 30 ) );
         if( gameObjects.size() - 1 >= playerIndex + 1 )
         {
@@ -239,7 +241,7 @@ public class World extends GameState
 
                     if( objectA.state.isAttacking( objectB ) )
                     {
-                        objectB.health.set( objectB.health.get() - 25 );
+                        objectB.health.set( objectB.health.get() - 10 );
                         //objectB.state.currentStat
                     }
                 }
