@@ -4,6 +4,7 @@ import engine2d.behaviour.*;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,7 @@ public class GameObject
     public Type type;
     public Status status = Status.ACTIVE;
     public Sprite sprite;
+    public Sprite shadow;
     public ColliderBehaviour collider;
     public AIBehaviour ai;
     public ArrayList<AnimationBehaviour> anims;
@@ -38,6 +40,14 @@ public class GameObject
         if( collider != null ) { collider.update(); } // If the engine2d.GameObject can move, then move it.
         if( state != null ) { state.update(); } // If the engine2d.GameObject supports animation, update it.
         if( ai != null ) { ai.update(); }
+        if( shadow != null )
+        {
+            if( Vec2f.greaterThan( sprite.getScale(), new Vector2f( 0, 0 ) ) )
+                shadow.setPosition( new Vector2f( sprite.getGlobalBounds().left + state.currentAnim.originPoint.x, sprite.getGlobalBounds().top + state.currentAnim.originPoint.y + 30 ) );
+
+            else
+                shadow.setPosition( new Vector2f( sprite.getGlobalBounds().left + sprite.getGlobalBounds().width - state.currentAnim.originPoint.x, sprite.getGlobalBounds().top + state.currentAnim.originPoint.y + 30 ) );
+        }
     }
 
     boolean hasMotion()

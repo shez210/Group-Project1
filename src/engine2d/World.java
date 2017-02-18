@@ -1,9 +1,7 @@
 package engine2d;
 
 import engine2d.behaviour.*;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.Text;
-import org.jsfml.graphics.Texture;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
@@ -39,6 +37,7 @@ public class World extends GameState
 
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
+        //createPlayer();
         //createPlayer();
         //createPlayerBeta();
         buildLevel();
@@ -76,7 +75,11 @@ public class World extends GameState
     {
         App.window.clear();
 
-        for( GameObject object : gameObjects ) { App.window.draw( object.sprite ); }
+        for( GameObject object : gameObjects )
+        {
+            if( object.shadow != null ) { App.window.draw( object.shadow ); }
+            App.window.draw( object.sprite );
+        }
         App.window.draw( new Text( "Use WASD to move and Space to attack.", App.resources.font, 30 ) );
         //App.window.draw( new Text( "\nhealth = " + gameObjects.get( playerIndex ).health, App.resources.font, 30 ) );
         //if( gameObjects.size() - 1 >= playerIndex + 1 )
@@ -137,7 +140,7 @@ public class World extends GameState
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( App.resources.props.get( 1 ) ) );
+        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
         object.addBehaviour( new ColliderBehaviour( object.sprite, 5 ) );
         object.sprite.setPosition( 300, 300 );
         playerIndex = gameObjects.size() - 1;
@@ -148,6 +151,10 @@ public class World extends GameState
         GameObject object = new GameObject();
         gameObjects.add( object );
         object.sprite.setPosition( 300, 300 );
+        object.shadow = new Sprite( App.resources.textures.get( "shadow" ) );
+        object.shadow.setOrigin( object.shadow.getGlobalBounds().width/2, object.shadow.getGlobalBounds().height/2 );
+        object.shadow.setScale( 0.1f, 0.1f );
+        object.shadow.setColor( new Color( object.shadow.getColor().r, object.shadow.getColor().b, object.shadow.getColor().g, 128 ) );
         object.addBehaviour( new ColliderBehaviour( object.sprite, 1.5f ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle, App.resources.pointsOfOrigin.get( "knightIdle") ), StateBehaviour.State.IDLE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun, App.resources.pointsOfOrigin.get( "knightRun") ), StateBehaviour.State.MOVE.ordinal() );
@@ -181,7 +188,7 @@ public class World extends GameState
         int angle = new Random().nextInt( 360 );
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addTexture( new Texture( App.resources.props.get( 1 ) ) );
+        object.addTexture( new Texture( App.resources.textures.get( 1 ) ) );
         object.addBehaviour( new ColliderBehaviour( object.sprite, 5 ) );
         object.addBehaviour( new AIBehaviour( object.collider, object.sprite, gameObjects.get( playerIndex ).sprite ) );
         object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_HEIGHT/2 ) );
@@ -268,7 +275,7 @@ public class World extends GameState
 
                 if( line[ j ] == '0' )
                 {
-                    createDecoration( App.resources.props.get( "stoneFloor1" ), pos );
+                    createDecoration( App.resources.textures.get( "stoneFloor1" ), pos );
                 }
 
                 if( line[ j ] == '1' )
@@ -288,36 +295,36 @@ public class World extends GameState
 
         if( currentRow[ j - 1 ] == '1' && currentRow[ j + 1 ] == '1' && bottomRow[ j ] == '0' )
         {
-            createDecoration( App.resources.props.get( "stoneWallNorth1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallNorth1" ), pos, true );
         }
         if( currentRow[ j - 1 ] == '1' && currentRow[ j + 1 ] == '1' && topRow[ j ] == '0' )
         {
-            createDecoration( App.resources.props.get( "stoneWallSouth1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallSouth1" ), pos, true );
         }
         if( topRow[ j ] == '1' && bottomRow[ j ] == '1' && currentRow[ j + 1 ] == '0' )
         {
-            createDecoration( App.resources.props.get( "stoneWallWest1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallWest1" ), pos, true );
         }
         if( topRow[ j ] == '1' && bottomRow[ j ] == '1' && currentRow[ j - 1 ] == '0' )
         {
-            createDecoration( App.resources.props.get( "stoneWallEast1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallEast1" ), pos, true );
         }
 
         if( currentRow[ j + 1 ] == '1' && bottomRow[ j ] == '1' )
         {
-            createDecoration( App.resources.props.get( "stoneWallNorthWest1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallNorthWest1" ), pos, true );
         }
         if( currentRow[ j - 1 ] == '1' && bottomRow[ j ] == '1' )
         {
-            createDecoration( App.resources.props.get( "stoneWallNorthEast1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallNorthEast1" ), pos, true );
         }
         if( currentRow[ j + 1 ] == '1' && topRow[ j ] == '1' )
         {
-            createDecoration( App.resources.props.get( "stoneWallSouthWest1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallSouthWest1" ), pos, true );
         }
         if( currentRow[ j - 1 ] == '1' && topRow[ j ] == '1' )
         {
-            createDecoration( App.resources.props.get( "stoneWallSouthEast1" ), pos, true );
+            createDecoration( App.resources.textures.get( "stoneWallSouthEast1" ), pos, true );
         }
 
 

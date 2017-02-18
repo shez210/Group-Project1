@@ -23,7 +23,7 @@ public class Resources
     public ArrayList<Texture> knightAttack = new ArrayList<>();
     public ArrayList<Texture> knightDead = new ArrayList<>();
     public HashMap<String, Vector2f> pointsOfOrigin = new HashMap<>();
-    public HashMap<String, Texture> props = new HashMap<>();
+    public HashMap<String, Texture> textures = new HashMap<>();
     private HashMap<String, Sound> sounds = new HashMap<>();
 
 
@@ -53,6 +53,7 @@ public class Resources
         loadTexture( "sprites/bullet.png", Color.WHITE );
         loadTexture( "sprites/cursor.png", Color.WHITE );
         loadTexture( "sprites/placeholder_tile.png", Color.WHITE );
+        loadTexture( "sprites/shadow.png", Color.WHITE );
         // If you want to call loadTexture(), do it HERE, not before the other function calls.
         // load sprite sheet here.
 
@@ -85,7 +86,7 @@ public class Resources
         loadSound( "Music/menu.wav" );
 
         //Set the cursor stuff.
-        cursorSprite = new Sprite( props.get( "cursor" ) );
+        cursorSprite = new Sprite( textures.get( "cursor" ) );
         cursorSprite.setScale( 0.47f, 0.47f );
     }
 
@@ -102,7 +103,7 @@ public class Resources
         try { tex.loadFromImage( img ); }
         catch ( TextureCreationException e )
         { e.printStackTrace(); }
-        props.put( Utility.getNameOnly( path ), tex );
+        textures.put( Utility.getNameOnly( path ), tex );
     }
 
     public void loadTexture( String path, ArrayList<Texture> textures, Color color )
@@ -143,7 +144,7 @@ public class Resources
         try{ tex.loadFromFile( Paths.get( path ), new IntRect( x, y, tileSize, tileSize ) ); }
         catch ( IOException e ) { e.printStackTrace(); }
         tex.setSmooth( true );
-        props.put( name, tex );
+        textures.put( name, tex );
     }
 
     /** Loads a font at the specified path.
