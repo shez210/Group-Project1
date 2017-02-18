@@ -20,7 +20,7 @@ public class NPCStateBehaviour extends StateBehaviour
 
     public NPCStateBehaviour( GameObject object, Sprite player )
     {
-        super( object.sprite, object.motion, object.anims );
+        super( object.sprite, object.collider, object.anims );
         this.object = object;
         this.player = player;
         fightingDistance = player.getGlobalBounds().width/2 + sprite.getGlobalBounds().width/2;
@@ -80,13 +80,13 @@ public class NPCStateBehaviour extends StateBehaviour
 
         if( currentState == State.ATTACK )
         {
-            motion.velocity = new Vector2f( 0, 0 );
+            collider.velocity = new Vector2f( 0, 0 );
             attackCooldownCounter.restart();
         }
 
         if( currentState == State.MOVE )
         {
-            motion.velocity = new Vector2f( 0, 0 );
+            collider.velocity = new Vector2f( 0, 0 );
             headTowards( nearPlayer );
             turnTowards( player.getPosition() );
         }
@@ -104,7 +104,7 @@ public class NPCStateBehaviour extends StateBehaviour
     void headTowards( Vector2f dest )
     {
         Vector2f diff = Vec2f.normalize( Vector2f.sub( dest, sprite.getPosition() ) );
-        motion.velocity = new Vector2f( diff.x/2, diff.y/2 );
+        collider.velocity = new Vector2f( diff.x/2, diff.y/2 );
     }
 
     void turnTowards( Vector2f dest )

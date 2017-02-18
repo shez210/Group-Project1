@@ -17,7 +17,7 @@ public class PlayerStateBehaviour extends StateBehaviour
 
     public PlayerStateBehaviour( InputHandler input, GameObject object )
     {
-        super( object.sprite, object.motion, object.anims );
+        super( object.sprite, object.collider, object.anims );
         this.input = input;
         this.object = object;
     }
@@ -91,29 +91,29 @@ public class PlayerStateBehaviour extends StateBehaviour
         //Logic
         if( currentState == State.IDLE || currentState == State.ATTACK || currentState == State.DEAD )
         {
-            motion.velocity = new Vector2f( 0, 0 );
+            collider.velocity = new Vector2f( 0, 0 );
         }
 
         if( currentState == State.MOVE )
         {
-            motion.velocity = new Vector2f( 0, 0 );
+            collider.velocity = new Vector2f( 0, 0 );
             if( ( boolean )input.keyState.get( Keyboard.Key.A ) )
             {
                 if( sprite.getScale().x > 0 ) { Utility.turnLeft( sprite ); }
-                motion.velocity = Vector2f.add( motion.velocity, new Vector2f( -motion.speed, 0 ) );
+                collider.velocity = Vector2f.add( collider.velocity, new Vector2f( -collider.speed, 0 ) );
             }
 
             if( ( boolean )input.keyState.get( Keyboard.Key.D ) )
             {
                 if( sprite.getScale().x < 0 ) { Utility.turnRight( sprite ); }
-                motion.velocity = Vector2f.add( motion.velocity, new Vector2f( motion.speed, 0 ) );
+                collider.velocity = Vector2f.add( collider.velocity, new Vector2f( collider.speed, 0 ) );
             }
 
             if( ( boolean )input.keyState.get( Keyboard.Key.W ) )
-            { motion.velocity = Vector2f.add( motion.velocity, new Vector2f( 0, -motion.speed ) ); }
+            { collider.velocity = Vector2f.add( collider.velocity, new Vector2f( 0, -collider.speed ) ); }
 
             if( ( boolean )input.keyState.get( Keyboard.Key.S ) )
-            { motion.velocity = Vector2f.add( motion.velocity, new Vector2f( 0, motion.speed ) ); }
+            { collider.velocity = Vector2f.add( collider.velocity, new Vector2f( 0, collider.speed ) ); }
         }
 
         if( currentState == State.DEAD )

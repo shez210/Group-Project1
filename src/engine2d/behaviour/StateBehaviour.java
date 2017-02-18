@@ -2,9 +2,6 @@ package engine2d.behaviour;
 
 import engine2d.*;
 import org.jsfml.graphics.Sprite;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
-import org.jsfml.window.Keyboard;
 
 import java.util.ArrayList;
 
@@ -17,7 +14,7 @@ public abstract class StateBehaviour
     public State currentState = State.IDLE;
     State previousState;
     Sprite sprite;
-    MotionBehaviour motion;
+    ColliderBehaviour collider;
     ArrayList<AnimationBehaviour> anims;
     public AnimationBehaviour currentAnim;
 
@@ -26,10 +23,10 @@ public abstract class StateBehaviour
         IDLE, MOVE, ATTACK, DEAD
     }
 
-    public StateBehaviour( Sprite sprite, MotionBehaviour motion, ArrayList<AnimationBehaviour> anims )
+    public StateBehaviour( Sprite sprite, ColliderBehaviour collider, ArrayList<AnimationBehaviour> anims )
     {
         this.sprite = sprite;
-        this.motion = motion;
+        this.collider = collider;
         this.anims = anims;
         this.currentAnim = anims.get( 0 );
     }

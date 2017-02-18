@@ -4,7 +4,6 @@ import engine2d.behaviour.*;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,8 +15,7 @@ public class GameObject
     public Type type;
     public Status status = Status.ACTIVE;
     public Sprite sprite;
-    public Sprite collider;
-    public MotionBehaviour motion;
+    public ColliderBehaviour collider;
     public AIBehaviour ai;
     public ArrayList<AnimationBehaviour> anims;
     public StatsBehaviour stats;
@@ -32,21 +30,19 @@ public class GameObject
     public GameObject()
     {
         sprite = new Sprite();
-        collider = new Sprite();
-        collider.setTextureRect( new IntRect( 0, 0, 50, 50 ) );
         anims = new ArrayList<>( Collections.nCopies( StateBehaviour.State.values().length, null ) );
     }
 
     void update()
     {
-        if( motion != null ) { motion.update(); } // If the engine2d.GameObject can move, then move it.
+        if( collider != null ) { collider.update(); } // If the engine2d.GameObject can move, then move it.
         if( state != null ) { state.update(); } // If the engine2d.GameObject supports animation, update it.
         if( ai != null ) { ai.update(); }
     }
 
     boolean hasMotion()
     {
-        return motion != null;
+        return collider != null;
     }
 
     void addBehaviour( AnimationBehaviour anim, int abilityIndex )
@@ -59,9 +55,9 @@ public class GameObject
         this.state = state;
     }
 
-    void addBehaviour( MotionBehaviour motion )
+    void addBehaviour( ColliderBehaviour collider )
     {
-        this.motion = motion;
+        this.collider = collider;
     }
 
     void addBehaviour( AIBehaviour ai )

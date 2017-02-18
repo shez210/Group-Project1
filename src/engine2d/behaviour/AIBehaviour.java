@@ -5,19 +5,19 @@ import org.jsfml.system.Vector2f;
 
 public class AIBehaviour
 {
-    MotionBehaviour motion;
+    ColliderBehaviour collider;
     Sprite aiSprite;
     Sprite targetSprite;
 
     /** Constructs the AI behaviour of a game object.
      *
-     * @param motion the motion behaviour of the current game object.
+     * @param collider the collider behaviour of the current game object.
      * @param aiSprite the sprite of the current game object.
      * @param targetSprite the sprite of the targeted game object.
      */
-    public AIBehaviour( MotionBehaviour motion, Sprite aiSprite, Sprite targetSprite )
+    public AIBehaviour( ColliderBehaviour collider, Sprite aiSprite, Sprite targetSprite )
     {
-        this.motion = motion;
+        this.collider = collider;
         this.aiSprite = aiSprite;
         this.targetSprite = targetSprite;
     }
@@ -31,6 +31,6 @@ public class AIBehaviour
     public void chaseTarget()
     {
         Vector2f diff = Vector2f.sub( targetSprite.getPosition(), aiSprite.getPosition() );
-        motion.velocity = Vector2f.div( diff, 130.0f );
+        collider.velocity = Vector2f.div( diff, 130.0f );
     }
 }

@@ -2,7 +2,6 @@ package engine2d;
 
 import engine2d.behaviour.*;
 import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
@@ -54,22 +53,11 @@ public class World extends GameState
     /** Handles creation and destruction of entities and also resolves collision. */
     public void update()
     {
-        /*
-        if( App.inputHandler.isMouseClicked == true && timerShoot.getElapsedTime().asSeconds() > 0.1f )
-        {
-            App.resources.getSound( "Projectile" ).play();
-            timerShoot.restart();
-            //createProjectile( App.resources.textures.get( 3 ), gameObjects.get( playerIndex ).sprite.getPosition(), gameObjects.get( playerIndex ).motion.direction );
-        }
-        */
-        //if( timer.getElapsedTime().asSeconds() > 0.2f ) { createEnemyRandom(); timer.restart(); }
-
-
         for( GameObject object : gameObjects ) { object.update(); }
-        moveAllObjectsAlongX();
-        resolveCollisionsAlongX();
-        moveAllObjectsAlongY();
-        resolveCollisionsAlongY();
+        moveEntitiesAlong( ColliderBehaviour.Axis.X );
+        resolveCollisionsAlong( ColliderBehaviour.Axis.X );
+        moveEntitiesAlong( ColliderBehaviour.Axis.Y );
+        resolveCollisionsAlong( ColliderBehaviour.Axis.Y );
 
         resolveKills();
         checkForDeallocations();
@@ -100,26 +88,7 @@ public class World extends GameState
         App.window.display();
     }
 
-    /** Resolves all collisions that happen. Still not finished. Works only to kill enemies. */
-    public void resolveCollisionsAlongX()
-    {
-        for( int i = gameObjects.size() - 1; i >= 0; i -- )
-        {
-            for( int j = gameObjects.size() - 1; j >= 0; j -- )
-            {
-                GameObject objectA = gameObjects.get( i );
-                GameObject objectB = gameObjects.get( j );
-                FloatRect box = objectA.sprite.getGlobalBounds();
-                if( i != j && (objectA.type == GameObject.Type.PLAYER ) && objectB.collidable
-                && isCollision( new FloatRect( box.left + 50, box.top + 100, 10, 10 ), objectB.sprite.getGlobalBounds() ) )
-                {
-                    objectA.motion.inCollisionXWith( objectB );
-                }
-            }
-        }
-    }
-
-    public void resolveCollisionsAlongY()
+    public void resolveCollisionsAlong( ColliderBehaviour.Axis axis )
     {
         for( int i = gameObjects.size() - 1; i >= 0; i -- )
         {
@@ -131,28 +100,25 @@ public class World extends GameState
                 if( i != j && (objectA.type == GameObject.Type.PLAYER ) && objectB.collidable
                         && isCollision( new FloatRect( box.left + 50, box.top + 100, 10, 10 ), objectB.sprite.getGlobalBounds() ) )
                 {
-                    objectA.motion.inCollisionYWith( objectB );
+                    objectA.collider.inCollisionWith( objectB, axis );
                 }
             }
         }
     }
 
-    public void moveAllObjectsAlongX()
+    public void moveEntitiesAlong( ColliderBehaviour.Axis axis )
     {
         for( GameObject object : gameObjects )
         {
-            if( object.motion != null ) { object.sprite.setPosition( Vector2f.add( object.sprite.getPosition(), new Vector2f( object.motion.velocity.x, 0 ) ) ); }
+            if( object.collider != null )
+            {
+                Vector2f move;
+                if( axis == ColliderBehaviour.Axis.X ) { move = new Vector2f( object.collider.velocity.x, 0 ); }
+                else move = new Vector2f( 0, object.collider.velocity.y );
+                object.sprite.setPosition( Vector2f.add( object.sprite.getPosition(), move ) );
+            }
         }
     }
-
-    public void moveAllObjectsAlongY()
-    {
-        for( GameObject object : gameObjects )
-        {
-            if( object.motion != null ) { object.sprite.setPosition( Vector2f.add( object.sprite.getPosition(), new Vector2f( 0, object.motion.velocity.y ) ) ); }
-        }
-    }
-
 
     /** Checks if there is a collision between two entities.
      *
@@ -172,7 +138,7 @@ public class World extends GameState
         GameObject object = new GameObject();
         gameObjects.add( object );
         object.addTexture( new Texture( App.resources.props.get( 1 ) ) );
-        object.addBehaviour( new MotionBehaviour( object.sprite, 5 ) );
+        object.addBehaviour( new ColliderBehaviour( object.sprite, 5 ) );
         object.sprite.setPosition( 300, 300 );
         playerIndex = gameObjects.size() - 1;
     }
@@ -182,7 +148,7 @@ public class World extends GameState
         GameObject object = new GameObject();
         gameObjects.add( object );
         object.sprite.setPosition( 300, 300 );
-        object.addBehaviour( new MotionBehaviour( object.sprite, 1.5f ) );
+        object.addBehaviour( new ColliderBehaviour( object.sprite, 1.5f ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle, App.resources.pointsOfOrigin.get( "knightIdle") ), StateBehaviour.State.IDLE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun, App.resources.pointsOfOrigin.get( "knightRun") ), StateBehaviour.State.MOVE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack, App.resources.pointsOfOrigin.get( "knightAttack") ), StateBehaviour.State.ATTACK.ordinal() );
@@ -197,24 +163,16 @@ public class World extends GameState
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.addBehaviour( new MotionBehaviour( object.sprite, 5 ) );
+        object.addBehaviour( new ColliderBehaviour( object.sprite, 5 ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle, App.resources.pointsOfOrigin.get( "knightIdle") ), StateBehaviour.State.IDLE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun, App.resources.pointsOfOrigin.get( "knightRun") ), StateBehaviour.State.MOVE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack, App.resources.pointsOfOrigin.get( "knightAttack") ), StateBehaviour.State.ATTACK.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightDead, App.resources.pointsOfOrigin.get( "knightDead") ), StateBehaviour.State.DEAD.ordinal() );
 
         object.addBehaviour( new NPCStateBehaviour( object, gameObjects.get( playerIndex ).sprite ) );
-        //object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
+        //object.addBehaviour( new AIBehaviour( object.collider, object.sprite, gameObjects.get( playerIndex ).sprite ) );
         object.sprite.setPosition( 300, 100 );
         object.type = GameObject.Type.ENEMY;
-    }
-
-    public void addHealth()
-    {
-        GameObject object = new GameObject();
-        gameObjects.add( object );
-        object.sprite.setPosition(App.SCREEN_HEIGHT/2, App.SCREEN_WIDTH/2);
-        object.type = GameObject.Type.PLAYER;
     }
 
     /** Creates an enemy. Spawn position is across a circle around the screen. */
@@ -224,8 +182,8 @@ public class World extends GameState
         GameObject object = new GameObject();
         gameObjects.add( object );
         object.addTexture( new Texture( App.resources.props.get( 1 ) ) );
-        object.addBehaviour( new MotionBehaviour( object.sprite, 5 ) );
-        object.addBehaviour( new AIBehaviour( object.motion, object.sprite, gameObjects.get( playerIndex ).sprite ) );
+        object.addBehaviour( new ColliderBehaviour( object.sprite, 5 ) );
+        object.addBehaviour( new AIBehaviour( object.collider, object.sprite, gameObjects.get( playerIndex ).sprite ) );
         object.sprite.setPosition( new Vector2f( ( ( float ) Math.sin( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_WIDTH/2, ( ( float ) Math.cos( Math.toRadians( angle ) ) )*500.0f + App.SCREEN_HEIGHT/2 ) );
         object.type = GameObject.Type.ENEMY;
     }
@@ -242,21 +200,17 @@ public class World extends GameState
         gameObjects.add( object );
         object.addTexture( tex );
         object.sprite.setPosition( pos );
-        object.addBehaviour( new MotionBehaviour( object.sprite, 5 ) );
-        object.motion.velocity = direction;
+        object.addBehaviour( new ColliderBehaviour( object.sprite, 5 ) );
+        object.collider.velocity = direction;
         object.type = GameObject.Type.PLAYER_BULLET;
     }
 
     /** Destroy all objects that are out of the screen. */
     public void destroyOutOfBoundsObjects()
     {
-
         for( int i = gameObjects.size() - 1; i >= 0; i -- ) // Counts backwards for performance reasons.
         {
-            if( gameObjects.get( i ).hasMotion() == true  )//&& gameObjects.get( i ).motion.isOutOfScreenBoundaries() == true )
-            {
-                gameObjects.remove( gameObjects.get( i ) );
-            }
+            if( gameObjects.get( i ).hasMotion() == true  ) { gameObjects.remove( gameObjects.get( i ) ); }
         }
     }
 
