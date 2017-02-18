@@ -89,7 +89,7 @@ public class AnimationBehaviour
 
     public boolean isEnding()
     {
-        return currentSequence == sequenceEnd - 1;
+        return currentSequence == sequenceEnd - 1 || currentSequence == sequenceEnd - 2;
     }
 
     public void showOnlyFirstFrame()

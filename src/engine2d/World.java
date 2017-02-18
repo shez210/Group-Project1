@@ -6,6 +6,7 @@ import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.window.Keyboard;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class World extends GameState
         //createPlayer();
         //createPlayerBeta();
         buildLevel();
-        createPlayerKnight();
+        //createPlayerKnight();
         //createEnemy();
         //addHealth();
         //createEnemyRandom();
@@ -166,7 +167,8 @@ public class World extends GameState
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.sprite.setPosition( 300, 300 );
+        object.health.set( 500 );
+        object.sprite.setPosition( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 );
         object.shadow = new Sprite( App.resources.textures.get( "shadow" ) );
         object.shadow.setOrigin( object.shadow.getGlobalBounds().width/2, object.shadow.getGlobalBounds().height/2 );
         object.shadow.setScale( 0.1f, 0.1f );
@@ -182,19 +184,21 @@ public class World extends GameState
     }
 
     /** Creates an enemy. Spawn position is across a circle around the screen. */
-    public void createEnemy()
+    public void createEnemy( Vector2f pos )
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
+        object.shadow = new Sprite( App.resources.textures.get( "shadow" ) );
+        object.shadow.setOrigin( object.shadow.getGlobalBounds().width/2, object.shadow.getGlobalBounds().height/2 );
+        object.shadow.setScale( 0.1f, 0.1f );
+        object.shadow.setColor( new Color( object.shadow.getColor().r, object.shadow.getColor().b, object.shadow.getColor().g, 128 ) );
         object.addBehaviour( new ColliderBehaviour( object.sprite, 5 ) );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightIdle, App.resources.pointsOfOrigin.get( "knightIdle") ), StateBehaviour.State.IDLE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightRun, App.resources.pointsOfOrigin.get( "knightRun") ), StateBehaviour.State.MOVE.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightAttack, App.resources.pointsOfOrigin.get( "knightAttack") ), StateBehaviour.State.ATTACK.ordinal() );
         object.addBehaviour( new AnimationBehaviour( object.sprite, App.resources.knightDead, App.resources.pointsOfOrigin.get( "knightDead") ), StateBehaviour.State.DEAD.ordinal() );
-
         object.addBehaviour( new NPCStateBehaviour( object, gameObjects.get( playerIndex ).sprite ) );
-        //object.addBehaviour( new AIBehaviour( object.collider, object.sprite, gameObjects.get( playerIndex ).sprite ) );
-        object.sprite.setPosition( 300, 100 );
+        object.sprite.setPosition( pos );
         object.type = GameObject.Type.ENEMY;
     }
 
@@ -241,7 +245,13 @@ public class World extends GameState
     public void destroyDeadObjects()
     {
         for( int i = gameObjects.size() - 1; i >= 0; i -- )
-        { if( gameObjects.get( i ).status == GameObject.Status.INACTIVE ) { gameObjects.remove( gameObjects.get( i ) ); } }
+        {
+            if( gameObjects.get( i ).status == GameObject.Status.INACTIVE )
+            {
+                Collections.swap( gameObjects, i, gameObjects.size() - 1 );
+                gameObjects.remove( gameObjects.size() - 1 );
+            }
+        }
     }
 
     /** Wrapper function, handles all deallocations. */
@@ -264,7 +274,7 @@ public class World extends GameState
 
                     if( objectA.state != null && objectA.state.isAttacking( objectB ) )
                     {
-                        objectB.health.set( objectB.health.get() - 10 );
+                        objectB.health.set( objectB.health.get() - 50 );
                         //objectB.state.currentStat
                     }
                 }
@@ -289,7 +299,7 @@ public class World extends GameState
                 float y = texSide * ( i );
                 Vector2f pos = new Vector2f( x, y );
 
-                if( line[ j ] == '0' )
+                if( line[ j ] == '0' || line[ j ] == '2' )
                 {
                     createDecoration( App.resources.textures.get( "stoneFloor1" ), pos );
                 }
@@ -297,6 +307,23 @@ public class World extends GameState
                 if( line[ j ] == '1' )
                 {
                     createWallTexture( i, j, maxTileIndex, pos, data );
+                }
+            }
+        }
+
+        for( int i = 0; i < data.size(); ++ i )
+        {
+            char[] line = data.get( i ).toCharArray();
+            for( int j = 0; j < line.length; ++ j )
+            {
+                float x = texSide * ( j );
+                float y = texSide * ( i );
+                Vector2f pos = new Vector2f( x, y );
+
+                if( line[ j ] == '2' )
+                {
+                    if( playerIndex < 0 ) { createPlayerKnight(); }
+                    createEnemy( pos );
                 }
             }
         }

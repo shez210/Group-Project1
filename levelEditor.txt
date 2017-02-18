@@ -1,17 +1,22 @@
+#
+# CrappyLevelEditor v1.04.
+#
 # A line that starts with "#" won't be parsed, so use it for comments.
-# Really basic level editor.
-# Write a 'zero' to spawn 'floor' tile.
-# Write a 'one' to spawn 'wall' tile.
-# Write a 'two' to spawn 'enemy' tile.
-# Write a 'three' to spawn 'door' tile.
-# Write a 'four' to spawn 'empty' tile.
+#
+# Write a '-' to spawn a crashfix tile.
+# Write a '0' to spawn a floor tile.
+# Write a '1' to spawn a wall tile.
+# Write a '2' to spawn an enemy.
+# Write a '3' to spawn a door tile.(not working yet)
 # Will add some more stuff later on.
 #
-############Level Editor################
+############Level 1################
 -----------------------
--1111111---1111111---
--10000011111000001---
--10000000000000001---
--10000011111000001---
--1111111---1111111---
+-1111111---1111111-----
+-10000011111000001-----
+-10000000000002001-----
+-10002000020000001-----
+-10000000000000001-----
+-10000011111000001-----
+-1111111---1111111-----
 -----------------------
