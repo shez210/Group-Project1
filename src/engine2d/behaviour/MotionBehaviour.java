@@ -1,6 +1,8 @@
 package engine2d.behaviour;
 
 import engine2d.App;
+import engine2d.GameObject;
+import engine2d.World;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
@@ -12,23 +14,42 @@ public class MotionBehaviour
     private Sprite sprite;
     private final float SPEED_NORMAL = 1.0f;
     public float speed = SPEED_NORMAL;
+    public boolean collidedAlongX;
+    public boolean collidedAlongY;
     
-    public MotionBehaviour( Sprite sprite, Vector2f velocity )
+    public MotionBehaviour( Sprite sprite, float speed )
     {
         this.sprite = sprite;
-        this.velocity = velocity;
+        this.speed = speed;
     }
 
     /** Moves the entity to some direction by some velocity. */
     public void update()
     {
-        sprite.setPosition( Vector2f.add( sprite.getPosition(), velocity ) ); // Move the sprite.
+        collidedAlongX = false;
+        collidedAlongY = false;
+        //sprite.setPosition( Vector2f.add( sprite.getPosition(), velocity ) ); // Move the sprite.
     }
 
-    void onCollision()
+    public void inCollisionXWith( GameObject object )
     {
-        System.out.print( "gg" );
+        if( World.isCollision( sprite.getGlobalBounds(), object.sprite.getGlobalBounds() ) && collidedAlongX == false )
+        {
+            sprite.setPosition( Vector2f.sub( sprite.getPosition(), new Vector2f( velocity.x, 0 ) ) );
+            collidedAlongX = true;
+        }
     }
+
+    public void inCollisionYWith( GameObject object )
+    {
+        if( World.isCollision( sprite.getGlobalBounds(), object.sprite.getGlobalBounds() ) && collidedAlongY == false )
+        {
+            sprite.setPosition( Vector2f.sub( sprite.getPosition(), new Vector2f( 0, velocity.y ) ) );
+            collidedAlongY = true;
+        }
+    }
+
+
 
     /** Checks if an entity is out of the screen boundaries.
      * @return true if its out of screen, false otherwise.

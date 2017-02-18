@@ -49,7 +49,7 @@ public abstract class StateBehaviour
     public boolean isAttacking( GameObject object )
     {
         return currentState == StateBehaviour.State.ATTACK && currentAnim.isEnding()
-        && World.isCollision( sprite, object.sprite );
+        && World.isCollision( sprite.getGlobalBounds(), object.sprite.getGlobalBounds() );
     }
 
     abstract void handleInput();

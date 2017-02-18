@@ -28,4 +28,14 @@ public abstract class GameState
         object.sprite.setPosition( pos );
         object.sprite.setOrigin( object.sprite.getGlobalBounds().width/2, object.sprite.getGlobalBounds().height/2 );
     }
+
+    public void createDecoration( Texture tex, Vector2f pos, boolean collidable )
+    {
+        GameObject object = new GameObject();
+        this.gameObjects.add( object );
+        object.addTexture( tex );
+        object.collidable = collidable;
+        object.sprite.setPosition( pos );
+        object.sprite.setOrigin( object.sprite.getGlobalBounds().width/2, object.sprite.getGlobalBounds().height/2 );
+    }
 }

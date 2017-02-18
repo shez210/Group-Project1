@@ -1,6 +1,7 @@
 package engine2d;
 
 import engine2d.behaviour.*;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
@@ -15,12 +16,14 @@ public class GameObject
     public Type type;
     public Status status = Status.ACTIVE;
     public Sprite sprite;
+    public Sprite collider;
     public MotionBehaviour motion;
     public AIBehaviour ai;
     public ArrayList<AnimationBehaviour> anims;
     public StatsBehaviour stats;
     public StateBehaviour state;
     public AtomicInteger health = new AtomicInteger( 100 );
+    public boolean collidable = false;
 
     public enum Type{ PLAYER, PLAYER_BULLET, ENEMY }
     public enum Status{ ACTIVE, INACTIVE }
@@ -29,6 +32,8 @@ public class GameObject
     public GameObject()
     {
         sprite = new Sprite();
+        collider = new Sprite();
+        collider.setTextureRect( new IntRect( 0, 0, 50, 50 ) );
         anims = new ArrayList<>( Collections.nCopies( StateBehaviour.State.values().length, null ) );
     }
 

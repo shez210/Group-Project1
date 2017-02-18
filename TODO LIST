@@ -26,12 +26,12 @@ to start hitting him repeatedly. All that functionality should be encapsulated i
 
 10. We don't have any sounds and music. DONE
 
-11. Need code for attacking and killing enemies, dying when killed, etc.
+11. Need code for attacking and killing enemies, dying when killed, etc. DONE
 
 12. Need code for UI, most importantly - healthbar decreasing smoothly when player is hit.
 
 13. Someone needs to create a proper map with the level editor.
-We need multiple levels, doors, high-quality tiles, walls, etc.
+We need multiple levels, doors, high-quality tiles, walls, etc. DONE
 
 14. Implement scrolling.
 

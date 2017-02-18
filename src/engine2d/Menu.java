@@ -24,7 +24,6 @@ public class Menu extends GameState
 
     public void update()
     {
-
         if( ( boolean )App.inputHandler.keyState.get( Keyboard.Key.RETURN ) )
         {
             App.currentState = new World();
