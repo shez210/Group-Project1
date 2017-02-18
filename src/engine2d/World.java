@@ -57,6 +57,7 @@ public class World extends GameState
         resolveCollisionsAlong( ColliderBehaviour.Axis.X );
         moveEntitiesAlong( ColliderBehaviour.Axis.Y );
         resolveCollisionsAlong( ColliderBehaviour.Axis.Y );
+        scrollAllEntities();
 
         resolveKills();
         checkForDeallocations();
@@ -119,6 +120,21 @@ public class World extends GameState
                 if( axis == ColliderBehaviour.Axis.X ) { move = new Vector2f( object.collider.velocity.x, 0 ); }
                 else move = new Vector2f( 0, object.collider.velocity.y );
                 object.sprite.setPosition( Vector2f.add( object.sprite.getPosition(), move ) );
+            }
+        }
+    }
+
+    public void scrollAllEntities()
+    {
+        for( GameObject object : gameObjects )
+        {
+            if( gameObjects.get( playerIndex ).collider.hasCollidedAlong[ ColliderBehaviour.Axis.X.ordinal() ] == false )
+            {
+                object.sprite.setPosition( Vector2f.sub( object.sprite.getPosition(), new Vector2f( gameObjects.get( playerIndex ).collider.velocity.x, 0 ) ) );
+            }
+            if( gameObjects.get( playerIndex ).collider.hasCollidedAlong[ ColliderBehaviour.Axis.Y.ordinal() ] == false )
+            {
+                object.sprite.setPosition( Vector2f.sub( object.sprite.getPosition(), new Vector2f( 0, gameObjects.get( playerIndex ).collider.velocity.y ) ) );
             }
         }
     }
@@ -310,21 +326,38 @@ public class World extends GameState
             createDecoration( App.resources.textures.get( "stoneWallEast1" ), pos, true );
         }
 
-        if( currentRow[ j + 1 ] == '1' && bottomRow[ j ] == '1' )
+        if( currentRow[ j + 1 ] == '1' && bottomRow[ j ] == '1' && bottomRow[ j + 1 ] == '0' )
         {
             createDecoration( App.resources.textures.get( "stoneWallNorthWest1" ), pos, true );
         }
-        if( currentRow[ j - 1 ] == '1' && bottomRow[ j ] == '1' )
+        if( currentRow[ j - 1 ] == '1' && bottomRow[ j ] == '1' && bottomRow[ j - 1 ] == '0' )
         {
             createDecoration( App.resources.textures.get( "stoneWallNorthEast1" ), pos, true );
         }
-        if( currentRow[ j + 1 ] == '1' && topRow[ j ] == '1' )
+        if( currentRow[ j + 1 ] == '1' && topRow[ j ] == '1' && topRow[ j + 1 ] == '0' )
         {
             createDecoration( App.resources.textures.get( "stoneWallSouthWest1" ), pos, true );
         }
-        if( currentRow[ j - 1 ] == '1' && topRow[ j ] == '1' )
+        if( currentRow[ j - 1 ] == '1' && topRow[ j ] == '1'&& topRow[ j - 1 ] == '0' )
         {
             createDecoration( App.resources.textures.get( "stoneWallSouthEast1" ), pos, true );
+        }
+
+        if( currentRow[ j + 1 ] == '1' && bottomRow[ j ] == '1' && topRow[ j - 1 ] == '0' )
+        {
+            createDecoration( App.resources.textures.get( "stoneWallNorthWestInverted1" ), pos, true );
+        }
+        if( currentRow[ j - 1 ] == '1' && bottomRow[ j ] == '1' && topRow[ j + 1 ] == '0' )
+        {
+            createDecoration( App.resources.textures.get( "stoneWallNorthEastInverted1" ), pos, true );
+        }
+        if( currentRow[ j + 1 ] == '1' && topRow[ j ] == '1' && bottomRow[ j - 1 ] == '0' )
+        {
+            createDecoration( App.resources.textures.get( "stoneWallSouthWestInverted1" ), pos, true );
+        }
+        if( currentRow[ j - 1 ] == '1' && topRow[ j ] == '1'&& bottomRow[ j + 1 ] == '0' )
+        {
+            createDecoration( App.resources.textures.get( "stoneWallSouthEastInverted1" ), pos, true );
         }
 
 

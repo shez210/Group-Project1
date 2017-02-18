@@ -16,9 +16,7 @@ public class ColliderBehaviour
     private Sprite sprite;
     private final float SPEED_NORMAL = 1.0f;
     public float speed = SPEED_NORMAL;
-    public boolean collidedAlongX;
-    public boolean collidedAlongY;
-    boolean hasCollidedAlong[] = new boolean[ 2 ];
+    public boolean hasCollidedAlong[] = new boolean[ 2 ];
 
     public enum Axis{ X, Y }
     
@@ -31,11 +29,8 @@ public class ColliderBehaviour
     /** Moves the entity to some direction by some velocity. */
     public void update()
     {
-        collidedAlongX = false;
-        collidedAlongY = false;
         hasCollidedAlong[ Axis.X.ordinal() ] = false;
         hasCollidedAlong[ Axis.Y.ordinal() ] = false;
-        //sprite.setPosition( Vector2f.add( sprite.getPosition(), velocity ) ); // Move the sprite.
     }
 
     public void inCollisionWith( GameObject object, Axis axis )
@@ -50,7 +45,6 @@ public class ColliderBehaviour
             hasCollidedAlong[ axis.ordinal() ] = true;
         }
     }
-
 
     /** Checks if an entity is out of the screen boundaries.
      * @return true if its out of screen, false otherwise.

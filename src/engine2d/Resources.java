@@ -79,6 +79,11 @@ public class Resources
         loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthWest1", 2, 114, new Vector2i( 6, 2 ) );
         loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthEast1", 2, 114, new Vector2i( 5, 2 ) );
 
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthWestInverted1", 2, 114, new Vector2i( 2, 14 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthEastInverted1", 2, 114, new Vector2i( 2, 15 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthWestInverted1", 2, 114, new Vector2i( 2, 11 ) );
+        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthEastInverted1", 2, 114, new Vector2i( 2, 12 ) );
+
         loadFont( "font.ttf" );
 
         loadSound( "Music/repentant.wav" );
