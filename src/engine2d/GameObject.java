@@ -25,6 +25,7 @@ public class GameObject
     public AtomicInteger health = new AtomicInteger( 100 );
     public boolean collidable = false;
 
+
     public enum Type{ PLAYER, PLAYER_BULLET, ENEMY }
     public enum Status{ ACTIVE, INACTIVE }
 
