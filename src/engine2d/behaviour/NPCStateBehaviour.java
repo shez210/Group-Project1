@@ -89,7 +89,6 @@ public class NPCStateBehaviour extends StateBehaviour
 
         if( object.health.get() <= 0 ) { currentState = State.DEAD; }
 
-        System.out.println( currentState );
         //System.out.println( hasArrived(  nearPlayer ));
 
         if( currentState == State.IDLE )

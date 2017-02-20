@@ -47,13 +47,14 @@ public class Resources
         pointsOfOrigin.put( "knightAttack", new Vector2f( 44, 99 ) );
         pointsOfOrigin.put( "knightDead", new Vector2f( 132, 99 ) );
 
-        loadTexture( "sprites/player_running.png", new Color( 255, 254 ,254 ) );
-        loadTexture( "sprites/placeholder_sprite.png", Color.WHITE ); // Color.WHITE is 255 255 255
         loadTexture( "sprites/chest_open.png", Color.WHITE );
-        loadTexture( "sprites/bullet.png", Color.WHITE );
         loadTexture( "sprites/cursor.png", Color.WHITE );
-        loadTexture( "sprites/placeholder_tile.png", Color.WHITE );
         loadTexture( "sprites/shadow.png", Color.WHITE );
+        loadTexture( "sprites/blood_splash.png", Color.WHITE );
+
+        loadTexture( "sprites/health_box.png", Color.WHITE );
+        loadTexture( "sprites/health_bar_full.png", Color.WHITE );
+        loadTexture( "sprites/health_bar_empty.png", Color.WHITE );
         // If you want to call loadTexture(), do it HERE, not before the other function calls.
         // load sprite sheet here.
 

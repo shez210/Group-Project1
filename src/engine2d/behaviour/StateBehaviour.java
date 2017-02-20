@@ -38,7 +38,6 @@ public abstract class StateBehaviour
             currentAnim = anims.get( requestedAnim.ordinal() );
             currentAnim.reset();
             previousState = currentState;
-            System.out.println("animation changed to " + requestedAnim.ordinal());
         }
     }
 

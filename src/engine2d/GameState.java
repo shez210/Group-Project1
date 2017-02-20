@@ -24,6 +24,7 @@ public abstract class GameState
     {
         GameObject object = new GameObject();
         this.gameObjects.add( object );
+        tex.setSmooth( false );
         object.addTexture( tex );
         object.sprite.setPosition( pos );
         object.sprite.setOrigin( object.sprite.getGlobalBounds().width/2, object.sprite.getGlobalBounds().height/2 );

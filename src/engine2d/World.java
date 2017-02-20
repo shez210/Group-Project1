@@ -1,5 +1,6 @@
 package engine2d;
 
+import com.sun.javafx.scene.traversal.Hueristic2D;
 import engine2d.behaviour.*;
 import org.jsfml.graphics.*;
 import org.jsfml.system.Clock;
@@ -19,22 +20,11 @@ public class World extends GameState
     public Clock timer = new Clock(); // doesnt belong here
     public Clock timerShoot = new Clock(); // doesnt belong here
     public int playerIndex = - 1; // index of the player object in the array of game objects.
-    public Vector2f healthPos = new Vector2f( App.SCREEN_WIDTH / 2+295, App.SCREEN_HEIGHT/2-275 );
-    public Vector2f healthPos1 = new Vector2f( App.SCREEN_WIDTH / 2+360, App.SCREEN_HEIGHT/2-275 );
-    public Vector2f healthPos2 = new Vector2f( App.SCREEN_WIDTH / 2+230, App.SCREEN_HEIGHT/2-275 );
-    public Vector2f backGround = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT/2 );
-    public Vector2f door = new Vector2f( App.SCREEN_WIDTH / 2, App.SCREEN_HEIGHT/2 );
-
+    public HUD hud;
 
     public World()
     {
         App.resources.getSound( "repentant" ).play();
-        //createDecoration( App.resources.textures.get( 13 ), backGround );
-        //createDecoration( App.resources.textures.get( 12 ), healthPos );
-        //createDecoration( App.resources.textures.get( 12 ), healthPos1 );
-        //createDecoration( App.resources.textures.get( 12 ), healthPos2 );
-        //createDecoration( App.resources.textures.get( 14 ), door );
-
 
         /** If you want to create something, just call some "create" function.
          * createDecoration() is for walls, tiles and map stuff. */
@@ -42,6 +32,12 @@ public class World extends GameState
         //createPlayer();
         //createPlayerBeta();
         buildLevel();
+        hud = new HUD( this );
+
+        for( int i = 0; i < 10; ++ i )
+        {
+            createEffect( App.resources.textures.get( "blood_splash" ), new Vector2f( 0, 0 ) );
+        }
         //createPlayerKnight();
         //createEnemy();
         //addHealth();
@@ -53,6 +49,7 @@ public class World extends GameState
     /** Handles creation and destruction of entities and also resolves collision. */
     public void update()
     {
+        hud.update();
         for( GameObject object : gameObjects ) { object.update(); }
         moveEntitiesAlong( ColliderBehaviour.Axis.X );
         resolveCollisionsAlong( ColliderBehaviour.Axis.X );
@@ -80,7 +77,7 @@ public class World extends GameState
         for( GameObject object : gameObjects )
         {
             if( object.shadow != null ) { App.window.draw( object.shadow ); }
-            App.window.draw( object.sprite );
+            if( object.status == GameObject.Status.ACTIVE ) App.window.draw( object.sprite );
         }
         App.window.draw( new Text( "Use WASD to move and Space to attack.", App.resources.font, 30 ) );
         //App.window.draw( new Text( "\nhealth = " + gameObjects.get( playerIndex ).health, App.resources.font, 30 ) );
@@ -129,13 +126,41 @@ public class World extends GameState
     {
         for( GameObject object : gameObjects )
         {
-            if( gameObjects.get( playerIndex ).collider.hasCollidedAlong[ ColliderBehaviour.Axis.X.ordinal() ] == false )
+            if( object.type != GameObject.Type.HUD && playerIndex > 0 )
             {
-                object.sprite.setPosition( Vector2f.sub( object.sprite.getPosition(), new Vector2f( gameObjects.get( playerIndex ).collider.velocity.x, 0 ) ) );
+                if( gameObjects.get( playerIndex ).collider.hasCollidedAlong[ ColliderBehaviour.Axis.X.ordinal() ] == false )
+                {
+                    object.sprite.setPosition( Vector2f.sub( object.sprite.getPosition(), new Vector2f( gameObjects.get( playerIndex ).collider.velocity.x, 0 ) ) );
+                }
+                if( gameObjects.get( playerIndex ).collider.hasCollidedAlong[ ColliderBehaviour.Axis.Y.ordinal() ] == false )
+                {
+                    object.sprite.setPosition( Vector2f.sub( object.sprite.getPosition(), new Vector2f( 0, gameObjects.get( playerIndex ).collider.velocity.y ) ) );
+                }
             }
-            if( gameObjects.get( playerIndex ).collider.hasCollidedAlong[ ColliderBehaviour.Axis.Y.ordinal() ] == false )
+        }
+    }
+
+    public void useEffect( GameObject.Type type, Vector2f pos )
+    {
+        for( GameObject object : gameObjects )
+        {
+            //System.out.println( object.type);
+            if( object.type == type && object.status == GameObject.Status.INACTIVE )
             {
-                object.sprite.setPosition( Vector2f.sub( object.sprite.getPosition(), new Vector2f( 0, gameObjects.get( playerIndex ).collider.velocity.y ) ) );
+                object.status = GameObject.Status.ACTIVE;
+                object.sprite.setPosition( pos );
+                System.out.println(55);
+            }
+        }
+    }
+
+    public void deactivateEffects()
+    {
+        for( GameObject object : gameObjects )
+        {
+            if( object.type == GameObject.Type.BLOOD_SPLASH_EFFECT && object.anims.get( 0 ).isEnding() )
+            {
+                object.status = GameObject.Status.INACTIVE;
             }
         }
     }
@@ -167,7 +192,8 @@ public class World extends GameState
     {
         GameObject object = new GameObject();
         gameObjects.add( object );
-        object.health.set( 500 );
+        object.health.set( 200 );
+        object.maxHealth.set( 200 );
         object.sprite.setPosition( App.SCREEN_WIDTH/2, App.SCREEN_HEIGHT/2 );
         object.shadow = new Sprite( App.resources.textures.get( "shadow" ) );
         object.shadow.setOrigin( object.shadow.getGlobalBounds().width/2, object.shadow.getGlobalBounds().height/2 );
@@ -215,6 +241,17 @@ public class World extends GameState
         object.type = GameObject.Type.ENEMY;
     }
 
+    public void createEffect( Texture tex, Vector2f pos )
+    {
+        GameObject object = new GameObject();
+        gameObjects.add( object );
+        object.addTexture( tex );
+        object.sprite.setPosition( pos );
+        object.addBehaviour( new AnimationBehaviour( object.sprite, 2, 32, 5, 31 ), 0 );
+        object.type = GameObject.Type.BLOOD_SPLASH_EFFECT;
+        object.status = GameObject.Status.INACTIVE;
+    }
+
     /** Creates a projectile and moves it in a certain direction.
      *
      * @param tex the texture that is going to be used for the projectile.
@@ -246,7 +283,7 @@ public class World extends GameState
     {
         for( int i = gameObjects.size() - 1; i >= 0; i -- )
         {
-            if( gameObjects.get( i ).status == GameObject.Status.INACTIVE )
+            if( gameObjects.get( i ).status == GameObject.Status.INACTIVE && gameObjects.get( i ).type != GameObject.Type.BLOOD_SPLASH_EFFECT )
             {
                 Collections.swap( gameObjects, i, gameObjects.size() - 1 );
                 gameObjects.remove( gameObjects.size() - 1 );
@@ -272,9 +309,11 @@ public class World extends GameState
                     GameObject objectA = gameObjects.get( i );
                     GameObject objectB = gameObjects.get( j );
 
-                    if( objectA.state != null && objectA.state.isAttacking( objectB ) )
+                    if( objectA.state != null && objectA.state.isAttacking( objectB ) && objectB.state != null )
                     {
+                        //useEffect( GameObject.Type.BLOOD_SPLASH_EFFECT, objectB.sprite.getPosition() );
                         objectB.health.set( objectB.health.get() - 50 );
+                        if( gameObjects.get( playerIndex ).health.get() <= 0 ) { playerIndex = -1; }
                         //objectB.state.currentStat
                     }
                 }

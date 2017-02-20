@@ -22,11 +22,11 @@ public class GameObject
     public ArrayList<AnimationBehaviour> anims;
     public StatsBehaviour stats;
     public StateBehaviour state;
+    public AtomicInteger maxHealth = new AtomicInteger( 100 );
     public AtomicInteger health = new AtomicInteger( 100 );
     public boolean collidable = false;
 
-
-    public enum Type{ PLAYER, PLAYER_BULLET, ENEMY }
+    public enum Type{ PLAYER, PLAYER_BULLET, ENEMY, BLOOD_SPLASH_EFFECT, HUD }
     public enum Status{ ACTIVE, INACTIVE }
 
     // engine2d.GameObject is created by instantiating all the needed components/behaviours.
