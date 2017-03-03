@@ -68,22 +68,22 @@ public class Resources
         loadTexture("sprites/Images/Backgrounds/newBg.png", Color.WHITE);
         loadTexture("sprites/Images/Tiles/passable/6.png", Color.WHITE);
 
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "greenFloor1", 2, 114, new Vector2i( 1, 0 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "greenFloor2", 2, 114, new Vector2i( 2, 0 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneFloor1", 2, 114, new Vector2i( 3, 3 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorth1", 2, 114, new Vector2i( 16, 2 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouth1", 2, 114, new Vector2i( 2, 16 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallWest1", 2, 114, new Vector2i( 7, 2 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallEast1", 2, 114, new Vector2i( 2, 10 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthWest1", 2, 114, new Vector2i( 4, 2 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthEast1", 2, 114, new Vector2i( 3, 2 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthWest1", 2, 114, new Vector2i( 6, 2 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthEast1", 2, 114, new Vector2i( 5, 2 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "greenFloor1", 2, 114, new Vector2i( 1, 0 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "greenFloor2", 2, 114, new Vector2i( 2, 0 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneFloor1", 2, 114, new Vector2i( 3, 3 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallNorth1", 2, 114, new Vector2i( 16, 2 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallSouth1", 2, 114, new Vector2i( 2, 16 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallWest1", 2, 114, new Vector2i( 7, 2 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallEast1", 2, 114, new Vector2i( 2, 10 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallNorthWest1", 2, 114, new Vector2i( 4, 2 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallNorthEast1", 2, 114, new Vector2i( 3, 2 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallSouthWest1", 2, 114, new Vector2i( 6, 2 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallSouthEast1", 2, 114, new Vector2i( 5, 2 ) );
 
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthWestInverted1", 2, 114, new Vector2i( 2, 14 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallNorthEastInverted1", 2, 114, new Vector2i( 2, 15 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthWestInverted1", 2, 114, new Vector2i( 2, 11 ) );
-        loadTextureFromSpriteSheet( "sprites/Images/Tiles/tiles.png", "stoneWallSouthEastInverted1", 2, 114, new Vector2i( 2, 12 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallNorthWestInverted1", 2, 114, new Vector2i( 2, 14 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallNorthEastInverted1", 2, 114, new Vector2i( 2, 15 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallSouthWestInverted1", 2, 114, new Vector2i( 2, 11 ) );
+        loadTextureFromSpriteSheet("sprites/tiles.png", "stoneWallSouthEastInverted1", 2, 114, new Vector2i( 2, 12 ) );
 
         loadFont( "font.ttf" );
 
