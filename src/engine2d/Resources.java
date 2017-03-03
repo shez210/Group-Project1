@@ -64,9 +64,7 @@ public class Resources
         loadTexture("sprites/Images/Buttons/Quit.png", Color.WHITE);
         loadTexture("sprites/Images/Buttons/QutHover.png", Color.WHITE);
         loadTexture("sprites/Images/Buttons/Title.png", Color.WHITE);
-        loadTexture("sprites/Images/Icons/health.png", Color.WHITE);
         loadTexture("sprites/Images/Backgrounds/newBg.png", Color.WHITE);
-        loadTexture("sprites/Images/Tiles/passable/6.png", Color.WHITE);
 
         loadTextureFromSpriteSheet("sprites/tiles.png", "greenFloor1", 2, 114, new Vector2i( 1, 0 ) );
         loadTextureFromSpriteSheet("sprites/tiles.png", "greenFloor2", 2, 114, new Vector2i( 2, 0 ) );
